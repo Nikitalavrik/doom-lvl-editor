@@ -63,13 +63,19 @@ void	mouse_move_map(t_editor *editor)
 	t_coords 	mouse_position;
 
 	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-	editor->move_map.x = editor->move_save.x + mouse_position.x / 2;
-	editor->move_map.y = editor->move_save.y + mouse_position.y / 2;
-	// ft_printf("preees\n");
+	if (mouse_position.x != editor->move_save.x ||\
+		mouse_position.y != editor->move_save.y)
+	{
+		editor->center.x -= mouse_position.x - editor->move_save.x;
+		editor->center.y -= mouse_position.y - editor->move_save.y;
+		editor->move_save.x = mouse_position.x;
+		editor->move_save.y = mouse_position.y;
+	}
 }
 
 int		detect_event(t_editor *editor)
 {
+	t_coords 	mouse_position;
 	SDL_Event	event;
 
 	while (SDL_PollEvent(&event) != 0)
@@ -79,18 +85,17 @@ int		detect_event(t_editor *editor)
 		if (event.type == SDL_MOUSEWHEEL)
 			mouse_event(editor, event);
 		if (event.type == SDL_MOUSEBUTTONDOWN)
-			editor->move = 1;
-		if (event.type == SDL_MOUSEBUTTONUP)
 		{
-			editor->move_save.x = editor->move_map.x;
-			editor->move_save.y = editor->move_map.y;
-			editor->move = 0;
+			SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+			editor->move = 1;
+			editor->move_save.x = mouse_position.x;
+			editor->move_save.y = mouse_position.y;
 		}
 
+		if (event.type == SDL_MOUSEBUTTONUP)
+			editor->move = 0;
 		if (editor->move)
 			mouse_move_map(editor);
-		// if (event.type == SDL_MOUSEMOTION)
-		// 	mouse_event(editor, event);
 		if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
 		{
 			if (keyboard_events(editor, event))

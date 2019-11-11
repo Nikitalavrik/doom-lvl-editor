@@ -39,8 +39,8 @@ void		coords_rerange(t_editor *editor)
 		iterator.x = 0;
 		while (iterator.x < editor->size.x)
 		{
-			editor->coords[iterator.y][iterator.x].x = (int)(iterator.x * SQUARE_SIZE * editor->zoom) - editor->center.x + editor->move_map.x;
-			editor->coords[iterator.y][iterator.x].y = (int)(iterator.y * SQUARE_SIZE * editor->zoom) - editor->center.y + editor->move_map.y;
+			editor->coords[iterator.y][iterator.x].x = (int)(iterator.x * SQUARE_SIZE * editor->zoom) - editor->center.x;
+			editor->coords[iterator.y][iterator.x].y = (int)(iterator.y * SQUARE_SIZE * editor->zoom) - editor->center.y;
 			iterator.x++;
 		}
 		iterator.y++;
@@ -67,7 +67,7 @@ t_editor	*init_editor(void)
 	editor = ft_memalloc(sizeof(t_editor));
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		print_error("SDL : ", "init error\n");
-	editor->win = SDL_CreateWindow("editor", 650, 300, WIDTH,
+	editor->win = SDL_CreateWindow("editor", 150, 100, WIDTH,
 											HEIGHT, SDL_WINDOW_SHOWN);
 	if (!editor->win)
 		print_error("SDL : ", "window create error\n");
