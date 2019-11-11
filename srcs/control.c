@@ -61,15 +61,27 @@ void	mouse_event(t_editor *editor, SDL_Event	event)
 void	mouse_move_map(t_editor *editor)
 {
 	t_coords 	mouse_position;
+	t_coords	tmp_calc;
+	t_coords	limit;
 
 	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-	if (mouse_position.x != editor->move_save.x ||\
-		mouse_position.y != editor->move_save.y)
+	if ((mouse_position.x != editor->move_save.x ||\
+		mouse_position.y != editor->move_save.y))
 	{
-		editor->center.x -= mouse_position.x - editor->move_save.x;
-		editor->center.y -= mouse_position.y - editor->move_save.y;
+		limit.x = SQUARE_SIZE * editor->size.x * editor->zoom - editor->width + MENU_WIDTH + PADDING_WIDTH;
+		limit.y = SQUARE_SIZE * editor->size.y * editor->zoom - editor->height;
+		tmp_calc.x = mouse_position.x - editor->move_save.x;
+		tmp_calc.y = mouse_position.y - editor->move_save.y;
+		if ((editor->center.x > 0 ||  tmp_calc.x < 0) &&\
+		(editor->center.x < limit.x || tmp_calc.x > 0))
+			editor->center.x -= tmp_calc.x;
+		if ((editor->center.y > 0 || tmp_calc.y < 0) &&\
+		(editor->center.y < limit.y || tmp_calc.y > 0))
+			editor->center.y -= tmp_calc.y;
 		editor->move_save.x = mouse_position.x;
 		editor->move_save.y = mouse_position.y;
+		// ft_printf("limit  x %i y %i\n", limit.x, limit.y);
+		// ft_printf("center x %i y %i\n", editor->center.x, editor->center.y);
 	}
 }
 
