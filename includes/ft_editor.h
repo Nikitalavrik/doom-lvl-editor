@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/10 16:45:27 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/11 18:09:46 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 # define WIDTH 1280
 # define HEIGHT 720
 # define WALL_HEIGHT HEIGHT
+# define MENU_WIDTH 300
+# define SQUARE_SIZE 30
+# define PADDING_WIDTH 20
+# define PADDING_HEIGHT 20
 
 typedef struct	s_dcoords
 {
@@ -43,7 +47,8 @@ typedef struct	s_coords
 	int			x;
 	int			y;
 	int			z;
-	int			texture;
+	int			step;
+	int			radius;
 	int			prev_z;
 }				t_coords;
 
@@ -57,13 +62,23 @@ typedef	struct	s_editor
 	int			width;
 	int			height;
 	int			mouse;
+	t_coords	size;
+	double		zoom;
+	int			move;
+	// double		mouse_zoom;
 	t_coords	**coords;
 	SDL_Surface	*textures[9];
+	t_coords	center;
+	t_coords	move_map;
+	t_coords	move_save;
 }				t_editor;
 
 t_editor		*init_editor(void);
 
 int				main_loop(t_editor *editor);
+
+void			draw_cells(t_editor *editor);
+void			coords_rerange(t_editor *editor);
 
 int				detect_event(t_editor *editor);
 
