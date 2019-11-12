@@ -34,6 +34,7 @@
 # define SQUARE_SIZE 30
 # define PADDING_WIDTH 20
 # define PADDING_HEIGHT 20
+# define STANDART_COLOR 0xbdb5b5
 
 typedef struct	s_dcoords
 {
@@ -42,14 +43,30 @@ typedef struct	s_dcoords
 	double		z;
 }				t_dcoords;
 
+typedef	union	s_flags
+{
+	unsigned	char	flag;
+	struct				s_f
+	{
+		unsigned char build 	: 1;
+		unsigned char select 	: 1;
+		unsigned char texture 	: 1;
+		unsigned char move 		: 1;
+		unsigned char build4 	: 1;
+		unsigned char build5 	: 1;
+		unsigned char build6 	: 1;
+		unsigned char build7 	: 1;
+	}			t_f;
+}				t_flags;
+
 typedef struct	s_coords
 {
 	int			x;
 	int			y;
 	int			z;
-	int			step;
-	int			radius;
-	int			prev_z;
+	int			color;
+	int			r;
+	int			inc;
 }				t_coords;
 
 typedef	struct	s_editor
@@ -64,13 +81,13 @@ typedef	struct	s_editor
 	int			mouse;
 	t_coords	size;
 	double		zoom;
-	int			move;
-	// double		mouse_zoom;
+	t_flags		flags;
 	t_coords	**coords;
 	SDL_Surface	*textures[9];
 	t_coords	center;
 	t_coords	move_map;
 	t_coords	move_save;
+	t_coords	*finded;
 }				t_editor;
 
 t_editor		*init_editor(void);

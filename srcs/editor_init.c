@@ -41,6 +41,11 @@ void		coords_rerange(t_editor *editor)
 		{
 			editor->coords[iterator.y][iterator.x].x = (int)(iterator.x * SQUARE_SIZE * editor->zoom) - editor->center.x;
 			editor->coords[iterator.y][iterator.x].y = (int)(iterator.y * SQUARE_SIZE * editor->zoom) - editor->center.y;
+			if (!editor->coords[iterator.y][iterator.x].color)
+				editor->coords[iterator.y][iterator.x].color = STANDART_COLOR;
+			if (!editor->coords[iterator.y][iterator.x].inc)
+				editor->coords[iterator.y][iterator.x].r = 1;
+			// editor->coords[iterator.y][iterator.x].inc = 0;
 			iterator.x++;
 		}
 		iterator.y++;
@@ -80,6 +85,7 @@ t_editor	*init_editor(void)
 	coords_init(editor, &editor->size);
 	editor->center.x = editor->size.x / 2 * SQUARE_SIZE * editor->zoom - (editor->width - MENU_WIDTH) / 2;
 	editor->center.y = editor->size.y / 2 * SQUARE_SIZE * editor->zoom - (editor->height) / 2;
+	editor->flags.t_f.select = 1;
 	ft_printf("x = %i y = %i\n", editor->center.x, editor->center.y);
 	return (editor);
 }

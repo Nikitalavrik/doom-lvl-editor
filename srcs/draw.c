@@ -25,7 +25,6 @@ t_coords	calc_delta(t_coords coord0, t_coords coord1,
 
 	coord.x = coord0.x;
 	coord.y = coord0.y;
-	coord.prev_z = coord0.prev_z;
 	delta->x = abs(coord1.x - coord0.x);
 	delta->y = -abs(coord1.y - coord0.y);
 	iter->x = coord0.x < coord1.x ? 1 : -1;
@@ -75,11 +74,13 @@ void drawCircle(t_editor *editor, t_coords coord0, t_coords coord1, int color)
     put_pixel(editor, coord0.x - coord1.y, coord0.y - coord1.x, color); 
 } 
 
-void circle_Bres(t_editor *editor, t_coords coord0, int r, int color) 
+void circle_Bres(t_editor *editor, t_coords coord0, int color) 
 {
 	int 		d;
+	int			r;
 	t_coords	coord1;
 
+	r = (int)(coord0.r * editor->zoom);
 	coord1.x = 0;
 	coord1.y = r;
 	d = 3 - 2 * r;
@@ -115,7 +116,7 @@ void		draw_cells(t_editor *editor)
 				color = 0xff0008;
 			else
 				color = 0xbdb5b5;
-			circle_Bres(editor, editor->coords[step.y][step.x], (int)(1 * editor->zoom), color);
+			circle_Bres(editor, editor->coords[step.y][step.x], color);
 			step.x++;
 		}
 		step.y++;
