@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_editor.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/11 18:09:46 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:53:51 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define PADDING_HEIGHT 20
 # define STANDART_COLOR 0xbdb5b5
 
+
+
 typedef struct	s_dcoords
 {
 	double		x;
@@ -52,7 +54,7 @@ typedef	union	s_flags
 		unsigned char select 	: 1;
 		unsigned char texture 	: 1;
 		unsigned char move 		: 1;
-		unsigned char build4 	: 1;
+		unsigned char lctrl 	: 1;
 		unsigned char build5 	: 1;
 		unsigned char build6 	: 1;
 		unsigned char build7 	: 1;
@@ -69,6 +71,13 @@ typedef struct	s_coords
 	int			inc;
 }				t_coords;
 
+typedef	struct			s_point
+{
+	t_coords			*coord;
+	struct	s_point		*next;
+	struct	s_point		*prev;
+}						t_point;
+
 typedef	struct	s_editor
 {
 	TTF_Font	*font;
@@ -82,22 +91,29 @@ typedef	struct	s_editor
 	t_coords	size;
 	double		zoom;
 	t_flags		flags;
+	// t_flags		keys;
 	t_coords	**coords;
 	SDL_Surface	*textures[9];
 	t_coords	center;
 	t_coords	move_map;
 	t_coords	move_save;
 	t_coords	*finded;
+	t_point		*point;
+
 }				t_editor;
 
 t_editor		*init_editor(void);
 
 int				main_loop(t_editor *editor);
 
+void			draw_lines(t_editor *editor);
 void			draw_cells(t_editor *editor);
 void			coords_rerange(t_editor *editor);
 
 int				detect_event(t_editor *editor);
+
+void        	push_point(t_point **begin, t_coords *coord);
+void       		pop_point(t_point **begin);
 
 void			print_error(char *manage, char *message);
 

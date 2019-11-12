@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:20:39 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/11 17:53:46 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:59:31 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		coords_rerange(t_editor *editor)
 			if (!editor->coords[iterator.y][iterator.x].color)
 				editor->coords[iterator.y][iterator.x].color = STANDART_COLOR;
 			if (!editor->coords[iterator.y][iterator.x].inc)
-				editor->coords[iterator.y][iterator.x].r = 1;
+				editor->coords[iterator.y][iterator.x].r = 2;
 			// editor->coords[iterator.y][iterator.x].inc = 0;
 			iterator.x++;
 		}
@@ -80,7 +80,7 @@ t_editor	*init_editor(void)
 	editor->fg = (SDL_Color){252, 136, 3, 255};
 	editor->width = WIDTH;
 	editor->height = HEIGHT;
-	editor->zoom = 1;
+	editor->zoom = 5;
 	init_music_font(editor);
 	coords_init(editor, &editor->size);
 	editor->center.x = editor->size.x / 2 * SQUARE_SIZE * editor->zoom - (editor->width - MENU_WIDTH) / 2;

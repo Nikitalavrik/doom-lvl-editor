@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/11 18:11:09 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/12 15:01:13 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,21 @@
 
 int		keyboard_events_down(t_editor *editor, SDL_Event event)
 {
-	(void)editor;
 	if (event.key.keysym.sym == SDLK_ESCAPE)
 		return (1);
 	else if (event.key.keysym.sym == SDLK_s)
 		editor->flags.t_f.select = editor->flags.t_f.select ? 0 : 1;
+	else if (event.key.keysym.sym == SDLK_LCTRL)
+		editor->flags.t_f.lctrl = 1;
+	else if (editor->flags.t_f.lctrl && event.key.keysym.sym == SDLK_z)
+		pop_point(&editor->point);
+	return (0);
+}
+
+int		keyboard_events_up(t_editor *editor, SDL_Event event)
+{
+	if (event.key.keysym.sym == SDLK_LCTRL)
+		editor->flags.t_f.lctrl = 0;
 	return (0);
 }
 
@@ -28,10 +38,10 @@ t_coords	get_coords(t_editor *editor, t_coords mouse)
 	double		sq_zoom;
 
 	sq_zoom = SQUARE_SIZE * editor->zoom;
-	coord.x = ((mouse.x + editor->center.x + (int)(1 * editor->zoom)) +\
-	(mouse.x + editor->center.x + (int)(1 * editor->zoom))) / 2 / sq_zoom;
-	coord.y = ((mouse.y + editor->center.y + (int)(1 * editor->zoom)) +\
-	(mouse.y + editor->center.y + (int)(1 * editor->zoom))) / 2 / sq_zoom;
+	coord.x = ((mouse.x + editor->center.x + (int)(2 * editor->zoom)) +\
+	(mouse.x + editor->center.x + (int)(2 * editor->zoom))) / 2 / sq_zoom;
+	coord.y = ((mouse.y + editor->center.y + (int)(2 * editor->zoom)) +\
+	(mouse.y + editor->center.y + (int)(2 * editor->zoom))) / 2 / sq_zoom;
 
 	if (coord.x > 0 && coord.x < editor->size.x &&\
 		coord.y > 0 && coord.y < editor->size.y)
@@ -87,7 +97,7 @@ void	mouse_motion(t_editor *editor)
 			mouse_position.y >= finded->y - (int)(finded->r * editor->zoom))
 			{
 				finded->inc = 1;
-				finded->r = 2;
+				finded->r = 3;
 				editor->finded = finded;
 			}
 	}
@@ -118,6 +128,27 @@ void	mouse_move_map(t_editor *editor)
 	}
 }
 
+void	add_line(t_editor *editor)
+{
+	t_coords 	mouse_position;
+	t_coords	coord;
+	t_coords	*finded;
+
+	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+	coord = get_coords(editor, mouse_position);
+	if (coord.x != INT16_MAX)
+	{
+		finded = &editor->coords[coord.y][coord.x];
+		if (mouse_position.x <= finded->x + (int)(finded->r * editor->zoom) &&\
+			mouse_position.x >= finded->x - (int)(finded->r * editor->zoom) &&\
+			mouse_position.y <= finded->y + (int)(finded->r * editor->zoom) &&\
+			mouse_position.y >= finded->y - (int)(finded->r * editor->zoom))
+			{
+				push_point(&editor->point, finded);
+			}
+	}
+}
+
 int		detect_event(t_editor *editor)
 {
 	t_coords 	mouse_position;
@@ -135,8 +166,8 @@ int		detect_event(t_editor *editor)
 			editor->flags.t_f.move = editor->flags.t_f.select;
 			editor->move_save.x = mouse_position.x;
 			editor->move_save.y = mouse_position.y;
-	//		if (!editor->flags.t_f.select)
-	//			draw_room();
+			if (!editor->flags.t_f.select)
+				add_line(editor);
 		}
 		if (event.type == SDL_MOUSEBUTTONUP && editor->flags.t_f.move)
 			editor->flags.t_f.move = 0;
@@ -145,10 +176,11 @@ int		detect_event(t_editor *editor)
 		if (event.type == SDL_MOUSEMOTION)
 			mouse_motion(editor);
 		if (event.type == SDL_KEYDOWN)
-		{
 			if (keyboard_events_down(editor, event))
 				return (1);
-		}
+		if (event.type == SDL_KEYUP)
+			if (keyboard_events_up(editor, event))
+				return (1);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:55:43 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/10 19:23:52 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:39:50 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,17 @@ void		draw_cells(t_editor *editor)
 			step.x++;
 		}
 		step.y++;
+	}
+}
+
+void	draw_lines(t_editor *editor)
+{
+	t_point	*iterator;
+
+	iterator = editor->point;
+	while (iterator && iterator->next)
+	{
+		draw_line(editor, *iterator->coord, *iterator->next->coord, 0x8f017e);
+		iterator = iterator->next;
 	}
 }

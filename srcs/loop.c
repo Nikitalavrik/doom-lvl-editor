@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:38:31 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/10 18:20:12 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:30:03 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		main_loop(t_editor *editor)
 	{
 		ft_bzero(editor->surf->pixels, WIDTH * HEIGHT * sizeof(int));
 		draw_cells(editor);
+		draw_lines(editor);
 		quit = detect_event(editor);
 		SDL_UpdateWindowSurface(editor->win);
 	}
