@@ -6,7 +6,7 @@
 /*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/12 15:01:13 by nikita           ###   ########.fr       */
+/*   Updated: 2019/11/12 15:21:05 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int		keyboard_events_down(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.lctrl = 1;
 	else if (editor->flags.t_f.lctrl && event.key.keysym.sym == SDLK_z)
 		pop_point(&editor->point);
+	else if (event.key.keysym.sym == SDLK_SPACE)
+		close_room(editor);
 	return (0);
 }
 

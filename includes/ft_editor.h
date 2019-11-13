@@ -6,7 +6,7 @@
 /*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/12 14:53:51 by nikita           ###   ########.fr       */
+/*   Updated: 2019/11/13 17:29:49 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,13 @@ typedef	struct			s_point
 	struct	s_point		*prev;
 }						t_point;
 
+typedef struct			s_room
+{
+	t_point				*point;
+	struct	s_room		*next;
+	struct	s_room		*prev;	
+}						t_room;
+
 typedef	struct	s_editor
 {
 	TTF_Font	*font;
@@ -91,7 +98,7 @@ typedef	struct	s_editor
 	t_coords	size;
 	double		zoom;
 	t_flags		flags;
-	// t_flags		keys;
+	t_room		*rooms;
 	t_coords	**coords;
 	SDL_Surface	*textures[9];
 	t_coords	center;
@@ -106,12 +113,17 @@ t_editor		*init_editor(void);
 
 int				main_loop(t_editor *editor);
 
+void        	draw_rooms(t_editor *editor);
 void			draw_lines(t_editor *editor);
 void			draw_cells(t_editor *editor);
 void			coords_rerange(t_editor *editor);
 
 int				detect_event(t_editor *editor);
 
+void			put_pixel(t_editor *editor, int x, int y, int color);
+
+void    		close_room(t_editor *editor);
+void       	 	push_room(t_room **begin, t_point *point);
 void        	push_point(t_point **begin, t_coords *coord);
 void       		pop_point(t_point **begin);
 

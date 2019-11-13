@@ -6,7 +6,7 @@
 /*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:55:43 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/12 14:39:50 by nikita           ###   ########.fr       */
+/*   Updated: 2019/11/13 17:32:38 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,6 @@ void		draw_cells(t_editor *editor)
 		step.x = 0;
 		while (step.x < editor->size.x)
 		{
-			if (step.x == editor->size.x / 2 || step.y == editor->size.y / 2)
-				color = 0xff0008;
-			else
-				color = 0xbdb5b5;
 			circle_Bres(editor, editor->coords[step.y][step.x], color);
 			step.x++;
 		}
@@ -132,5 +128,24 @@ void	draw_lines(t_editor *editor)
 	{
 		draw_line(editor, *iterator->coord, *iterator->next->coord, 0x8f017e);
 		iterator = iterator->next;
+	}
+}
+
+void        draw_rooms(t_editor *editor)
+{
+	t_room	*iterate_room;
+	t_point	*iterator;
+
+	iterate_room = editor->rooms;
+	while (iterate_room)
+	{
+		iterator = iterate_room->point;
+		while (iterator && iterator->next)
+		{
+			draw_line(editor, *iterator->coord,
+						*iterator->next->coord, 0x8f017e);
+			iterator = iterator->next;
+		}
+		iterate_room = iterate_room->next;		
 	}
 }

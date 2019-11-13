@@ -6,7 +6,7 @@
 /*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:17:34 by nikita            #+#    #+#             */
-/*   Updated: 2019/11/12 14:58:26 by nikita           ###   ########.fr       */
+/*   Updated: 2019/11/12 15:20:26 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,22 @@ void        pop_point(t_point **begin)
         ft_memdel((void **)&iterator);
         *begin = NULL;
     }
+}
+
+void        push_room(t_room **begin, t_point *point)
+{
+    t_room *iterator;
+    t_room *new_point;
+
+    new_point = ft_memalloc(sizeof(t_room));
+    new_point->point = point;
+    if (*begin)
+    {
+        iterator = *begin;
+        new_point->next = iterator;
+        iterator->prev = new_point;
+        *begin = new_point;
+    }
+    else
+        *begin = new_point;
 }
