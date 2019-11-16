@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/12 15:21:05 by nikita           ###   ########.fr       */
+/*   Updated: 2019/11/16 19:23:36 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		keyboard_events_down(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.lctrl = 1;
 	else if (editor->flags.t_f.lctrl && event.key.keysym.sym == SDLK_z)
 		pop_point(&editor->point);
-	else if (event.key.keysym.sym == SDLK_SPACE)
+	else if (event.key.keysym.sym == SDLK_SPACE && editor->point)
 		close_room(editor);
 	return (0);
 }
@@ -102,6 +102,10 @@ void	mouse_motion(t_editor *editor)
 				finded->r = 3;
 				editor->finded = finded;
 			}
+		// if (finded->in_room)
+		// {
+			
+		// }
 	}
 }
 
@@ -147,6 +151,8 @@ void	add_line(t_editor *editor)
 			mouse_position.y >= finded->y - (int)(finded->r * editor->zoom))
 			{
 				push_point(&editor->point, finded);
+				editor->point->x = coord.x;
+				editor->point->y = coord.y;
 			}
 	}
 }

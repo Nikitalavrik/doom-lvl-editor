@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:55:43 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/13 17:32:38 by nikita           ###   ########.fr       */
+/*   Updated: 2019/11/16 18:55:14 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
+
+int		get_pixel(t_editor *editor, int x, int y)
+{
+	if (x >= 0 && x < WIDTH - MENU_WIDTH && y >= 0 && y < HEIGHT)
+		return (((int *)editor->surf->pixels)[(y * editor->surf->w) + x]);
+	return (-1);
+}
 
 void	put_pixel(t_editor *editor, int x, int y, int color)
 {
@@ -126,9 +133,48 @@ void	draw_lines(t_editor *editor)
 	iterator = editor->point;
 	while (iterator && iterator->next)
 	{
-		draw_line(editor, *iterator->coord, *iterator->next->coord, 0x8f017e);
+		draw_line(editor, *iterator->coord, *iterator->next->coord, WALL_COLOR);
 		iterator = iterator->next;
 	}
+}
+
+void		draw_vertical_line(t_editor *editor, int x, int from, int to)
+{
+
+	while (from > to)
+	{
+		put_pixel(editor, x, from, 0x02dec1);
+		from--;
+	}
+}
+
+void		draw_texture_room(t_editor *editor, t_room *iterate_room)
+{
+	int			color;
+	t_coords 	iter;
+	t_coords 	max;
+
+	iter.x = editor->coords[iterate_room->min_xy.y][iterate_room->min_xy.x].x + 1;
+	max.x = editor->coords[iterate_room->max_xy.y][iterate_room->max_xy.x].x;
+	max.y = editor->coords[iterate_room->max_xy.y][iterate_room->max_xy.x].y;
+	while (iter.x < max.x)
+	{
+		iter.y = editor->coords[iterate_room->min_xy.y][iterate_room->min_xy.x].y;
+		color = 0;
+		while (iter.y < max.y)
+		{
+			if (((int *)editor->surf->pixels)[(iter.y * editor->surf->w) + iter.x] == WALL_COLOR)
+			{
+				color = color ? 0 : 1;
+				while (((int *)editor->surf->pixels)[(iter.y * editor->surf->w) + iter.x] == WALL_COLOR && iter.y < max.y)
+					iter.y++;
+			}	
+			else if (color)
+				put_pixel(editor, iter.x, iter.y, TEXTURE_COLOR);
+			iter.y++;
+		}
+		iter.x++;
+	}	
 }
 
 void        draw_rooms(t_editor *editor)
@@ -143,9 +189,10 @@ void        draw_rooms(t_editor *editor)
 		while (iterator && iterator->next)
 		{
 			draw_line(editor, *iterator->coord,
-						*iterator->next->coord, 0x8f017e);
+						*iterator->next->coord, WALL_COLOR);
 			iterator = iterator->next;
 		}
+		draw_texture_room(editor, iterate_room);
 		iterate_room = iterate_room->next;		
 	}
 }

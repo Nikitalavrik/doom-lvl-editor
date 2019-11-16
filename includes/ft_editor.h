@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_editor.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/13 17:29:49 by nikita           ###   ########.fr       */
+/*   Updated: 2019/11/16 18:55:29 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # define PADDING_WIDTH 20
 # define PADDING_HEIGHT 20
 # define STANDART_COLOR 0xbdb5b5
-
-
+# define WALL_COLOR 0x8f017e
+# define TEXTURE_COLOR 0x099481
 
 typedef struct	s_dcoords
 {
@@ -69,18 +69,31 @@ typedef struct	s_coords
 	int			color;
 	int			r;
 	int			inc;
+	int			in_room;
 }				t_coords;
 
 typedef	struct			s_point
 {
 	t_coords			*coord;
+	int					x;
+	int					y;
 	struct	s_point		*next;
 	struct	s_point		*prev;
 }						t_point;
 
+typedef struct			s_triangle
+{
+	t_coords			*coord[3];
+	struct	s_point		*next;
+}						t_triangle;
+
 typedef struct			s_room
 {
+	int					id;
 	t_point				*point;
+	t_triangle			*triang;
+	t_coords			max_xy;
+	t_coords			min_xy;
 	struct	s_room		*next;
 	struct	s_room		*prev;	
 }						t_room;
@@ -106,12 +119,13 @@ typedef	struct	s_editor
 	t_coords	move_save;
 	t_coords	*finded;
 	t_point		*point;
-
+	int			num_of_rooms;
 }				t_editor;
 
 t_editor		*init_editor(void);
 
 int				main_loop(t_editor *editor);
+
 
 void        	draw_rooms(t_editor *editor);
 void			draw_lines(t_editor *editor);
@@ -120,6 +134,9 @@ void			coords_rerange(t_editor *editor);
 
 int				detect_event(t_editor *editor);
 
+void			load_textures(t_editor *editor);
+
+int				get_pixel(t_editor *editor, int x, int y);
 void			put_pixel(t_editor *editor, int x, int y, int color);
 
 void    		close_room(t_editor *editor);

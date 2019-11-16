@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/10 18:20:20 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/15 17:17:15 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ SRC =	main.c			\
 		control.c		\
 		textures.c		\
 		draw_utils.c	\
+		room.c			\
+		dlist.c			\
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror 
