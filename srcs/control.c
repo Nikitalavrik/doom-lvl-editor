@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/17 19:58:50 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/17 20:01:54 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ double		calc_short_dist(t_line *line, t_coords mouse)
 	double s;
 	double h;
 
-	// ft_printf("mouse x = %i y = %i\n", mouse.x, mouse.y);
 	a = pow(mouse.x - line->points[0]->coord->x, 2) + pow(mouse.y - line->points[0]->coord->y, 2);
 	b = pow(mouse.x - line->points[1]->coord->x, 2) + pow(mouse.y - line->points[1]->coord->y, 2);
 	c = pow(line->points[1]->coord->x - line->points[0]->coord->x, 2) + pow(line->points[1]->coord->y\
@@ -101,7 +100,6 @@ double		calc_short_dist(t_line *line, t_coords mouse)
 	s = abs((mouse.x  - line->points[1]->coord->x) * (line->points[0]->coord->y - line->points[1]->coord->y) -\
 	(line->points[0]->coord->x  - line->points[1]->coord->x) * (mouse.y - line->points[1]->coord->y));
 	h = 2 * s / sqrt(c);
-	// ft_printf("a = %f b = %f c = %f s = %f h = %f\n", a, b, c, s, h);
 	if ((a + c) < b || (b + c) < a)
 	{
 		if (a < b)

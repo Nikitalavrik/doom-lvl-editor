@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:21:12 by nikita            #+#    #+#             */
-/*   Updated: 2019/11/17 19:46:12 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/17 20:07:42 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,24 @@ void    calc_max_min(t_editor *editor)
 	editor->rooms->area = pow(editor->rooms->max_xy.x - editor->rooms->min_xy.x, 2) +\
 	pow(editor->rooms->max_xy.y - editor->rooms->min_xy.y, 2);
 }
+
+// void	sort_rooms(t_room *rooms, int len)
+// {
+// 	t_room	*i;
+// 	t_room	*j;
+
+// 	i = rooms;
+// 	while (i)
+// 	{
+// 		j = rooms;
+// 		while (j->next)
+// 		{
+// 			if ()
+// 			j = j->next;
+// 		}
+// 		i = i->next;
+// 	}
+// }
 
 void    close_room(t_editor *editor)
 {

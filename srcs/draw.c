@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:55:43 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/17 17:22:04 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/17 20:02:45 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ void		draw_line(t_editor *editor, t_coords coord0,
 
 	coord = calc_delta(coord0, coord1, &delta, &iter);
 	error.x = delta.x + delta.y;
-	while (1 && !((coord0.x < 0 && coord1.x < 0) || (coord0.y < 0 && coord1.y < 0)))
+	while (1 && !((coord0.x < 0 && coord1.x < 0) ||\
+	(coord0.y < 0 && coord1.y < 0)))
 	{
 		put_pixel(editor, coord.x, coord.y, color);
 		if (((coord.x == coord1.x)\
-						&& (coord.y == coord1.y)) || (coord.x < 0 && coord.y < 0))
+					&& (coord.y == coord1.y)) || (coord.x < 0 && coord.y < 0))
 			break ;
 		error.y = error.x + 1;
 		if (error.y >= delta.y && coord.x != coord1.x)
@@ -131,7 +132,8 @@ void	draw_lines(t_editor *editor, t_line *lines)
 	iterator = lines;
 	while (iterator)
 	{
-		draw_line(editor, *iterator->points[0]->coord, *iterator->points[1]->coord, iterator->color);
+		draw_line(editor, *iterator->points[0]->coord,\
+		*iterator->points[1]->coord, iterator->color);
 		iterator = iterator->next;
 	}
 }
@@ -155,21 +157,14 @@ void		draw_texture_room(t_editor *editor, t_room *iterate_room)
 	iter.x = editor->coords[iterate_room->min_xy.y][iterate_room->min_xy.x].x + 1;
 	max.x = editor->coords[iterate_room->max_xy.y][iterate_room->max_xy.x].x;
 	max.y = editor->coords[iterate_room->max_xy.y][iterate_room->max_xy.x].y;
-	// ft_printf("iter")
 	while (iter.x < max.x)
 	{
 		iter.y = editor->coords[iterate_room->min_xy.y][iterate_room->min_xy.x].y;
 		color = 0;
 		while (iter.y < max.y)
 		{
-			// if (((int *)editor->surf->pixels)[(iter.y * editor->surf->w) + iter.x] == WALL_COLOR)
-			// {
-			// 	color = color ? 0 : 1;
-			// 	while (((int *)editor->surf->pixels)[(iter.y * editor->surf->w) + iter.x] == WALL_COLOR && iter.y < max.y)
-			// 		iter.y++;
-			// }	
-			// else if (color)
-			put_pixel(editor, iter.x, iter.y, alpha_grad(TEXTURE_COLOR, 0, iterate_room->alpha));
+			put_pixel(editor, iter.x, iter.y,\
+			alpha_grad(TEXTURE_COLOR, 0, iterate_room->alpha));
 			iter.y++;
 		}
 		iter.x++;
