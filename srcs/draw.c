@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:55:43 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/16 18:55:14 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/17 17:22:04 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void		draw_line(t_editor *editor, t_coords coord0,
 
 	coord = calc_delta(coord0, coord1, &delta, &iter);
 	error.x = delta.x + delta.y;
-	while (1 && coord0.x > 0 && coord0.y > 0)
+	while (1 && !((coord0.x < 0 && coord1.x < 0) || (coord0.y < 0 && coord1.y < 0)))
 	{
 		put_pixel(editor, coord.x, coord.y, color);
-		if ((coord.x == coord1.x || coord.x < 0)\
-						&& (coord.y == coord1.y || coord.y < 0))
+		if (((coord.x == coord1.x)\
+						&& (coord.y == coord1.y)) || (coord.x < 0 && coord.y < 0))
 			break ;
 		error.y = error.x + 1;
 		if (error.y >= delta.y && coord.x != coord1.x)
@@ -108,32 +108,30 @@ void circle_Bres(t_editor *editor, t_coords coord0, int color)
 
 void		draw_cells(t_editor *editor)
 {
-	int			color;
 	t_coords	step;
 
 	step.y = 0;
-	color = 0xbdb5b5;
 	coords_rerange(editor);
 	while (step.y < editor->size.y)
 	{
 		step.x = 0;
 		while (step.x < editor->size.x)
 		{
-			circle_Bres(editor, editor->coords[step.y][step.x], color);
+			circle_Bres(editor, editor->coords[step.y][step.x], STANDART_COLOR);
 			step.x++;
 		}
 		step.y++;
 	}
 }
 
-void	draw_lines(t_editor *editor)
+void	draw_lines(t_editor *editor, t_line *lines)
 {
-	t_point	*iterator;
+	t_line		*iterator;
 
-	iterator = editor->point;
-	while (iterator && iterator->next)
+	iterator = lines;
+	while (iterator)
 	{
-		draw_line(editor, *iterator->coord, *iterator->next->coord, WALL_COLOR);
+		draw_line(editor, *iterator->points[0]->coord, *iterator->points[1]->coord, iterator->color);
 		iterator = iterator->next;
 	}
 }
@@ -157,20 +155,21 @@ void		draw_texture_room(t_editor *editor, t_room *iterate_room)
 	iter.x = editor->coords[iterate_room->min_xy.y][iterate_room->min_xy.x].x + 1;
 	max.x = editor->coords[iterate_room->max_xy.y][iterate_room->max_xy.x].x;
 	max.y = editor->coords[iterate_room->max_xy.y][iterate_room->max_xy.x].y;
+	// ft_printf("iter")
 	while (iter.x < max.x)
 	{
 		iter.y = editor->coords[iterate_room->min_xy.y][iterate_room->min_xy.x].y;
 		color = 0;
 		while (iter.y < max.y)
 		{
-			if (((int *)editor->surf->pixels)[(iter.y * editor->surf->w) + iter.x] == WALL_COLOR)
-			{
-				color = color ? 0 : 1;
-				while (((int *)editor->surf->pixels)[(iter.y * editor->surf->w) + iter.x] == WALL_COLOR && iter.y < max.y)
-					iter.y++;
-			}	
-			else if (color)
-				put_pixel(editor, iter.x, iter.y, TEXTURE_COLOR);
+			// if (((int *)editor->surf->pixels)[(iter.y * editor->surf->w) + iter.x] == WALL_COLOR)
+			// {
+			// 	color = color ? 0 : 1;
+			// 	while (((int *)editor->surf->pixels)[(iter.y * editor->surf->w) + iter.x] == WALL_COLOR && iter.y < max.y)
+			// 		iter.y++;
+			// }	
+			// else if (color)
+			put_pixel(editor, iter.x, iter.y, alpha_grad(TEXTURE_COLOR, 0, iterate_room->alpha));
 			iter.y++;
 		}
 		iter.x++;
@@ -186,13 +185,8 @@ void        draw_rooms(t_editor *editor)
 	while (iterate_room)
 	{
 		iterator = iterate_room->point;
-		while (iterator && iterator->next)
-		{
-			draw_line(editor, *iterator->coord,
-						*iterator->next->coord, WALL_COLOR);
-			iterator = iterator->next;
-		}
 		draw_texture_room(editor, iterate_room);
+		draw_lines(editor, iterate_room->lines);
 		iterate_room = iterate_room->next;		
 	}
 }

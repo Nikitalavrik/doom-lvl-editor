@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/16 19:23:36 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/17 19:58:50 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,14 @@ int		keyboard_events_down(t_editor *editor, SDL_Event event)
 	else if (event.key.keysym.sym == SDLK_LCTRL)
 		editor->flags.t_f.lctrl = 1;
 	else if (editor->flags.t_f.lctrl && event.key.keysym.sym == SDLK_z)
+	{
+		pop_line(&editor->lines);
 		pop_point(&editor->point);
+	}
 	else if (event.key.keysym.sym == SDLK_SPACE && editor->point)
 		close_room(editor);
+	// else if (event.key.keysym.sym == SDLK_c)
+	// 	editor->flags.t_f.select
 	return (0);
 }
 
@@ -80,6 +85,109 @@ void	mouse_event(t_editor *editor, SDL_Event	event)
 	}
 }
 
+double		calc_short_dist(t_line *line, t_coords mouse)
+{
+	double a;
+	double b;
+	double c;
+	double s;
+	double h;
+
+	// ft_printf("mouse x = %i y = %i\n", mouse.x, mouse.y);
+	a = pow(mouse.x - line->points[0]->coord->x, 2) + pow(mouse.y - line->points[0]->coord->y, 2);
+	b = pow(mouse.x - line->points[1]->coord->x, 2) + pow(mouse.y - line->points[1]->coord->y, 2);
+	c = pow(line->points[1]->coord->x - line->points[0]->coord->x, 2) + pow(line->points[1]->coord->y\
+	- line->points[0]->coord->y, 2);
+	s = abs((mouse.x  - line->points[1]->coord->x) * (line->points[0]->coord->y - line->points[1]->coord->y) -\
+	(line->points[0]->coord->x  - line->points[1]->coord->x) * (mouse.y - line->points[1]->coord->y));
+	h = 2 * s / sqrt(c);
+	// ft_printf("a = %f b = %f c = %f s = %f h = %f\n", a, b, c, s, h);
+	if ((a + c) < b || (b + c) < a)
+	{
+		if (a < b)
+			return (sqrt(a));
+		if (b < a)
+			return (sqrt(b));
+	}
+	return (h);
+}
+
+void	check_line(t_editor *editor, t_coords mouse)
+{
+	double		calc_dist;
+	double		min_dist;
+	t_line		*choosen;
+	t_line		*lines;
+
+	lines = editor->selected ? editor->selected->lines : editor->lines;
+	min_dist = 20;
+	choosen = NULL;
+	while (lines)
+	{
+		lines->color = WALL_COLOR;
+		calc_dist = calc_short_dist(lines, mouse);	
+		if (calc_dist < min_dist)
+		{
+			min_dist = calc_dist;
+			choosen = lines;
+		}
+		lines = lines->next;
+	}
+	if (choosen)
+		choosen->color = PRESS_WALL_COLOR;
+}
+
+void	check_rooms(t_editor *editor, t_coords mouse, int type)
+{
+	t_coords	min;
+	t_coords	max;
+	t_room		*iter;
+	int			min_area;
+
+	iter = editor->rooms;
+	min_area = INT16_MAX;
+	while (iter)
+	{
+		min = editor->coords[iter->min_xy.y][iter->min_xy.x];
+		max = editor->coords[iter->max_xy.y][iter->max_xy.x];
+		iter->flags.t_f.hover = 0;
+		if (mouse.x >= min.x && mouse.x <= max.x\
+		&& mouse.y >= min.y && mouse.y <= max.y &&\
+		iter->area < min_area)
+		{
+			iter->flags.t_f.hover = 1;
+			min_area = iter->area;
+			if (type)
+			{
+				iter->flags.t_f.select = 1;
+				editor->selected = iter;
+			}
+		}
+		else if (type && editor->selected && iter->flags.t_f.select)
+		{
+			iter->flags.t_f.select = 0;
+			editor->selected = editor->selected == iter ? NULL : editor->selected;
+		}
+		else if (type && iter->flags.t_f.select)
+		{
+			iter->flags.t_f.select = 0;
+		}
+		iter = iter->next;
+	}
+	iter = editor->selected;
+	if (iter)
+	{
+		iter = iter->prev;
+		while (iter)
+		{
+			iter->flags.t_f.select = 0;
+			iter->flags.t_f.hover = 0;
+			iter = iter->prev;
+		}
+	}
+
+}
+
 void	mouse_motion(t_editor *editor)
 {
 	t_coords 	mouse_position;
@@ -102,11 +210,11 @@ void	mouse_motion(t_editor *editor)
 				finded->r = 3;
 				editor->finded = finded;
 			}
-		// if (finded->in_room)
-		// {
-			
-		// }
 	}
+	if (editor->rooms)
+		check_rooms(editor, mouse_position, 0);
+	if (editor->lines || editor->selected)
+		check_line(editor, mouse_position);
 }
 
 void	mouse_move_map(t_editor *editor)
@@ -153,6 +261,15 @@ void	add_line(t_editor *editor)
 				push_point(&editor->point, finded);
 				editor->point->x = coord.x;
 				editor->point->y = coord.y;
+				editor->line_cnt++;
+				if (editor->line_cnt >= 2 && editor->point && editor->point->next)
+				{
+					editor->line_cnt = 1;
+					push_line(&editor->lines, editor->point, editor->point->next);
+					editor->lines->color = WALL_COLOR;
+					editor->lines->id = editor->line_id;
+					editor->line_id++;
+				}
 			}
 	}
 }
@@ -174,6 +291,7 @@ int		detect_event(t_editor *editor)
 			editor->flags.t_f.move = editor->flags.t_f.select;
 			editor->move_save.x = mouse_position.x;
 			editor->move_save.y = mouse_position.y;
+			check_rooms(editor, mouse_position, 1);
 			if (!editor->flags.t_f.select)
 				add_line(editor);
 		}

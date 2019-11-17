@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:21:12 by nikita            #+#    #+#             */
-/*   Updated: 2019/11/16 17:18:01 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/17 19:46:12 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ t_coords     *check_room(t_editor *editor, int *x, int *y)
 	return (end->coord);
 }
 
-// can be optimize
-
 void    calc_max_min(t_editor *editor)
 {
 	t_point	*iter;
@@ -59,29 +57,9 @@ void    calc_max_min(t_editor *editor)
 		iter->y : editor->rooms->min_xy.y;
 		iter = iter->next;
 	}
+	editor->rooms->area = pow(editor->rooms->max_xy.x - editor->rooms->min_xy.x, 2) +\
+	pow(editor->rooms->max_xy.y - editor->rooms->min_xy.y, 2);
 }
-
-// t_coords	*find_coords()
-
-// void	init_points(t_editor *editor, t_room *room)
-// {
-// 	t_coords 		iter;
-// 	t_coords 		max;
-
-// 	iter.x = iterate_room->min_xy.x;	
-// 	max.x = iterate_room->max_xy.x;
-// 	max.y = iterate_room->max_xy.y;
-// 	while (iter.x < max.x)
-// 	{
-// 		iter.y = iterate_room->min_xy.y;
-// 		while (iter.y < max.y)
-// 		{
-// 			if ()
-// 			iter.y++;
-// 		}
-// 		iter.x++;
-// 	}
-// }
 
 void    close_room(t_editor *editor)
 {
@@ -94,14 +72,18 @@ void    close_room(t_editor *editor)
 		push_point(&editor->point, last);
 		editor->point->x = x;
 		editor->point->y = y;
+		push_line(&editor->lines, editor->point, editor->point->next);
+		editor->lines->color = WALL_COLOR;
+		editor->lines->id = editor->line_id;
+		editor->line_id++;
 	}
 	push_room(&editor->rooms, editor->point);
 	editor->num_of_rooms++;
 	editor->rooms->id = editor->num_of_rooms;
 	calc_max_min(editor);
 	editor->point = NULL;
-	// init_points(editor, editor->rooms);
-	ft_printf("max x = %i y = %i\nmin x = %i y = %i\n",
-	editor->rooms->max_xy.x, editor->rooms->max_xy.y,
-	editor->rooms->min_xy.x, editor->rooms->min_xy.y);
+	editor->rooms->lines = editor->lines;
+	editor->lines = NULL;
+	editor->rooms->alpha = 80;
+	// sort_rooms(editor->rooms);
 }
