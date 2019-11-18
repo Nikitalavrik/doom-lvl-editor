@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/15 17:17:15 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/18 18:48:25 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ SRC =	main.c			\
 		draw_utils.c	\
 		room.c			\
 		dlist.c			\
+		keyboard.c		\
+		mouse.c			\
+		check_mouse.c	\
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror 
@@ -55,7 +58,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(PRINTF) $(OBJS)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC) $(FLAGS)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) $(INCLUDES)
+		@$(CC) $(FLAGS)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) $(INCLUDES) -fsanitize=address
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:21:12 by nikita            #+#    #+#             */
-/*   Updated: 2019/11/17 20:07:42 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/18 13:51:03 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,43 @@ void    calc_max_min(t_editor *editor)
 	pow(editor->rooms->max_xy.y - editor->rooms->min_xy.y, 2);
 }
 
-// void	sort_rooms(t_room *rooms, int len)
-// {
-// 	t_room	*i;
-// 	t_room	*j;
+void	swap_rooms(t_room **begin, t_room *first, t_room *second)
+{
+	t_room	*tmp;
 
-// 	i = rooms;
-// 	while (i)
-// 	{
-// 		j = rooms;
-// 		while (j->next)
-// 		{
-// 			if ()
-// 			j = j->next;
-// 		}
-// 		i = i->next;
-// 	}
-// }
+	tmp = first->prev;
+	if (tmp)
+		tmp->next = second;
+	tmp = second->next;
+	if (tmp)
+		tmp->prev = first;
+	first->next = second->next;
+	second->prev = first->prev;
+	first->prev = second;
+	second->next = first;
+	if (first == *begin)
+		*begin = second;
+}
+
+void	sort_rooms(t_room **rooms, int len)
+{
+	int		i;
+
+	t_room	*iter;
+
+	i = 0;
+	while (i < len)
+	{
+		iter = *rooms;
+		while (iter && iter->next)
+		{
+			if (iter->area < iter->next->area)
+				swap_rooms(rooms, iter, iter->next);
+			iter = iter->next;
+		}
+		i++;
+	}
+}
 
 void    close_room(t_editor *editor)
 {
@@ -103,5 +123,6 @@ void    close_room(t_editor *editor)
 	editor->rooms->lines = editor->lines;
 	editor->lines = NULL;
 	editor->rooms->alpha = 80;
-	// sort_rooms(editor->rooms);
+	// ft_printf("**********************\n");
+	sort_rooms(&editor->rooms, editor->num_of_rooms);
 }

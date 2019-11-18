@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 15:35:06 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/17 18:23:31 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/18 18:10:07 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int		alpha_grad(int color1, int color2, unsigned char a)
 
 void	check_alpha(t_editor *editor)
 {
-	t_room	*iter;
+	t_sprite	*spr;
+	t_room		*iter;
 
 	iter = editor->rooms;
 	while (iter)
@@ -42,12 +43,27 @@ void	check_alpha(t_editor *editor)
 		if (iter->flags.t_f.select || iter->flags.t_f.hover)
 		{
 			if (iter->alpha < 170)
-				iter->alpha += 8;
+				iter->alpha += 10;
 		}
 		else
 		{
 			if (iter->alpha > 80)
-				iter->alpha -= 8;
+				iter->alpha -= 10;
+		}
+		spr = iter->sprites;
+		while (spr)
+		{
+			if (spr->flag_a)
+			{
+				if (spr->alpha < 190)
+					spr->alpha += 10;
+			}
+			else
+			{
+				if (spr->alpha > 140)
+					spr->alpha -= 10;
+			}
+			spr = spr->next;
 		}
 		iter = iter->next;
 	}

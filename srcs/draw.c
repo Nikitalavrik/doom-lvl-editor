@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:55:43 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/17 20:02:45 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/18 18:03:58 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,45 @@ void		draw_texture_room(t_editor *editor, t_room *iterate_room)
 	}	
 }
 
+void		draw_square(t_editor *editor, t_sprite *sprite)
+{
+	// t_coords	step;
+	t_coords	max;
+	t_coords	iter;
+
+	// ft_printf("1\n");
+	sprite->size = SPRITE_SIZE * editor->zoom;
+	sprite->dist.x = sprite->origin.x * editor->zoom;
+	sprite->dist.y = sprite->origin.y * editor->zoom;
+	max.x = sprite->coord->x + sprite->dist.x + sprite->size / 2;
+	max.y = sprite->coord->y + sprite->dist.y + sprite->size / 2;
+	iter.y = sprite->coord->y + sprite->dist.y - sprite->size / 2;
+	// step.x =
+	// ft_printf("2\n");
+	while (iter.y < max.y)
+	{
+		iter.x = sprite->coord->x + sprite->dist.x - sprite->size / 2;
+		while (iter.x < max.x)
+		{
+			put_pixel(editor, iter.x, iter.y, alpha_grad(SPRITE_COLOR, 0, sprite->alpha));
+			iter.x++;
+		}
+		iter.y++;
+	}
+}
+
+void		draw_sprite(t_editor *editor, t_sprite *sprites)
+{
+	t_sprite	*iter;
+
+	iter = sprites;
+	while (iter)
+	{
+		draw_square(editor, iter);
+		iter = iter->next;
+	}
+}
+
 void        draw_rooms(t_editor *editor)
 {
 	t_room	*iterate_room;
@@ -181,6 +220,7 @@ void        draw_rooms(t_editor *editor)
 	{
 		iterator = iterate_room->point;
 		draw_texture_room(editor, iterate_room);
+		draw_sprite(editor, iterate_room->sprites);
 		draw_lines(editor, iterate_room->lines);
 		iterate_room = iterate_room->next;		
 	}
