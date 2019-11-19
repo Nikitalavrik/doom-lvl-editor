@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_editor.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/18 18:22:17 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/19 12:17:59 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # define NUMBER_OF_TEXTURES 9
 # define WIDTH 1280
-# define HEIGHT 1024
+# define HEIGHT 720
 # define WALL_HEIGHT HEIGHT
 # define MENU_WIDTH 300
 # define SQUARE_SIZE 30
@@ -126,6 +126,7 @@ typedef struct			s_sprite
 	t_coords				*coord;
 	int						size;
 	unsigned char			alpha;
+	t_dcoords				move;
 	int						flag_a;
 	t_coords				dist;
 	t_coords				origin;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:48 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/18 18:50:48 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/19 12:17:49 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	mouse_move_map(t_editor *editor, t_coords mouse_position)
 
 void	mouse_move_sprite(t_editor *editor, t_coords mouse_position)
 {
-	t_coords	tmp_calc;
+	t_dcoords	tmp_calc;
 	t_sprite	*sprite;
 
 	if (editor->selected)
@@ -150,10 +150,10 @@ void	mouse_move_sprite(t_editor *editor, t_coords mouse_position)
 	if ((mouse_position.x != editor->move_save.x ||\
 		mouse_position.y != editor->move_save.y) && sprite)
 	{
-		tmp_calc.x = mouse_position.x - editor->move_save.x + sprite->origin.x;
-		tmp_calc.y = mouse_position.y - editor->move_save.y + sprite->origin.y;
-		sprite->origin.x = tmp_calc.x;
-		sprite->origin.y = tmp_calc.y;
+		tmp_calc.x = (double)((mouse_position.x - editor->move_save.x) / editor->zoom) + sprite->move.x;
+		tmp_calc.y = (double)((mouse_position.y - editor->move_save.y) / editor->zoom) + sprite->move.y;
+		sprite->move.x = tmp_calc.x;
+		sprite->move.y = tmp_calc.y;
 		editor->move_save.x = mouse_position.x;
 		editor->move_save.y = mouse_position.y;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:55:43 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/18 18:03:58 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/19 12:12:19 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ void		draw_vertical_line(t_editor *editor, int x, int from, int to)
 
 void		draw_texture_room(t_editor *editor, t_room *iterate_room)
 {
-	int			color;
 	t_coords 	iter;
 	t_coords 	max;
 
@@ -160,7 +159,6 @@ void		draw_texture_room(t_editor *editor, t_room *iterate_room)
 	while (iter.x < max.x)
 	{
 		iter.y = editor->coords[iterate_room->min_xy.y][iterate_room->min_xy.x].y;
-		color = 0;
 		while (iter.y < max.y)
 		{
 			put_pixel(editor, iter.x, iter.y,\
@@ -179,8 +177,8 @@ void		draw_square(t_editor *editor, t_sprite *sprite)
 
 	// ft_printf("1\n");
 	sprite->size = SPRITE_SIZE * editor->zoom;
-	sprite->dist.x = sprite->origin.x * editor->zoom;
-	sprite->dist.y = sprite->origin.y * editor->zoom;
+	sprite->dist.x = (sprite->origin.x + sprite->move.x) * editor->zoom;
+	sprite->dist.y = (sprite->origin.y + sprite->move.y) * editor->zoom;
 	max.x = sprite->coord->x + sprite->dist.x + sprite->size / 2;
 	max.y = sprite->coord->y + sprite->dist.y + sprite->size / 2;
 	iter.y = sprite->coord->y + sprite->dist.y - sprite->size / 2;
@@ -213,12 +211,10 @@ void		draw_sprite(t_editor *editor, t_sprite *sprites)
 void        draw_rooms(t_editor *editor)
 {
 	t_room	*iterate_room;
-	t_point	*iterator;
 
 	iterate_room = editor->rooms;
 	while (iterate_room)
 	{
-		iterator = iterate_room->point;
 		draw_texture_room(editor, iterate_room);
 		draw_sprite(editor, iterate_room->sprites);
 		draw_lines(editor, iterate_room->lines);
