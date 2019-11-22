@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_editor.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/19 12:17:59 by nikita           ###   ########.fr       */
+/*   Updated: 2019/11/22 16:34:57 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@
 # include "SDL.h"
 # include "SDL_image.h"
 # include "SDL_ttf.h"
+# include "../mkhomich/incs/doom.h"
 
 # define NUMBER_OF_TEXTURES 9
-# define WIDTH 1280
-# define HEIGHT 720
+# define E_WIDTH 1280
+# define E_HEIGHT 1024
 # define WALL_HEIGHT HEIGHT
 # define MENU_WIDTH 300
 # define SQUARE_SIZE 30
@@ -95,33 +96,34 @@ typedef struct			s_dcoords
 ** point save coords
 */
 
-typedef	struct			s_point
+typedef	struct			s_epoint
 {
 	t_coords			*coord;
 	int					x;
 	int					y;
-	struct	s_point		*next;
-	struct	s_point		*prev;
-}						t_point;
+	struct	s_epoint		*next;
+	struct	s_epoint		*prev;
+}						t_epoint;
 
 /*
 ** line in editor, walls in doom
 */
 
-typedef struct			s_line
+typedef struct			s_eline
 {
 	int					id;
-	t_point				*points[2];
+	t_epoint			*points[2];
 	int					color;
-	struct s_line		*next;
-	struct s_line		*prev;
-}						t_line;
+	int					num_of_textures;
+	struct s_eline		*next;
+	struct s_eline		*prev;
+}						t_eline;
 
 /*
 ** struct for sprite, square in editor
 */
 
-typedef struct			s_sprite
+typedef struct			s_esprite
 {
 	t_coords				*coord;
 	int						size;
@@ -130,9 +132,9 @@ typedef struct			s_sprite
 	int						flag_a;
 	t_coords				dist;
 	t_coords				origin;
-	struct	s_sprite		*next;
-	struct	s_sprite		*prev;
-}						t_sprite;
+	struct	s_esprite		*next;
+	struct	s_esprite		*prev;
+}						t_esprite;
 
 /*
 ** struct room that similiar to floor
@@ -142,11 +144,11 @@ typedef struct			s_room
 {
 	int					id;
 	t_flags				flags;
-	t_point				*point;
-	t_line				*lines;
+	t_epoint			*point;
+	t_eline				*lines;
 	t_coords			max_xy;
 	t_coords			min_xy;
-	t_sprite			*sprites;
+	t_esprite			*sprites;
 	int					area;
 	unsigned char		alpha;
 	struct	s_room		*next;
@@ -178,9 +180,10 @@ typedef	struct			s_editor
 	t_coords			move_map;
 	t_coords			move_save;
 	t_coords			*finded;
-	t_point				*point;
-	t_line				*lines;
+	t_epoint			*point;
+	t_eline				*lines;
 	t_room				*selected;
+	t_doom				*doom;
 	int					num_of_rooms;
 	int					line_id;
 }						t_editor;
@@ -197,7 +200,7 @@ void			load_textures(t_editor *editor);
 */
 
 void        	draw_rooms(t_editor *editor);
-void			draw_lines(t_editor *editor, t_line *lines);
+void			draw_lines(t_editor *editor, t_eline *lines);
 void			draw_cells(t_editor *editor);
 void			coords_rerange(t_editor *editor);
 
@@ -212,20 +215,20 @@ int				main_loop(t_editor *editor);
 ** pixel manipulation
 */
 
-int				get_pixel(t_editor *editor, int x, int y);
-void			put_pixel(t_editor *editor, int x, int y, int color);
+int				get_epixel(t_editor *editor, int x, int y);
+void			put_epixel(t_editor *editor, int x, int y, int color);
 
 /*
 ** double linked lists func
 */
 
-void       	 	push_room(t_room **begin, t_point *point);
-void			pop_line(t_line **begin);
-void        	push_point(t_point **begin, t_coords *coord);
-void       		pop_point(t_point **begin);
-void        	push_line(t_line **begin, t_point *point1, t_point *point2);
-void			push_sprite(t_sprite **begin, t_coords *coord);
-void			pop_sprite(t_sprite **begin);
+void       	 	push_room(t_room **begin, t_epoint *point);
+void			pop_line(t_eline **begin);
+void        	push_point(t_epoint **begin, t_coords *coord);
+void       		pop_point(t_epoint **begin);
+void        	push_line(t_eline **begin, t_epoint *point1, t_epoint *point2);
+void			push_sprite(t_esprite **begin, t_coords *coord);
+void			pop_sprite(t_esprite **begin);
 
 /*
 ** gradient
@@ -241,8 +244,9 @@ void			check_alpha(t_editor *editor);
 void			mouse_event(t_editor *editor, SDL_Event	event);
 void			add_sprite(t_editor *editor);
 void			add_line(t_editor *editor);
-void			check_rooms(t_editor *editor, t_coords mouse, int type);
-void			check_line(t_editor *editor, t_coords mouse);
+t_room			*check_rooms(t_editor *editor, t_coords mouse, int type);
+t_eline			*check_line(t_editor *editor, t_coords mouse);
+t_esprite		*check_sprite(t_room *selected, t_coords mouse, double zoom);
 void			mouse_move(t_editor *editor);
 void			mouse_motion(t_editor *editor);
 t_coords		get_coords(t_editor *editor, t_coords mouse);
@@ -261,5 +265,11 @@ int				keyboard_events_up(t_editor *editor, SDL_Event event);
 
 void			print_room(t_room *begin);
 void			print_error(char *manage, char *message);
+
+/*
+** doom init for editor
+*/
+
+void			d3_init(t_editor *editor);
 
 #endif

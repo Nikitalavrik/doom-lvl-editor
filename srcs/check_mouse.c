@@ -6,14 +6,14 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:55:10 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/18 18:13:17 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/22 16:34:40 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
 
 
-double		calc_short_dist(t_line *line, t_coords mouse)
+double		calc_short_dist(t_eline *line, t_coords mouse)
 {
 	double a;
 	double b;
@@ -38,12 +38,12 @@ double		calc_short_dist(t_line *line, t_coords mouse)
 	return (h);
 }
 
-void	check_line(t_editor *editor, t_coords mouse)
+t_eline	 *check_line(t_editor *editor, t_coords mouse)
 {
 	double		calc_dist;
 	double		min_dist;
-	t_line		*choosen;
-	t_line		*lines;
+	t_eline		*choosen;
+	t_eline		*lines;
 
 	lines = editor->selected ? editor->selected->lines : editor->lines;
 	min_dist = 20;
@@ -61,9 +61,37 @@ void	check_line(t_editor *editor, t_coords mouse)
 	}
 	if (choosen)
 		choosen->color = PRESS_WALL_COLOR;
+	return (choosen);
 }
 
-void	check_rooms(t_editor *editor, t_coords mouse, int type)
+t_esprite	*check_sprite(t_room *selected, t_coords mouse, double zoom)
+{
+	int			min;
+	t_esprite	*choosen;
+	t_esprite	*iter;
+	int			dist;
+
+	iter = selected->sprites;
+	min = SPRITE_SIZE * zoom;
+	choosen = NULL;
+	while (iter)
+	{
+		iter->flag_a = 0;
+		dist = sqrt(pow(mouse.x - iter->coord->x - iter->dist.x, 2) +\
+		pow(mouse.y - iter->coord->y - iter->dist.y, 2));
+		if (dist < min)
+		{
+			choosen = iter;
+			min = dist;
+		}
+		iter = iter->next;
+	}
+	if (choosen)
+		choosen->flag_a = 1;
+	return (choosen);
+}
+
+t_room	*check_rooms(t_editor *editor, t_coords mouse, int type)
 {
 	t_coords	min;
 	t_coords	max;
@@ -101,6 +129,7 @@ void	check_rooms(t_editor *editor, t_coords mouse, int type)
 		iter = iter->prev;
 	}
 	iter = editor->selected;
+	return (editor->selected);
 }
 
 void	add_line(t_editor *editor)
@@ -139,10 +168,10 @@ void	add_line(t_editor *editor)
 ** check nearest sprite
 */
 
-int		check_sprites(t_sprite *sprites, t_coords mouse, double zoom)
+int		check_sprites(t_esprite *sprites, t_coords mouse, double zoom)
 {
 	int			dist;
-	t_sprite	*iter;
+	t_esprite	*iter;
 
 	iter = sprites;
 	while (iter)

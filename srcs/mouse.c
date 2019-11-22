@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:48 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/19 12:17:49 by nikita           ###   ########.fr       */
+/*   Updated: 2019/11/22 16:34:36 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,33 +56,6 @@ void	mouse_event(t_editor *editor, SDL_Event	event)
 		(SQUARE_SIZE * (editor->zoom * 0.95)) - mouse_position.y;
 		editor->zoom *= 0.95;
 	}
-}
-
-t_sprite	*check_sprite(t_room *selected, t_coords mouse, double zoom)
-{
-	int			min;
-	t_sprite	*choosen;
-	t_sprite	*iter;
-	int			dist;
-
-	iter = selected->sprites;
-	min = SPRITE_SIZE * zoom;
-	choosen = NULL;
-	while (iter)
-	{
-		iter->flag_a = 0;
-		dist = sqrt(pow(mouse.x - iter->coord->x - iter->dist.x, 2) +\
-		pow(mouse.y - iter->coord->y - iter->dist.y, 2));
-		if (dist < min)
-		{
-			choosen = iter;
-			min = dist;
-		}
-		iter = iter->next;
-	}
-	if (choosen)
-		choosen->flag_a = 1;
-	return (choosen);
 }
 
 void	mouse_motion(t_editor *editor)
@@ -143,7 +116,7 @@ void	mouse_move_map(t_editor *editor, t_coords mouse_position)
 void	mouse_move_sprite(t_editor *editor, t_coords mouse_position)
 {
 	t_dcoords	tmp_calc;
-	t_sprite	*sprite;
+	t_esprite	*sprite;
 
 	if (editor->selected)
 		sprite = check_sprite(editor->selected, mouse_position, editor->zoom);
@@ -152,6 +125,7 @@ void	mouse_move_sprite(t_editor *editor, t_coords mouse_position)
 	{
 		tmp_calc.x = (double)((mouse_position.x - editor->move_save.x) / editor->zoom) + sprite->move.x;
 		tmp_calc.y = (double)((mouse_position.y - editor->move_save.y) / editor->zoom) + sprite->move.y;
+		// if (tmp_calc.x )
 		sprite->move.x = tmp_calc.x;
 		sprite->move.y = tmp_calc.y;
 		editor->move_save.x = mouse_position.x;

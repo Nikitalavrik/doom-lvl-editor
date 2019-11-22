@@ -6,18 +6,18 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:17:34 by nikita            #+#    #+#             */
-/*   Updated: 2019/11/18 15:44:18 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/22 13:51:42 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
 
-void		push_point(t_point **begin, t_coords *coord)
+void		push_point(t_epoint **begin, t_coords *coord)
 {
-	t_point *iterator;
-	t_point *new_point;
+	t_epoint *iterator;
+	t_epoint *new_point;
 
-	new_point = ft_memalloc(sizeof(t_point));
+	new_point = ft_memalloc(sizeof(t_epoint));
 	new_point->coord = coord;
 	if (*begin)
 	{
@@ -30,10 +30,10 @@ void		push_point(t_point **begin, t_coords *coord)
 		*begin = new_point;
 }
 
-void		pop_point(t_point **begin)
+void		pop_point(t_epoint **begin)
 {
-	t_point *next_begin;
-	t_point *iterator;
+	t_epoint *next_begin;
+	t_epoint *iterator;
 
 	iterator = *begin;
 	if (iterator && iterator->next)
@@ -51,7 +51,7 @@ void		pop_point(t_point **begin)
 	}
 }
 
-void        push_room(t_room **begin, t_point *point)
+void        push_room(t_room **begin, t_epoint *point)
 {
 	t_room *iterator;
 	t_room *new_point;
@@ -69,12 +69,12 @@ void        push_room(t_room **begin, t_point *point)
 		*begin = new_point;
 }
 
-void        push_line(t_line **begin, t_point *point1, t_point *point2)
+void        push_line(t_eline **begin, t_epoint *point1, t_epoint *point2)
 {
-	t_line *iterator;
-	t_line *new_point;
+	t_eline *iterator;
+	t_eline *new_point;
 
-	new_point = ft_memalloc(sizeof(t_line));
+	new_point = ft_memalloc(sizeof(t_eline));
 	new_point->points[0] = point1;
 	new_point->points[1] = point2;
 	if (*begin)
@@ -88,10 +88,10 @@ void        push_line(t_line **begin, t_point *point1, t_point *point2)
 		*begin = new_point;
 }
 
-void		pop_line(t_line **begin)
+void		pop_line(t_eline **begin)
 {
-	t_line *next_begin;
-	t_line *iterator;
+	t_eline *next_begin;
+	t_eline *iterator;
 
 	iterator = *begin;
 	if (iterator && iterator->next)
@@ -108,12 +108,12 @@ void		pop_line(t_line **begin)
 	}
 }
 
-void		push_sprite(t_sprite **begin, t_coords *coord)
+void		push_sprite(t_esprite **begin, t_coords *coord)
 {
-	t_sprite *iterator;
-	t_sprite *new_point;
+	t_esprite *iterator;
+	t_esprite *new_point;
 
-	new_point = ft_memalloc(sizeof(t_sprite));
+	new_point = ft_memalloc(sizeof(t_esprite));
 	new_point->coord = coord;
 	if (*begin)
 	{
@@ -126,10 +126,10 @@ void		push_sprite(t_sprite **begin, t_coords *coord)
 		*begin = new_point;
 }
 
-void		pop_sprite(t_sprite **begin)
+void		pop_sprite(t_esprite **begin)
 {
-	t_sprite *next_begin;
-	t_sprite *iterator;
+	t_esprite *next_begin;
+	t_esprite *iterator;
 
 	iterator = *begin;
 	if (iterator && iterator->next)

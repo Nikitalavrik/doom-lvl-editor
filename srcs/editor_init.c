@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:20:39 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/15 18:03:39 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/22 13:52:13 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ t_editor	*init_editor(void)
 	editor = ft_memalloc(sizeof(t_editor));
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		print_error("SDL : ", "init error\n");
-	editor->win = SDL_CreateWindow("editor", 150, 100, WIDTH,
-											HEIGHT, SDL_WINDOW_SHOWN);
+	editor->win = SDL_CreateWindow("editor", 250, 200, E_WIDTH,
+											E_HEIGHT, SDL_WINDOW_SHOWN);
 	if (!editor->win)
 		print_error("SDL : ", "window create error\n");
 	editor->surf = SDL_GetWindowSurface(editor->win);
 	editor->fg = (SDL_Color){252, 136, 3, 255};
-	editor->width = WIDTH;
-	editor->height = HEIGHT;
+	editor->width = E_WIDTH;
+	editor->height = E_HEIGHT;
 	editor->zoom = 5;
 	init_music_font(editor);
 	coords_init(editor, &editor->size);

@@ -6,13 +6,13 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/18 18:48:25 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/22 14:41:30 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = editor
 
-SRC =	main.c			\
+SRC =	e_main.c			\
 		error.c			\
 		sys_out.c		\
 		editor_init.c		\
@@ -26,6 +26,30 @@ SRC =	main.c			\
 		keyboard.c		\
 		mouse.c			\
 		check_mouse.c	\
+		virtual.c
+
+SRC_DOOM = mkhomich/srcs/main.c \
+        mkhomich/srcs/raycasting.c \
+        mkhomich/srcs/sector.c \
+        mkhomich/srcs/textures.c \
+        mkhomich/srcs/toch.c \
+       mkhomich/srcs/move.c \
+        mkhomich/srcs/draw_tr.c \
+        mkhomich/srcs/draw_line.c \
+        mkhomich/srcs/rotate.c \
+        mkhomich/srcs/render.c \
+        mkhomich/srcs/init.c \
+        mkhomich/srcs/set_ip.c \
+        mkhomich/srcs/send_rec_net.c \
+        mkhomich/srcs/init_socket.c \
+        mkhomich/srcs/add_player.c \
+        mkhomich/srcs/skybox.c \
+        mkhomich/srcs/animation_sp_txt.c \
+        mkhomich/srcs/print_sprites.c \
+        mkhomich/srcs/calc_uron.c \
+        mkhomich/srcs/print_sprite_sec.c \
+        mkhomich/srcs/load_map.c \
+        mkhomich/srcs/save_map.c \
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror 
@@ -58,7 +82,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(PRINTF) $(OBJS)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC) $(FLAGS)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) $(INCLUDES) -fsanitize=address
+		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(SRC_DOOM) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) $(INCLUDES) -fsanitize=address
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)

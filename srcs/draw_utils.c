@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 15:35:06 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/18 18:10:07 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/22 13:44:37 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		alpha_grad(int color1, int color2, unsigned char a)
 
 void	check_alpha(t_editor *editor)
 {
-	t_sprite	*spr;
+	t_esprite	*spr;
 	t_room		*iter;
 
 	iter = editor->rooms;

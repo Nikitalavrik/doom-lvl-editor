@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:21:12 by nikita            #+#    #+#             */
-/*   Updated: 2019/11/18 13:51:03 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/22 13:47:16 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 t_coords     *check_room(t_editor *editor, int *x, int *y)
 {
-	t_point *begin;
-	t_point *end;
+	t_epoint *begin;
+	t_epoint *end;
 
 	end = NULL;
 	begin = editor->point;
@@ -38,7 +38,7 @@ t_coords     *check_room(t_editor *editor, int *x, int *y)
 
 void    calc_max_min(t_editor *editor)
 {
-	t_point	*iter;
+	t_epoint	*iter;
 
 	iter = editor->rooms->point;
 	editor->rooms->max_xy.x = iter->x;
@@ -82,7 +82,6 @@ void	swap_rooms(t_room **begin, t_room *first, t_room *second)
 void	sort_rooms(t_room **rooms, int len)
 {
 	int		i;
-
 	t_room	*iter;
 
 	i = 0;

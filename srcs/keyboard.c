@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:15 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/18 15:35:11 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/22 14:35:38 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int		keyboard_events_down(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.sprite = 1;
 		editor->flags.t_f.select = 0;
 	}
+	else if (event.key.keysym.sym == SDLK_n)
+		d3_init(editor);
 	return (0);
 }
 
