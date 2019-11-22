@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/22 16:34:57 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:28:27 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ typedef struct			s_room
 	t_coords			max_xy;
 	t_coords			min_xy;
 	t_esprite			*sprites;
+	int					max_sprites;
 	int					area;
 	unsigned char		alpha;
 	struct	s_room		*next;
@@ -251,6 +252,7 @@ typedef	struct			s_editor
 	t_room				*selected;
 	// t_doom				*doom;
 	int					num_of_rooms;
+	int					max_sectors;
 	int					line_id;
 	t_win				*new_win;
 }						t_editor;
