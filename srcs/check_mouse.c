@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:55:10 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/22 16:34:40 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:30:24 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void	add_line(t_editor *editor)
 					editor->lines->color = WALL_COLOR;
 					editor->lines->id = editor->line_id;
 					editor->line_id++;
+					editor->max_sectors++;
 				}
 			}
 	}
@@ -214,6 +215,7 @@ void	add_sprite(t_editor *editor)
 				editor->coords[coord.y][coord.x].y) / editor->zoom;
 				editor->selected->sprites->size = SPRITE_SIZE * editor->zoom;
 				editor->selected->sprites->alpha = 140;
+				editor->selected->max_sprites++;
 			}
 		}
 	}

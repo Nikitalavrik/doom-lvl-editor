@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:15 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/22 14:35:38 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:31:22 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		keyboard_events_down(t_editor *editor, SDL_Event event)
 	{
 		pop_line(&editor->lines);
 		pop_point(&editor->point);
+		editor->max_sectors--;
 	}
 	else if (event.key.keysym.sym == SDLK_SPACE && editor->point)
 		close_room(editor);
