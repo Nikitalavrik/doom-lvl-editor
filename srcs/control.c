@@ -36,6 +36,14 @@ int		detect_event(t_editor *editor)
 			if (!editor->flags.t_f.select && !editor->flags.t_f.sprite)
 				add_line(editor);
 		}
+		if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_RIGHT)
+		{
+			SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+			if (check_line(editor, mouse_position))
+			{
+				choice_win(editor, event, 1);
+			}
+		}
 		if (event.type == SDL_MOUSEBUTTONUP && editor->flags.t_f.move)
 			editor->flags.t_f.move = 0;
 		if (editor->flags.t_f.move)

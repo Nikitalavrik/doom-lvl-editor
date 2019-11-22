@@ -32,8 +32,8 @@ int		keyboard_events_down(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.sprite = 1;
 		editor->flags.t_f.select = 0;
 	}
-	else if (event.key.keysym.sym == SDLK_n)
-		d3_init(editor);
+	// else if (event.key.keysym.sym == SDLK_n)
+	// 	d3_init(editor);
 	return (0);
 }
 
