@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/22 17:28:27 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/24 19:34:48 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include "../mkhomich/incs/doom.h"
 
 # define NUMBER_OF_TEXTURES 9
-# define E_WIDTH 1280
-# define E_HEIGHT 1024
+# define E_WIDTH 1024
+# define E_HEIGHT 768
 # define WALL_HEIGHT HEIGHT
 # define MENU_WIDTH 300
 # define SQUARE_SIZE 30
@@ -62,7 +62,7 @@ typedef	union			s_flags
 		unsigned char	lctrl 	: 1;
 		unsigned char 	hover 	: 1;
 		unsigned char 	sprite 	: 1;
-		unsigned char 	build7 	: 1;
+		unsigned char 	visual 	: 1;
 	}					t_f;
 }						t_flags;
 
@@ -126,6 +126,8 @@ typedef struct			s_eline
 typedef struct			s_esprite
 {
 	t_coords				*coord;
+	int						x;
+	int						y;
 	int						size;
 	unsigned char			alpha;
 	t_dcoords				move;
