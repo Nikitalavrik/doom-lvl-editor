@@ -226,6 +226,7 @@ typedef struct		s_win
 	t_act			active_num;
 	t_ev			*events;
 	char			*input_text;
+	TTF_Font		*font;
 }					t_win;
 
 /*
@@ -358,6 +359,8 @@ void			choice_win(t_editor *editor, SDL_Event event, int flag);
 void			new_event(t_editor *editor, SDL_Event event);
 void			draw_rectangle(t_editor *editor);
 void			draw_list_text(t_editor *editor);
+void 			add_text_to_space(t_editor *editor);
+void			draw_white_space(t_editor *editor);
 
 /*
 ** FREE

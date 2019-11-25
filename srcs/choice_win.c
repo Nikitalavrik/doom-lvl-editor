@@ -12,6 +12,21 @@
 
 #include "ft_editor.h"
 
+void 	add_text_to_space(t_editor *editor)
+{
+	SDL_Color	color;
+	SDL_Surface	*message;
+	SDL_Rect	f;
+
+	f.x = C_WIDTH + 25;
+	f.y = 25;
+	color = (SDL_Color){0, 0, 0, 0};
+	message = TTF_RenderText_Solid(editor->new_win->font, editor->new_win->input_text, color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->new_win->win), &f);
+	SDL_UpdateWindowSurface(editor->new_win->win);
+	SDL_FreeSurface(message);
+}
+
 Uint32	get_pix_from_text(SDL_Surface *text, int x, int y)
 {
 	Uint32	*tmp;
@@ -222,6 +237,7 @@ void	new_win_init(t_editor *editor)
 	editor->new_win->events = ft_memalloc(sizeof(t_ev));
 	editor->new_win->active_num.tex_num = -1;
 	editor->new_win->input_text = ft_strdup("");
+	editor->new_win->font = TTF_OpenFont("fonts/font1.ttf", 14);
 }
 
 void		draw_white_space(t_editor *editor)

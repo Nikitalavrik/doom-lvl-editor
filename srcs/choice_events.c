@@ -107,12 +107,18 @@ void		new_event(t_editor *editor, SDL_Event event)
 			editor->new_win->input_text = ft_strsub(tmp, 0, ft_strlen(editor->new_win->input_text) - 1);
 			free(tmp);
 		}
-		else if (event.type == SDL_TEXTINPUT)
+		else if (event.type == SDL_TEXTINPUT &&\
+			ft_strlen(editor->new_win->input_text) < 10 &&\
+			((event.text.text[0] >= '0' && event.text.text[0] <= '9')\
+			|| (event.text.text[0] == '.' &&\
+			!ft_strchr(editor->new_win->input_text, '.'))))
 		{
 			tmp = editor->new_win->input_text;
 			editor->new_win->input_text = ft_strjoin(tmp, event.text.text);
 			free(tmp);
 		}
+		draw_white_space(editor);
+		add_text_to_space(editor);
 		printf("%s\n", editor->new_win->input_text);
 	}
 	new_event2(editor, event);
