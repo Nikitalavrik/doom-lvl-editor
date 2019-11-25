@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:35:30 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 11:47:42 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 15:19:38 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,8 @@ void		free_doom(t_doom *doom)
 		while (++i < doom->max_s)
 		{
 			ft_memdel((void **)&doom->sec[i].pts);
-			ft_memdel((void **)&doom->sec[i].sp);
+			if (doom->sec[i].max_sp)
+				ft_memdel((void **)&doom->sec[i].sp);
 		}
 		ft_memdel((void **)&doom->sec);
 		// system("leaks editor")
