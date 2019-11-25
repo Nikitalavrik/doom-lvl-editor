@@ -6,35 +6,11 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:21:12 by nikita            #+#    #+#             */
-/*   Updated: 2019/11/22 17:50:02 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 17:30:54 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
-
-// need add func that find nearest point and auto completion
-
-t_coords     *check_room(t_editor *editor, int *x, int *y)
-{
-	t_epoint *begin;
-	t_epoint *end;
-
-	end = NULL;
-	begin = editor->point;
-	if (begin)
-	{
-		end = editor->point;
-		while (end->next)
-			end = end->next;
-		if (end->coord == begin->coord)
-			return (NULL);
-	}
-	else
-		return (NULL);
-	*x = end->x;
-	*y = end->y;
-	return (end->coord);
-}
 
 void    calc_max_min(t_editor *editor)
 {
@@ -100,34 +76,15 @@ void	sort_rooms(t_room **rooms, int len)
 
 void    close_room(t_editor *editor)
 {
-	int			x;
-	int			y;
-	t_coords    *last;
-
-	if (editor->lines)
+	if (editor->point)
 	{
-		if ((last = check_room(editor, &x, &y)))
-		{
-			push_point(&editor->point, last);
-			editor->point->x = x;
-			editor->point->y = y;
-			push_line(&editor->lines, editor->point, editor->point->next);
-			editor->lines->color = WALL_COLOR;
-			editor->lines->id = editor->line_id;
-			editor->line_id++;
-			editor->max_sectors++;
-		}
 		push_room(&editor->rooms, editor->point);
 		editor->num_of_rooms++;
 		editor->rooms->id = editor->num_of_rooms;
 		calc_max_min(editor);
 		editor->point = NULL;
-		editor->rooms->lines = editor->lines;
-		editor->lines = NULL;
 		editor->rooms->alpha = 80;
 		editor->max_sectors++;
-		// ft_printf("**********************\n");
 		sort_rooms(&editor->rooms, editor->num_of_rooms);
 	}
-
 }

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 16:20:24 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 18:44:42 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 
 typedef	union			s_flags
 {
-	unsigned	char	flag;
+	short int			flag;
 	struct				s_f
 	{
 		unsigned char 	build 	: 1;
@@ -67,6 +67,8 @@ typedef	union			s_flags
 		unsigned char 	hover 	: 1;
 		unsigned char 	sprite 	: 1;
 		unsigned char 	visual 	: 1;
+		unsigned char 	floor 	: 1;
+		unsigned char 	any 	: 7;
 	}					t_f;
 }						t_flags;
 
@@ -151,7 +153,6 @@ typedef struct			s_room
 	int					id;
 	t_epoint			*point;
 	t_flags				flags;
-	t_eline				*lines;
 	t_coords			max_xy;
 	t_coords			min_xy;
 	t_esprite			*sprites;
@@ -260,6 +261,7 @@ typedef	struct			s_editor
 	t_eline				*lines;
 	t_room				*selected;
 	t_doom				*doom;
+	t_epoint			*room_point;
 	int					num_of_rooms;
 	int					max_sectors;
 	int					line_id;
@@ -373,5 +375,5 @@ void			free_sprites(t_esprite **sprites);
 void			free_rooms(t_room **room);
 
 void			sort_rooms(t_room **rooms, int len);
-
+void			calc_max_min(t_editor *editor);
 #endif

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:13:57 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 17:08:22 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 17:37:05 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	convert_sec_to_line(t_editor *editor, t_doom *doom, int i)
 	push_point(&editor->rooms->point, &editor->coords[coord.y][coord.x]);
 	editor->rooms->point->x = coord.x;
 	editor->rooms->point->y = coord.y;
-	push_line(&editor->rooms->lines, editor->rooms->point, editor->rooms->point->next);
-	editor->rooms->lines->color = WALL_COLOR;
+	push_line(&editor->lines, editor->rooms->point, editor->rooms->point->next);
+	editor->lines->color = WALL_COLOR;
 }
 
 void	convert_floor_to_room(t_editor *editor, t_doom *doom, int i)

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 12:40:42 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 14:12:25 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 17:35:41 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void		free_rooms(t_room **room)
 	{
 		*room = (*room)->next;
 		free_points(&iter->point);
-		free_lines(&iter->lines);
 		free_sprites(&iter->sprites);
 		ft_memdel((void **)&iter);
 		iter = *room;
