@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:55:10 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/22 17:30:24 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/24 16:02:46 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,8 @@ void	add_sprite(t_editor *editor)
 				editor->coords[coord.y][coord.x].y) / editor->zoom;
 				editor->selected->sprites->size = SPRITE_SIZE * editor->zoom;
 				editor->selected->sprites->alpha = 140;
+				editor->selected->sprites->x = coord.x;
+				editor->selected->sprites->y = coord.y;
 				editor->selected->max_sprites++;
 			}
 		}

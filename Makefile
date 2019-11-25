@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/22 14:41:30 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/25 10:42:38 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC =	e_main.c			\
 		check_mouse.c	\
 		choice_win.c	\
 		choice_events.c	\
+		virtual.c
 
 SRC_DOOM = mkhomich/srcs/main.c \
         mkhomich/srcs/raycasting.c \
@@ -53,7 +54,7 @@ SRC_DOOM = mkhomich/srcs/main.c \
         mkhomich/srcs/save_map.c \
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror -g -Og
 SRC_DIR = srcs
 H_DIR = includes
 OBJ_DIR = obj
@@ -83,7 +84,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(PRINTF) $(OBJS)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) $(INCLUDES) -fsanitize=address
+		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(SRC_DOOM) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) $(INCLUDES) #-fsanitize=address
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)
