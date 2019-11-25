@@ -41,6 +41,9 @@
 # define PRESS_WALL_COLOR 0x85dcb
 # define SPRITE_COLOR 0xc93706
 # define SPRITE_SIZE 10
+#define C_WIDTH 712
+#define C_HEIGHT 712
+#define TEXTNUM 9
 // # define STANDART_COLOR 0xc38d9e
 // # define WALL_COLOR 0xe27d60
 // # define TEXTURE_COLOR 0x41b3a3
@@ -349,6 +352,9 @@ void			convert_doom_to_editor(t_editor *editor, t_doom *doom);
 */
 
 void			choice_win(t_editor *editor, SDL_Event event, int flag);
+void			new_event(t_editor *editor, SDL_Event event);
+void			draw_rectangle(t_editor *editor);
+void			draw_list_text(t_editor *editor);
 
 /*
 ** FREE
