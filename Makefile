@@ -26,7 +26,8 @@ SRC =	e_main.c			\
 		keyboard.c		\
 		mouse.c			\
 		check_mouse.c	\
-		choice_win.c
+		choice_win.c	\
+		choice_events.c	\
 
 SRC_DOOM = mkhomich/srcs/main.c \
         mkhomich/srcs/raycasting.c \

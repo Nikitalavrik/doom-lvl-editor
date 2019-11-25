@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_editor.h"
-#define C_WIDTH 1024
-#define C_HEIGHT 712
-#define TEXTNUM 9
 
 Uint32	get_pix_from_text(SDL_Surface *text, int x, int y)
 {
@@ -33,25 +30,6 @@ void	ft_set_new_pixel(t_editor *editor, int x, int y)
 		pic = editor->new_win->sur->pixels + y * editor->new_win->sur->pitch +
 		x * editor->new_win->sur->format->BytesPerPixel;
 		*pic = 0x0062ff;
-	}
-}
-
-void	print_screen(t_editor *editor)
-{
-	int		x;
-	int		y;
-
-	y = 0;
-	while (y < 3000)
-	{
-		x = 0;
-		while (x < C_WIDTH)
-		{
-			printf("%x ", editor->new_win->screen[y][x]);
-			x++;
-		}
-		printf("\n");
-		y++;
 	}
 }
 
@@ -90,7 +68,8 @@ void	put_text_to_screen(t_editor *editor, int y, int x, int *k)
 		x = old_x;
 		while (x1 < 64)
 		{
-			editor->new_win->screen[y][x] = get_pix_from_text(editor->textures[*k % TEXTNUM], x1, y1);
+			editor->new_win->screen[y][x] =\
+			get_pix_from_text(editor->textures[*k % TEXTNUM], x1, y1);
 			x++;
 			x1++;
 		}
@@ -218,82 +197,6 @@ void		draw_rectangle(t_editor *editor)
 		n--;
 	}
 	draw_list_text(editor);
-}
-
-void		new_event(t_editor *editor, SDL_Event event)
-{
-	if (event.window.event == SDL_WINDOWEVENT_CLOSE)
-	{
-		SDL_FreeSurface(editor->new_win->sur);
-		SDL_DestroyWindow(SDL_GetWindowFromID(editor->new_win->win_id));
-		free(editor->new_win);
-		editor->new_win = NULL;
-		return ;
-
-	}
-	if (event.button.clicks == 1)
-	{
-		SDL_GetMouseState(&editor->new_win->mouse.x, &editor->new_win->mouse.y);
-		if ((editor->new_win->mouse.x % 84) > 20 && editor->new_win->mouse.x < 1009\
-			&& ((editor->new_win->mouse.y + editor->new_win->cam_y)  % 84) > 20\
-			&& (editor->new_win->mouse.y + editor->new_win->cam_y) < 2940)
-			draw_rectangle(editor);
-			// printf("editor->new_win->mouse.y + editor->new_win->cam_y %d\n", editor->new_win->mouse.y + editor->new_win->cam_y);
-	}
-	if (event.button.clicks == 2)
-	{
-		SDL_GetMouseState(&editor->new_win->mouse.x, &editor->new_win->mouse.y);
-	}
-	if(event.type == SDL_MOUSEWHEEL)
-	{
-		if (event.wheel.y > 0)
-		{
-			if (editor->new_win->cam_y < 3000 - 712 - 35)
-				editor->new_win->cam_y += 35;
-			else
-				editor->new_win->cam_y = 2288;
-			draw_list_text(editor);
-		}
-		if (event.wheel.y < 0)
-		{
-			if (editor->new_win->cam_y > 35)
-				editor->new_win->cam_y -= 35;
-			else
-				editor->new_win->cam_y = 0;
-			draw_list_text(editor);
-		}
-
-	}
-	if (event.key.type == SDL_KEYDOWN ||\
-		event.key.type == SDL_KEYUP)
-	{
-		if ((event.key.keysym.sym == SDLK_w ||\
-			event.key.keysym.sym == SDLK_UP))
-			editor->new_win->events->up = event.key.type == SDL_KEYDOWN;
-		if ((event.key.keysym.sym == SDLK_s ||\
-			event.key.keysym.sym == SDLK_DOWN))
-			editor->new_win->events->down = event.key.type == SDL_KEYDOWN;
-		if (editor->new_win->events->down)
-		{
-			if (editor->new_win->cam_y < 3000 - 712 - 50)
-				editor->new_win->cam_y += 50;
-			else
-				editor->new_win->cam_y = 2288;
-			draw_list_text(editor);
-			SDL_UpdateWindowSurface(editor->new_win->win);
-			editor->new_win->events->up = 0;
-		}
-		if (editor->new_win->events->up)
-		{
-			if (editor->new_win->cam_y > 50)
-				editor->new_win->cam_y -= 50;
-			else
-				editor->new_win->cam_y = 0;
-			draw_list_text(editor);
-			SDL_UpdateWindowSurface(editor->new_win->win);
-			editor->new_win->events->down = 0;
-		}
-	}
 }
 
 void	new_win_init(t_editor *editor)
