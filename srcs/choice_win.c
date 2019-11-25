@@ -221,14 +221,40 @@ void	new_win_init(t_editor *editor)
 	editor->new_win->delim_y = 84;
 	editor->new_win->events = ft_memalloc(sizeof(t_ev));
 	editor->new_win->active_num.tex_num = -1;
+	editor->new_win->input_text = ft_strdup("");
+}
+
+void		draw_white_space(t_editor *editor)
+{
+	t_coord coord;
+	Uint32	*pic;
+
+	coord.x = C_WIDTH + 20;
+	coord.y = 20;
+	coord.x1 = coord.x + 100;
+	coord.y1 = 40;
+	while (coord.x < coord.x1)
+	{
+		coord.y = 20;
+		while (coord.y < coord.y1)
+		{
+			pic = editor->new_win->sur->pixels + coord.y * editor->new_win->sur->pitch +
+			coord.x * editor->new_win->sur->format->BytesPerPixel;
+			*pic = BACKGROUND;
+			coord.y++;
+		}
+		coord.x++;
+	}
 }
 
 void		choice_win(t_editor *editor, SDL_Event event, int flag)
 {
 	flag++;
+	SDL_StartTextInput();
 	new_win_init(editor);
 	add_textures_to_screen(editor);
 	draw_list_text(editor);
+	draw_white_space(editor);
 	SDL_UpdateWindowSurface(editor->new_win->win);
 	while (1)
 	{
@@ -238,4 +264,5 @@ void		choice_win(t_editor *editor, SDL_Event event, int flag)
 			return ;
 		SDL_UpdateWindowSurface(editor->new_win->win);
 	}
+	SDL_StopTextInput();
 }

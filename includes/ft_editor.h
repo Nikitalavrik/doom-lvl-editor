@@ -40,6 +40,7 @@
 # define TEXTURE_COLOR 0x05386b
 # define PRESS_WALL_COLOR 0x85dcb
 # define SPRITE_COLOR 0xc93706
+# define BACKGROUND 0xfefffa
 # define SPRITE_SIZE 10
 #define C_WIDTH 712
 #define C_HEIGHT 712
@@ -225,6 +226,7 @@ typedef struct		s_win
 	int				delim_y;
 	t_act			active_num;
 	t_ev			*events;
+	char			*input_text;
 }					t_win;
 
 /*
@@ -249,6 +251,7 @@ typedef	struct			s_editor
 	t_room				*rooms;
 	t_coords			**coords;
 	SDL_Surface			*textures[9];
+	SDL_Surface			*button[3];
 	t_coords			center;
 	t_coords			move_map;
 	t_coords			move_save;

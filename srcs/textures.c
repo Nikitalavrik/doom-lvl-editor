@@ -55,6 +55,9 @@ void	load_textures(t_editor *editor)
 	editor->textures[6] = load_texture("textures/Stonemold2D.png", editor);
 	editor->textures[7] = load_texture("textures/WoodbrickswasD.png", editor);
 	editor->textures[8] = load_texture("textures/floor.png", editor);
+	editor->button[0] = load_texture("./textures/widgets_1.png", editor);
+	editor->button[1] = load_texture("./textures/widgets_2.png", editor);
+	editor->button[2] = load_texture("./textures/widgets_3.png", editor);
 	// i = 0;
 	// while (i < NUMBER_OF_TEXTURES)
 	// {
