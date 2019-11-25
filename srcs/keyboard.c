@@ -6,11 +6,19 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:15 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 11:23:26 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 15:08:39 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
+
+void	load_to_editor(t_editor *editor, char *filename)
+{
+	partly_free_editor(editor);
+	free_doom(editor->doom);
+	load_map(editor->doom, filename);
+	convert_doom_to_editor(editor, editor->doom);
+}
 
 int		keyboard_events_down(t_editor *editor, SDL_Event event)
 {
@@ -41,10 +49,10 @@ int		keyboard_events_down(t_editor *editor, SDL_Event event)
 			editor->flags.t_f.visual = 0;
 		SDL_SetRelativeMouseMode(editor->flags.t_f.visual);
 	}
-	// else if (event.key.keysym.sym == SDLK_l)
-	// {
-	// 	load_to_editor(editor, "152");
-	// }
+	else if (event.key.keysym.sym == SDLK_l)
+	{
+		load_to_editor(editor, "saves/47504");
+	}
 	// else if (event.key.keysym.sym == SDLK_x)
 	// 	d3_init(editor, 2);
 	// else if (event.key.keysym.sym == SDLK_l)

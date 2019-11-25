@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 10:42:00 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 16:20:24 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,8 @@ typedef struct			s_esprite
 typedef struct			s_room
 {
 	int					id;
-	t_flags				flags;
 	t_epoint			*point;
+	t_flags				flags;
 	t_eline				*lines;
 	t_coords			max_xy;
 	t_coords			min_xy;
@@ -342,11 +342,24 @@ void			print_error(char *manage, char *message);
 */
 
 void			d3_init(t_editor *editor);
+void			convert_doom_to_editor(t_editor *editor, t_doom *doom);
 
 /*
 ** choice textures functions
 */
 
 void			choice_win(t_editor *editor, SDL_Event event, int flag);
+
+/*
+** FREE
+*/
+
+void			free_doom(t_doom *doom);
+void			partly_free_editor(t_editor *editor);
+void			free_lines(t_eline **line);
+void			free_sprites(t_esprite **sprites);
+void			free_rooms(t_room **room);
+
+void			sort_rooms(t_room **rooms, int len);
 
 #endif

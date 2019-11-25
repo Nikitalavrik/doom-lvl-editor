@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:20:39 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 11:09:58 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 16:21:18 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_editor	*init_editor(void)
 	editor->fg = (SDL_Color){252, 136, 3, 255};
 	editor->width = E_WIDTH;
 	editor->height = E_HEIGHT;
-	editor->zoom = 5;
+	editor->zoom = 2;
 	init_music_font(editor);
 	coords_init(editor, &editor->size);
 	editor->center.x = editor->size.x / 2 * SQUARE_SIZE * editor->zoom - (editor->width - MENU_WIDTH) / 2;
