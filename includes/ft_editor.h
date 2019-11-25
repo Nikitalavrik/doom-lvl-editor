@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/24 19:34:48 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 10:42:00 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include "SDL.h"
 # include "SDL_image.h"
 # include "SDL_ttf.h"
-// # include "../mkhomich/incs/doom.h"
+# include "../mkhomich/incs/doom.h"
 
 # define NUMBER_OF_TEXTURES 9
 # define E_WIDTH 1024
@@ -252,7 +252,7 @@ typedef	struct			s_editor
 	t_epoint			*point;
 	t_eline				*lines;
 	t_room				*selected;
-	// t_doom				*doom;
+	t_doom				*doom;
 	int					num_of_rooms;
 	int					max_sectors;
 	int					line_id;

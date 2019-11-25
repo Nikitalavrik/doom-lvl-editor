@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/25 10:39:58 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/25 10:42:38 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRC =	e_main.c			\
 		keyboard.c		\
 		mouse.c			\
 		check_mouse.c	\
-		choice_win.c
+		choice_win.c	\
+		virtual.c
 
 SRC_DOOM = mkhomich/srcs/main.c \
         mkhomich/srcs/raycasting.c \

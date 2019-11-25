@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:35:30 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/24 19:52:38 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 11:47:42 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void		init_floor(t_editor *editor, t_room *room, int *i, int *r)
 	editor->doom->toch[++(*i)].x = room->min_xy.x << 4;
 	editor->doom->toch[*i].z = room->max_xy.y << 4;
 	editor->doom->sec[++(*r)].max_toch = 4;
-	editor->doom->sec[*r].pts = (int*)ft_memalloc(sizeof(int) * editor->doom->sec[*r].max_toch);
+	editor->doom->sec[*r].pts = ft_memalloc(sizeof(int) * editor->doom->sec[*r].max_toch);
 	editor->doom->sec[*r].pts[0] = *i;
 	editor->doom->toch[++(*i)].x = room->min_xy.x << 4;
 	editor->doom->toch[*i].z = room->min_xy.y << 4;
@@ -148,31 +148,55 @@ void		put_player(t_editor *editor)
 	editor->doom->play[0].speed = 1;
 }
 
+void		editor_autosave(t_doom *doom)
+{
+	char *filename;
+	char *num;
+
+	num = ft_itoa((unsigned short int)&doom);
+	filename = ft_strjoin("saves/", num);
+	ft_printf("save to %s\n", filename);
+	save_map(doom, filename);
+	ft_memdel((void **)&filename);
+	ft_memdel((void **)&num);
+}
+
+void		free_doom(t_doom *doom)
+{
+	int	i;
+
+	if (doom->max_s && doom->max_t)
+	{
+		// ft_printf("free max_s = %i max_t = %i\n", doom->max_s, doom->max_t);
+		ft_memdel((void **)&doom->toch);
+		i = -1;
+		while (++i < doom->max_s)
+		{
+			ft_memdel((void **)&doom->sec[i].pts);
+			ft_memdel((void **)&doom->sec[i].sp);
+		}
+		ft_memdel((void **)&doom->sec);
+		// system("leaks editor")
+		ft_memdel((void **)&doom->play);
+		ft_memdel((void **)&doom->rend);
+	}
+}
+
 void		d3_init(t_editor *editor)
 {
-	editor->doom = ft_memalloc(sizeof(t_doom));
+	free_doom(editor->doom);
 	editor->doom->max_t = editor->max_sectors * 4;
 	editor->doom->max_s = editor->max_sectors;
-	// ft_printf("max_s = %i max_t = %i\n", editor->doom->max_s, editor->doom->max_t);
-	editor->doom->x_aim = IGRX;
-	editor->doom->y_aim = HEIGHT * 0.62;
-	editor->doom->gravity = 0.015;
-	editor->doom->min_z = 0.5;
-	// if (editor->rooms)
-	// {
+	ft_printf("max_s = %i max_t = %i\n", editor->doom->max_s, editor->doom->max_t);
+	if (editor->rooms)
+	{
 		editor->doom->sec = ft_memalloc(sizeof(t_sec) * editor->doom->max_s);
 		editor->doom->toch = ft_memalloc(sizeof(t_toch) * editor->doom->max_t);
 		parse_rooms(editor);
-		// load_map(editor->doom);
 		editor->doom->rend = ft_memalloc(sizeof(t_render) * editor->doom->max_s);
 		grid_all_sec(editor);
 		put_player(editor);
-		editor->doom->z_buffer = (int*)malloc(sizeof(int) * WIDTH * HEIGHT);
-		init_skybox(editor->doom);
-		load_texture_wall(editor->doom);
-		editor->doom->window = editor->win;
-		editor->doom->surface = editor->surf;
-		editor->flags.t_f.visual = editor->flags.t_f.visual ? 0 : 1;
-	// }
-	save_map(editor->doom);
+		editor->flags.t_f.visual = 1;
+	}
+	editor_autosave(editor->doom);
 }
