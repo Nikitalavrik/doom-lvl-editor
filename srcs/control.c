@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 10:39:18 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 18:54:23 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,38 @@ void	move_player(t_doom *doom)
 	}
 }
 
+void	add_room(t_editor *editor)
+{
+	t_coords 	mouse_position;
+	t_coords	coord;
+	t_coords	*finded;
+
+	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+	coord = get_coords(editor, mouse_position);
+	if (coord.x != INT16_MAX)
+	{
+		finded = &editor->coords[coord.y][coord.x];
+		if (mouse_position.x <= finded->x + (int)(finded->r * editor->zoom) &&\
+			mouse_position.x >= finded->x - (int)(finded->r * editor->zoom) &&\
+			mouse_position.y <= finded->y + (int)(finded->r * editor->zoom) &&\
+			mouse_position.y >= finded->y - (int)(finded->r * editor->zoom))
+			{
+				push_point(&editor->room_point, finded);
+				editor->room_point->x = coord.x;
+				editor->room_point->y = coord.y;
+				if (editor->room_point && editor->room_point->next)
+				{
+					push_room(&editor->rooms, editor->room_point);
+					calc_max_min(editor);
+					editor->rooms->alpha = 80;
+					editor->max_sectors++;
+					editor->num_of_rooms++;
+					sort_rooms(&editor->rooms, editor->num_of_rooms);
+					editor->room_point = NULL;
+				}
+			}
+	}
+}
 
 int		detect_event(t_editor *editor)
 {
@@ -56,8 +88,10 @@ int		detect_event(t_editor *editor)
 				check_rooms(editor, mouse_position, 1);
 				if (editor->flags.t_f.sprite && editor->selected)
 					add_sprite(editor);
-				if (!editor->flags.t_f.select && !editor->flags.t_f.sprite)
+				else if (!editor->flags.t_f.select && !editor->flags.t_f.sprite && !editor->flags.t_f.floor)
 					add_line(editor);
+				else if (!editor->flags.t_f.select && editor->flags.t_f.floor)
+					add_room(editor);
 			}
 			if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_RIGHT)
 			{

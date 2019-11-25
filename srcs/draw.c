@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:55:43 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 12:37:20 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 17:32:27 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ void        draw_rooms(t_editor *editor)
 	{
 		draw_texture_room(editor, iterate_room);
 		draw_sprite(editor, iterate_room->sprites);
-		draw_lines(editor, iterate_room->lines);
+		// draw_lines(editor, iterate_room->lines);
 		iterate_room = iterate_room->next;
 	}
 }

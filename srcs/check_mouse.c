@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:55:10 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 14:39:12 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 17:33:26 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_eline	 *check_line(t_editor *editor, t_coords mouse)
 	t_eline		*choosen;
 	t_eline		*lines;
 
-	lines = editor->selected ? editor->selected->lines : editor->lines;
+	lines = editor->lines;
 	min_dist = 20;
 	choosen = NULL;
 	while (lines)
