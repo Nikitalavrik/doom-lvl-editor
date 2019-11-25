@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/24 16:17:47 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/25 10:39:18 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,19 @@ int		detect_event(t_editor *editor)
 				if (!editor->flags.t_f.select && !editor->flags.t_f.sprite)
 					add_line(editor);
 			}
+			if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_RIGHT)
+			{
+				SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+				if (check_line(editor, mouse_position))
+					choice_win(editor, event, 1);
+			}
 			if (event.type == SDL_MOUSEBUTTONUP && editor->flags.t_f.move)
 				editor->flags.t_f.move = 0;
 			if (editor->flags.t_f.move)
 				mouse_move(editor);
 			if (event.type == SDL_MOUSEMOTION)
 				mouse_motion(editor);
+
 		}
 		else
 		{

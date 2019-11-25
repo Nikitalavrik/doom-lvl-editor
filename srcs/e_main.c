@@ -18,7 +18,7 @@ int		main(void)
 
 	ft_printf("Structure init ...\n");
 	editor = init_editor();
-	// load_textures(editor);
+	load_textures(editor);
 	ft_printf("Let`s the play begin !\n");
 	main_loop(editor);
 	return (0);

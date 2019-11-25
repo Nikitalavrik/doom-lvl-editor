@@ -25,7 +25,7 @@
 # include "SDL.h"
 # include "SDL_image.h"
 # include "SDL_ttf.h"
-# include "../mkhomich/incs/doom.h"
+// # include "../mkhomich/incs/doom.h"
 
 # define NUMBER_OF_TEXTURES 9
 # define E_WIDTH 1024
@@ -159,11 +159,77 @@ typedef struct			s_room
 }						t_room;
 
 /*
+** struct mouse
+*/
+
+typedef struct		s_mou
+{
+	int				x;
+	int				y;
+}					t_mou;
+
+/*
+** struct coord 
+*/
+
+typedef struct		s_coord
+{
+	int				x;
+	int				y;
+	int				x1;
+	int				y1;
+}					t_coord;
+
+/*
+** struct new_win events
+*/
+
+typedef struct		s_ev
+{
+	int				m_f;
+	int				up;
+	int				down;
+	int				r_rot;
+	int				l_rot;
+	int				r_move;
+	int				l_move;
+}					t_ev;
+
+/*
+** struct to get info from active texture
+*/
+
+typedef struct		s_act
+{
+	t_coord			coord;
+	int				tex_num;
+}					t_act;
+
+/*
+** new window to choose textures
+*/
+
+typedef struct		s_win
+{
+	SDL_Window		*win;
+	SDL_Surface		*sur;
+	Uint32			win_id;
+	Uint32			**screen;
+	t_mou			mouse;
+	int				cam_y;
+	int				delim_x;
+	int				delim_y;
+	t_act			active_num;
+	t_ev			*events;
+}					t_win;
+
+/*
 ** main struct for SDL
 */
 
 typedef	struct			s_editor
 {
+
 	TTF_Font			*font;
 	SDL_Color			fg;
 	SDL_Window			*win;
@@ -186,10 +252,11 @@ typedef	struct			s_editor
 	t_epoint			*point;
 	t_eline				*lines;
 	t_room				*selected;
-	t_doom				*doom;
+	// t_doom				*doom;
 	int					num_of_rooms;
 	int					max_sectors;
 	int					line_id;
+	t_win				*new_win;
 }						t_editor;
 
 /*
@@ -275,5 +342,11 @@ void			print_error(char *manage, char *message);
 */
 
 void			d3_init(t_editor *editor);
+
+/*
+** choice textures functions
+*/
+
+void			choice_win(t_editor *editor, SDL_Event event, int flag);
 
 #endif
