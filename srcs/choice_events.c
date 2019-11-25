@@ -77,12 +77,15 @@ void		new_event2(t_editor *editor, SDL_Event event)
 
 void		new_event(t_editor *editor, SDL_Event event)
 {
+	char *tmp;
+
 	if (event.window.event == SDL_WINDOWEVENT_CLOSE)
 	{
 		SDL_FreeSurface(editor->new_win->sur);
 		SDL_DestroyWindow(SDL_GetWindowFromID(editor->new_win->win_id));
 		free(editor->new_win);
 		editor->new_win = NULL;
+		SDL_StopTextInput();
 		return ;
 
 	}
@@ -95,6 +98,22 @@ void		new_event(t_editor *editor, SDL_Event event)
 			editor->new_win->delim_y) > 20 && (editor->new_win->mouse.y +\
 			editor->new_win->cam_y) < 2940)
 			draw_rectangle(editor);
+	}
+	else if (event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN)
+	{
+		if (event.key.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_BACKSPACE && ft_strlen(editor->new_win->input_text) > 0)
+		{
+			tmp = editor->new_win->input_text;
+			editor->new_win->input_text = ft_strsub(tmp, 0, ft_strlen(editor->new_win->input_text) - 1);
+			free(tmp);
+		}
+		else if (event.type == SDL_TEXTINPUT)
+		{
+			tmp = editor->new_win->input_text;
+			editor->new_win->input_text = ft_strjoin(tmp, event.text.text);
+			free(tmp);
+		}
+		printf("%s\n", editor->new_win->input_text);
 	}
 	new_event2(editor, event);
 }
