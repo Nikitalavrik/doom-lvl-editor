@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:55:10 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 15:58:57 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:01:56 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ t_room	*check_rooms(t_editor *editor, t_coords mouse, int type)
 		{
 			iter->flags.t_f.select = 0;
 			editor->flags.t_f.sprite = 0;
-			// ft_printf("111\n");
 			editor->selected = editor->selected == iter ? NULL : editor->selected;
 		}
 		iter = iter->prev;
@@ -132,60 +131,29 @@ t_room	*check_rooms(t_editor *editor, t_coords mouse, int type)
 	return (editor->selected);
 }
 
-/*
-** check nearest sprite
-*/
-
-int		check_sprites(t_esprite *sprites, t_coords mouse, double zoom)
+t_coords	*check_point(t_editor *editor, t_coords mouse_position)
 {
-	int			dist;
-	t_esprite	*iter;
-
-	iter = sprites;
-	while (iter)
-	{
-		dist = sqrt(pow(mouse.x - iter->coord->x - iter->dist.x, 2) +\
-		pow(mouse.y - iter->coord->y - iter->dist.y, 2));
-		if (dist <= (SPRITE_SIZE + 2) * zoom)
-			return (0);
-		iter = iter->next;
-	}
-	return (1);
-}
-
-void	add_sprite(t_editor *editor)
-{
-	t_coords	max;
-	t_coords	min;
 	t_coords	coord;
-	int			size;
-	t_coords	mouse;
+	t_coords	*finded;
+	int			tmp;
 
-	SDL_GetMouseState(&mouse.x, &mouse.y);
-	coord = get_coords(editor, mouse);
-	min = editor->coords[editor->selected->min_xy.y][editor->selected->min_xy.x];
-	max = editor->coords[editor->selected->max_xy.y][editor->selected->max_xy.x];
-	size = SPRITE_SIZE * editor->zoom / 2;
-	if (mouse.x - size >= min.x && mouse.x + size <= max.x\
-		&& mouse.y - size >= min.y && mouse.y + size <= max.y)
+	coord = get_coords(editor, mouse_position);
+	if (editor->finded)
+		editor->finded->inc = 0;
+	if (coord.x != INT16_MAX)
 	{
-		if (coord.x != INT16_MAX)
-		{
-			
-			if (check_sprites(editor->selected->sprites, mouse, editor->zoom))
+		finded = &editor->coords[coord.y][coord.x];
+		tmp = (int)(finded->r * editor->zoom);
+		if (mouse_position.x <= finded->x + tmp &&\
+			mouse_position.x >= finded->x - tmp &&\
+			mouse_position.y <= finded->y + tmp &&\
+			mouse_position.y >= finded->y - tmp)
 			{
-				// ft_printf("zoom %f\n", editor->zoom);
-				push_sprite(&editor->selected->sprites, &editor->coords[coord.y][coord.x]);
-				editor->selected->sprites->origin.x = (mouse.x -\
-				editor->coords[coord.y][coord.x].x) / editor->zoom;
-				editor->selected->sprites->origin.y = (mouse.y -\
-				editor->coords[coord.y][coord.x].y) / editor->zoom;
-				editor->selected->sprites->size = SPRITE_SIZE * editor->zoom;
-				editor->selected->sprites->alpha = 140;
-				editor->selected->sprites->x = coord.x;
-				editor->selected->sprites->y = coord.y;
-				editor->selected->max_sprites++;
+				finded->inc = 1;
+				finded->r = 3;
+				editor->finded = finded;
+				return (finded);
 			}
-		}
 	}
+	return (NULL);
 }

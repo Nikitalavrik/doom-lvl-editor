@@ -6,11 +6,27 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:55:01 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 15:55:59 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:06:35 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
+
+void	delete_room(t_editor *editor, t_room *room)
+{
+	t_room *next;
+	t_room *prev;
+
+	next = room->next;
+	prev = room->prev;
+	if (prev)
+		prev->next = next;
+	if (next)
+		next->prev = prev;
+	if (room == editor->rooms)
+		editor->rooms = next;
+	ft_memdel((void **)&room);
+}
 
 void        push_room(t_room **begin, t_epoint *point)
 {

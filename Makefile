@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/29 16:08:22 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/29 17:29:32 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ SRC =	editor_main.c		\
 		textures.c			\
 		alpha_gradient.c	\
 		room.c				\
-		dlist.c				\
 		keyboard.c			\
 		mouse.c				\
 		check_mouse.c		\
@@ -40,6 +39,13 @@ SRC =	editor_main.c		\
 		room_utils.c		\
 		line.c				\
 		stick_to_mouse.c	\
+		god_movement.c		\
+		sprites.c			\
+		mouse_move.c		\
+		mouse_utils.c		\
+		keyboard_events.c	\
+		keyboard_switch.c	\
+		point.c				\
 
 SRC_DOOM = mkhomich/srcs/main.c \
         mkhomich/srcs/raycasting.c \

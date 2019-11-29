@@ -6,11 +6,19 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:13 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 15:44:15 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:05:56 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
+
+void	load_to_editor(t_editor *editor, char *filename)
+{
+	partly_free_editor(editor);
+	free_doom(editor->doom);
+	load_map(editor->doom, filename);
+	convert_doom_to_editor(editor, editor->doom);
+}
 
 void	convert_sec_to_line(t_editor *editor, t_doom *doom, int i)
 {

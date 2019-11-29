@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 16:04:25 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:31:13 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,15 +326,18 @@ void			check_alpha(t_editor *editor);
 ** MOUSE FUNCTION
 */
 
-void			mouse_event(t_editor *editor, SDL_Event	event);
+void			mouse_button_down(t_editor *editor);
+void			mouse_zoom(t_editor *editor, SDL_Event	event);
 void			add_sprite(t_editor *editor);
 void			add_line(t_editor *editor);
 t_room			*check_rooms(t_editor *editor, t_coords mouse, int type);
 t_eline			*check_line(t_editor *editor, t_coords mouse);
 t_esprite		*check_sprite(t_room *selected, t_coords mouse, double zoom);
+t_coords		*check_point(t_editor *editor, t_coords mouse_position);
 void			mouse_move(t_editor *editor);
 void			mouse_motion(t_editor *editor);
 t_coords		get_coords(t_editor *editor, t_coords mouse);
+void			delete_line(t_editor *editor, t_eline *line);
 
 /*
 ** KEYBOARD FUNCTION
@@ -343,6 +346,11 @@ t_coords		get_coords(t_editor *editor, t_coords mouse);
 void    		close_room(t_editor *editor);
 int				keyboard_events_down(t_editor *editor, SDL_Event event);
 int				keyboard_events_up(t_editor *editor, SDL_Event event);
+void			switch_to_select(t_editor *editor);
+void			switch_to_floor_build(t_editor *editor);
+void			switch_to_visual_3d(t_editor *editor);
+void			delete_prev(t_editor *editor);
+void			find_and_delete(t_editor *editor);
 
 /*
 ** debug function 
@@ -358,6 +366,7 @@ void			print_error(char *manage, char *message);
 void			d3_init(t_editor *editor);
 void			convert_doom_to_editor(t_editor *editor, t_doom *doom);
 void			convert_rooms(t_editor *editor);
+void			load_to_editor(t_editor *editor, char *filename);
 
 /*
 ** choice textures functions
@@ -390,6 +399,7 @@ void			calc_max_min(t_room *room);
 void			add_room(t_editor *editor);
 void       	 	push_room(t_room **begin, t_epoint *point);
 void			pop_room(t_room **begin);
+void			delete_room(t_editor *editor, t_room *room);
 
 /*
 ** stick line and room func
@@ -398,5 +408,12 @@ void			pop_room(t_room **begin);
 void			stick_line(t_editor *editor);
 void			delete_stick_line_room(t_editor *editor);
 void			stick_room(t_editor *editor);
+void			delete_stick_point(t_editor *editor);
+
+/*
+** god movement
+*/
+
+void			god_rot_move(t_editor *editor, SDL_Event event);
 
 #endif

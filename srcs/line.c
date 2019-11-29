@@ -6,11 +6,27 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:58:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 15:59:18 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:06:13 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
+
+void	delete_line(t_editor *editor, t_eline *line)
+{
+	t_eline *next;
+	t_eline *prev;
+
+	next = line->next;
+	prev = line->prev;
+	if (prev)
+		prev->next = next;
+	if (next)
+		next->prev = prev;
+	if (line == editor->lines)
+		editor->lines = next;
+	ft_memdel((void **)&line);
+}
 
 void        push_line(t_eline **begin, t_epoint *point1, t_epoint *point2)
 {
