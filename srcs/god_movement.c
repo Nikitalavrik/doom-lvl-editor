@@ -6,11 +6,40 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:12:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 16:14:58 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 19:13:38 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
+
+void	calc_movement(t_doom *doom)
+{
+	t_dcoords	step;
+
+	step.x = SDL_cos(doom->play[0].angle_y * PI / 180);
+	step.y = SDL_sin(doom->play[0].angle_y * PI / 180);
+	if (doom->move.wsad[0])
+	{
+		doom->play[0].t.z += step.x * doom->play[0].speed;
+		doom->play[0].t.x -= step.y * doom->play[0].speed;
+		doom->play[0].t.y -= doom->play[0].angle_x / 240;
+	}
+	if (doom->move.wsad[1])
+	{
+		doom->play[0].t.z -= step.x * doom->play[0].speed;
+		doom->play[0].t.x += step.y * doom->play[0].speed;
+	}
+	if (doom->move.wsad[2])
+	{
+		doom->play[0].t.z -= step.y * doom->play[0].speed;
+		doom->play[0].t.x -= step.x * doom->play[0].speed;
+	}
+	if (doom->move.wsad[3])
+	{
+		doom->play[0].t.z += step.y * doom->play[0].speed;
+		doom->play[0].t.x += step.x * doom->play[0].speed;
+	}
+}
 
 void	move_player(t_doom *doom)
 {
@@ -24,12 +53,7 @@ void	move_player(t_doom *doom)
 			doom->move.wsad[2] = doom->event.type == SDL_KEYDOWN;
 		else if (doom->event.key.keysym.sym == 'd')
 			doom->move.wsad[3] = doom->event.type == SDL_KEYDOWN;
-		if (doom->move.wsad[0])
-		{
-			doom->play[0].t.z += SDL_cos(doom->play[0].angle_y * PI / 180) * doom->play[0].speed;
-			doom->play[0].t.x -= SDL_sin(doom->play[0].angle_y * PI / 180) * doom->play[0].speed;
-			doom->play[0].t.y -= doom->play[0].angle_x / 240;
-		}
+		calc_movement(doom);
 	}
 }
 
