@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:15 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 17:26:09 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 18:14:30 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,11 @@ int		keyboard_events_down(t_editor *editor, SDL_Event event)
 	else if (event.key.keysym.sym == SDLK_SPACE && editor->point)
 		close_room(editor);
 	else if (event.key.keysym.sym == SDLK_c && editor->selected)
-	{
-		editor->flags.t_f.sprite = 1;
-		editor->flags.t_f.select = 0;
-	}
+		switch_to_sprite_put(editor);
 	else if (event.key.keysym.sym == SDLK_n)
 		switch_to_visual_3d(editor);
 	else if (event.key.keysym.sym == SDLK_l)
-		load_to_editor(editor, "saves/47504");
+		switch_to_line_build(editor);
 	else if (event.key.keysym.sym == SDLK_d)
 		find_and_delete(editor);
 	else if (event.key.keysym.sym == SDLK_f)

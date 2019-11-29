@@ -6,11 +6,29 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:11:09 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 17:29:00 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:53:22 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
+
+void		delete_sprite(t_editor *editor, t_esprite *sprite)
+{
+	t_esprite *next;
+	t_esprite *prev;
+	if (editor->selected)
+	{
+		next = sprite->next;
+		prev = sprite->prev;
+		if (prev)
+			prev->next = next;
+		if (next)
+			next->prev = prev;
+		if (sprite == editor->selected->sprites)
+			editor->selected->sprites = next;
+		ft_memdel((void **)&sprite);
+	}
+}
 
 void		push_sprite(t_esprite **begin, t_coords *coord)
 {

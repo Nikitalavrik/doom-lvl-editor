@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:55:10 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 17:01:56 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:51:20 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ t_esprite	*check_sprite(t_room *selected, t_coords mouse, double zoom)
 	t_esprite	*iter;
 	int			dist;
 
+	if (!selected)
+		return (NULL);
 	iter = selected->sprites;
 	min = SPRITE_SIZE * zoom;
 	choosen = NULL;

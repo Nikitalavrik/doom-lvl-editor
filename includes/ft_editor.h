@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 17:31:13 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 18:14:14 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ typedef	union			s_flags
 		unsigned char 	sprite 	: 1;
 		unsigned char 	visual 	: 1;
 		unsigned char 	floor 	: 1;
-		unsigned char 	any 	: 7;
+		unsigned char 	line 	: 1;
+		unsigned char 	any 	: 6;
 	}					t_f;
 }						t_flags;
 
@@ -349,8 +350,11 @@ int				keyboard_events_up(t_editor *editor, SDL_Event event);
 void			switch_to_select(t_editor *editor);
 void			switch_to_floor_build(t_editor *editor);
 void			switch_to_visual_3d(t_editor *editor);
+void			switch_to_line_build(t_editor *editor);
 void			delete_prev(t_editor *editor);
 void			find_and_delete(t_editor *editor);
+void			delete_sprite(t_editor *editor, t_esprite *sprite);
+void			switch_to_sprite_put(t_editor *editor);
 
 /*
 ** debug function 
@@ -415,5 +419,11 @@ void			delete_stick_point(t_editor *editor);
 */
 
 void			god_rot_move(t_editor *editor, SDL_Event event);
+
+/*
+** FLAG MANAGE
+*/
+
+void			null_editing_flags(t_flags *flags);
 
 #endif

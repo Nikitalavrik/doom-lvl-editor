@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:48 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 16:57:14 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 18:16:01 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	mouse_motion(t_editor *editor)
 	check_point(editor, mouse_position);
 	if (editor->point_cnt == 1)
 		editor->flags.t_f.floor ? stick_room(editor) : stick_line(editor);
-	else
+	else if (editor->flags.t_f.select)
 	{
 		if (editor->rooms)
 			check_rooms(editor, mouse_position, 0);
@@ -65,10 +65,13 @@ void	mouse_button_down(t_editor *editor)
 	editor->move_save.x = mouse_position.x;
 	editor->move_save.y = mouse_position.y;
 	check_rooms(editor, mouse_position, 1);
-	if (editor->flags.t_f.sprite && editor->selected)
-		add_sprite(editor);
-	else if (!editor->flags.t_f.select && !editor->flags.t_f.sprite && !editor->flags.t_f.floor)
-		add_line(editor);
-	else if (!editor->flags.t_f.select && editor->flags.t_f.floor)
-		add_room(editor);
+	if (!editor->flags.t_f.select)
+	{
+		if (editor->flags.t_f.sprite && editor->selected)
+			add_sprite(editor);
+		else if (editor->flags.t_f.line)
+			add_line(editor);
+		else if (editor->flags.t_f.floor)
+			add_room(editor);
+	}
 }
