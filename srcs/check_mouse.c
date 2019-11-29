@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:55:10 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 17:33:26 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 15:58:57 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,39 +130,6 @@ t_room	*check_rooms(t_editor *editor, t_coords mouse, int type)
 	}
 	iter = editor->selected;
 	return (editor->selected);
-}
-
-void	add_line(t_editor *editor)
-{
-	t_coords 	mouse_position;
-	t_coords	coord;
-	t_coords	*finded;
-
-	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-	coord = get_coords(editor, mouse_position);
-	if (coord.x != INT16_MAX)
-	{
-		finded = &editor->coords[coord.y][coord.x];
-		if (mouse_position.x <= finded->x + (int)(finded->r * editor->zoom) &&\
-			mouse_position.x >= finded->x - (int)(finded->r * editor->zoom) &&\
-			mouse_position.y <= finded->y + (int)(finded->r * editor->zoom) &&\
-			mouse_position.y >= finded->y - (int)(finded->r * editor->zoom))
-			{
-				push_point(&editor->point, finded);
-				editor->point->x = coord.x;
-				editor->point->y = coord.y;
-				editor->line_cnt++;
-				if (editor->line_cnt >= 2 && editor->point && editor->point->next)
-				{
-					editor->line_cnt = 1;
-					push_line(&editor->lines, editor->point, editor->point->next);
-					editor->lines->color = WALL_COLOR;
-					editor->lines->id = editor->line_id;
-					editor->line_id++;
-					editor->max_sectors++;
-				}
-			}
-	}
 }
 
 /*

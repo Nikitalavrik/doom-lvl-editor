@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 18:44:42 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 16:04:25 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ typedef	struct			s_editor
 	int					width;
 	int					height;
 	int					mouse;
-	int					line_cnt;
+	char				point_cnt;
 	t_coords			size;
 	double				zoom;
 	t_flags				flags;
@@ -266,6 +266,9 @@ typedef	struct			s_editor
 	int					max_sectors;
 	int					line_id;
 	t_win				*new_win;
+	t_eline				*stick_line;
+	t_room				*stick_room;
+	t_epoint			*stick_point;
 }						t_editor;
 
 /*
@@ -273,6 +276,7 @@ typedef	struct			s_editor
 */
 
 t_editor		*init_editor(void);
+void			coords_init(t_editor *editor, t_coords *size);
 void			load_textures(t_editor *editor);
 
 /*
@@ -282,6 +286,8 @@ void			load_textures(t_editor *editor);
 void        	draw_rooms(t_editor *editor);
 void			draw_lines(t_editor *editor, t_eline *lines);
 void			draw_cells(t_editor *editor);
+void			draw_stick_line(t_editor *editor);
+void			draw_stick_room(t_editor *editor);
 void			coords_rerange(t_editor *editor);
 
 /*
@@ -302,7 +308,6 @@ void			put_epixel(t_editor *editor, int x, int y, int color);
 ** double linked lists func
 */
 
-void       	 	push_room(t_room **begin, t_epoint *point);
 void			pop_line(t_eline **begin);
 void        	push_point(t_epoint **begin, t_coords *coord);
 void       		pop_point(t_epoint **begin);
@@ -352,6 +357,7 @@ void			print_error(char *manage, char *message);
 
 void			d3_init(t_editor *editor);
 void			convert_doom_to_editor(t_editor *editor, t_doom *doom);
+void			convert_rooms(t_editor *editor);
 
 /*
 ** choice textures functions
@@ -374,6 +380,23 @@ void			free_lines(t_eline **line);
 void			free_sprites(t_esprite **sprites);
 void			free_rooms(t_room **room);
 
+
+/*
+** room func
+*/
+
 void			sort_rooms(t_room **rooms, int len);
-void			calc_max_min(t_editor *editor);
+void			calc_max_min(t_room *room);
+void			add_room(t_editor *editor);
+void       	 	push_room(t_room **begin, t_epoint *point);
+void			pop_room(t_room **begin);
+
+/*
+** stick line and room func
+*/
+
+void			stick_line(t_editor *editor);
+void			delete_stick_line_room(t_editor *editor);
+void			stick_room(t_editor *editor);
+
 #endif

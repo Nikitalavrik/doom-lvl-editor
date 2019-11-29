@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 19:40:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/18 13:34:10 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 15:45:14 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,19 @@ void	print_room(t_room *begin)
 		iter = iter->next;	
 	}
 	ft_printf("~~~~~~~~~~~~~~~~~~\n");
+}
+
+void		print_toch(t_editor *editor, int i)
+{
+	int k;
+
+	k = 0;
+	while (k <= i)
+	{
+		ft_printf("toch[%03i].x = %3.f toch[%03i].y = %3.f  toch[%03i].z = %03.f\n", 
+		k, editor->doom->toch[k].x,
+		k, editor->doom->toch[k].y,
+		k, editor->doom->toch[k].z);
+		k++;
+	}
 }

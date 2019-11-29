@@ -6,31 +6,40 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/25 17:56:14 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/29 16:08:22 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = editor
 
-SRC =	e_main.c			\
-		error.c			\
-		sys_out.c		\
+SRC =	editor_main.c		\
+		error.c				\
+		sys_out.c			\
 		editor_init.c		\
-		loop.c			\
-		draw.c			\
-		control.c		\
-		textures.c		\
-		draw_utils.c	\
-		room.c			\
-		dlist.c			\
-		keyboard.c		\
-		mouse.c			\
-		check_mouse.c	\
-		choice_win.c	\
-		virtual.c		\
-		free_editor.c	\
-		convert.c		\
-		choice_events.c	\
+		loop.c				\
+		draw_circle.c		\
+		draw_line.c			\
+		draw_pixel.c		\
+		draw_rooms.c		\
+		control.c			\
+		textures.c			\
+		alpha_gradient.c	\
+		room.c				\
+		dlist.c				\
+		keyboard.c			\
+		mouse.c				\
+		check_mouse.c		\
+		choice_win.c		\
+		virtual.c			\
+		free_editor.c		\
+		convert_to_editor.c	\
+		convert_to_doom.c	\
+		choice_events.c		\
+		free_doom.c			\
+		coords.c			\
+		room_utils.c		\
+		line.c				\
+		stick_to_mouse.c	\
 
 SRC_DOOM = mkhomich/srcs/main.c \
         mkhomich/srcs/raycasting.c \

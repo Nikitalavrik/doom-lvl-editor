@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 18:54:23 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 15:55:29 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,39 +30,6 @@ void	move_player(t_doom *doom)
 			doom->play[0].t.x -= SDL_sin(doom->play[0].angle_y * PI / 180) * doom->play[0].speed;
 			doom->play[0].t.y -= doom->play[0].angle_x / 240;
 		}
-	}
-}
-
-void	add_room(t_editor *editor)
-{
-	t_coords 	mouse_position;
-	t_coords	coord;
-	t_coords	*finded;
-
-	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-	coord = get_coords(editor, mouse_position);
-	if (coord.x != INT16_MAX)
-	{
-		finded = &editor->coords[coord.y][coord.x];
-		if (mouse_position.x <= finded->x + (int)(finded->r * editor->zoom) &&\
-			mouse_position.x >= finded->x - (int)(finded->r * editor->zoom) &&\
-			mouse_position.y <= finded->y + (int)(finded->r * editor->zoom) &&\
-			mouse_position.y >= finded->y - (int)(finded->r * editor->zoom))
-			{
-				push_point(&editor->room_point, finded);
-				editor->room_point->x = coord.x;
-				editor->room_point->y = coord.y;
-				if (editor->room_point && editor->room_point->next)
-				{
-					push_room(&editor->rooms, editor->room_point);
-					calc_max_min(editor);
-					editor->rooms->alpha = 80;
-					editor->max_sectors++;
-					editor->num_of_rooms++;
-					sort_rooms(&editor->rooms, editor->num_of_rooms);
-					editor->room_point = NULL;
-				}
-			}
 	}
 }
 

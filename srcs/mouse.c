@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:48 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/22 16:34:36 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 16:03:25 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,17 @@ void	mouse_motion(t_editor *editor)
 				editor->finded = finded;
 			}
 	}
-	if (editor->rooms)
-		check_rooms(editor, mouse_position, 0);
-	if (editor->lines || editor->selected)
-		check_line(editor, mouse_position);
-	if (editor->selected)
-		check_sprite(editor->selected, mouse_position, editor->zoom);
+	if (editor->point_cnt == 1)
+		editor->flags.t_f.floor ? stick_room(editor) : stick_line(editor);
+	else
+	{
+		if (editor->rooms)
+			check_rooms(editor, mouse_position, 0);
+		if (editor->lines || editor->selected)
+			check_line(editor, mouse_position);
+		if (editor->selected)
+			check_sprite(editor->selected, mouse_position, editor->zoom);
+	}
 }
 
 void	mouse_move_map(t_editor *editor, t_coords mouse_position)

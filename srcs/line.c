@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   room.c                                             :+:      :+:    :+:   */
+/*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/29 15:55:01 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 15:55:59 by nlavrine         ###   ########.fr       */
+/*   Created: 2019/11/29 15:58:41 by nlavrine          #+#    #+#             */
+/*   Updated: 2019/11/29 15:59:18 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
 
-void        push_room(t_room **begin, t_epoint *point)
+void        push_line(t_eline **begin, t_epoint *point1, t_epoint *point2)
 {
-	t_room *iterator;
-	t_room *new_point;
+	t_eline *iterator;
+	t_eline *new_point;
 
-	new_point = ft_memalloc(sizeof(t_room));
-	new_point->point = point;
+	new_point = ft_memalloc(sizeof(t_eline));
+	new_point->points[0] = point1;
+	new_point->points[1] = point2;
 	if (*begin)
 	{
 		iterator = *begin;
@@ -30,10 +31,10 @@ void        push_room(t_room **begin, t_epoint *point)
 		*begin = new_point;
 }
 
-void		pop_room(t_room **begin)
+void		pop_line(t_eline **begin)
 {
-	t_room *next_begin;
-	t_room *iterator;
+	t_eline *next_begin;
+	t_eline *iterator;
 
 	iterator = *begin;
 	if (iterator && iterator->next)
@@ -50,8 +51,7 @@ void		pop_room(t_room **begin)
 	}
 }
 
-
-void	add_room(t_editor *editor)
+void	add_line(t_editor *editor)
 {
 	t_coords 	mouse_position;
 	t_coords	coord;
@@ -67,21 +67,18 @@ void	add_room(t_editor *editor)
 			mouse_position.y <= finded->y + (int)(finded->r * editor->zoom) &&\
 			mouse_position.y >= finded->y - (int)(finded->r * editor->zoom))
 			{
-				push_point(&editor->room_point, finded);
-				editor->room_point->x = coord.x;
-				editor->room_point->y = coord.y;
+				push_point(&editor->point, finded);
+				editor->point->x = coord.x;
+				editor->point->y = coord.y;
 				editor->point_cnt++;
-				if (editor->room_point && editor->room_point->next)
+				if (editor->point_cnt >= 2 && editor->point && editor->point->next)
 				{
-					editor->point_cnt = 0;
-					delete_stick_line_room(editor);
-					push_room(&editor->rooms, editor->room_point);
-					calc_max_min(editor->rooms);
-					editor->rooms->alpha = 80;
+					editor->point_cnt = 1;
+					push_line(&editor->lines, editor->point, editor->point->next);
+					editor->lines->color = WALL_COLOR;
+					editor->lines->id = editor->line_id;
+					editor->line_id++;
 					editor->max_sectors++;
-					editor->num_of_rooms++;
-					sort_rooms(&editor->rooms, editor->num_of_rooms);
-					editor->room_point = NULL;
 				}
 			}
 	}

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:15 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 18:38:03 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/29 15:29:28 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,38 @@ int		keyboard_events_down(t_editor *editor, SDL_Event event)
 	if (event.key.keysym.sym == SDLK_ESCAPE)
 		return (1);
 	else if (event.key.keysym.sym == SDLK_s)
+	{
 		editor->flags.t_f.select = editor->flags.t_f.select ? 0 : 1;
+		editor->flags.t_f.floor = 0;
+		if (editor->flags.t_f.select)
+		{
+			if (editor->point_cnt)
+			{
+				delete_stick_line_room(editor);
+				// pop_point(&editor->point);
+				editor->point_cnt = 0;
+			}
+
+		}
+
+	}
 	else if (event.key.keysym.sym == SDLK_LCTRL)
 		editor->flags.t_f.lctrl = 1;
 	else if (editor->flags.t_f.lctrl && event.key.keysym.sym == SDLK_z)
 	{
-		pop_line(&editor->lines);
-		pop_point(&editor->point);
-		editor->max_sectors--;
+		if (editor->stick_line)
+			delete_stick_line_room(editor);
+		else
+		{
+			if (editor->lines)
+			{
+				pop_line(&editor->lines);
+				editor->max_sectors--;
+			}	
+			if (editor->point)
+				pop_point(&editor->point);
+		}
+		editor->point_cnt = 0;
 	}
 	else if (event.key.keysym.sym == SDLK_SPACE && editor->point)
 		close_room(editor);
@@ -108,8 +132,15 @@ int		keyboard_events_down(t_editor *editor, SDL_Event event)
 		find_and_delete(editor);
 	else if (event.key.keysym.sym == SDLK_f)
 	{
+
+		editor->flags.t_f.floor = editor->flags.t_f.floor ? 0 : 1;
 		editor->flags.t_f.select = 0;
-		editor->flags.t_f.floor = 1;
+		if (editor->point_cnt)
+			{
+				delete_stick_line_room(editor);
+				// pop_point(&editor->point);
+				editor->point_cnt = 0;
+			}
 	}
 
 	return (0);
