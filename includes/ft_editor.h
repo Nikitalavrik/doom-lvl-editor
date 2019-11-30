@@ -40,7 +40,7 @@
 # define TEXTURE_COLOR 0x05386b
 # define PRESS_WALL_COLOR 0x85dcb
 # define SPRITE_COLOR 0xc93706
-# define BACKGROUND 0xfefffa
+# define BACKGROUND 0xffffff
 # define SPRITE_SIZE 10
 #define C_WIDTH 612
 #define C_HEIGHT 712

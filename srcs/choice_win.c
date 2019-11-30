@@ -69,7 +69,6 @@ void	put_text_to_screen(t_editor *editor, int y, int x, int *k)
 		while (x1 < 128)
 		{
 			editor->new_win->screen[y][x] = editor->doom->text[*k].tex[y1 * 128 + x1];
-			// get_pix_from_text(editor->doom->text[*k % editor->doom->count_text], x1, y1);
 			x++;
 			x1++;
 		}
@@ -215,7 +214,7 @@ void	new_win_init(t_editor *editor)
 	editor->new_win->win_id = SDL_GetWindowID(editor->new_win->win);
 	editor->new_win->mem_space = 148 * editor->doom->count_text / 4 + 20;
 	editor->new_win->screen = ft_memalloc(sizeof(Uint32 *) * editor->new_win->mem_space);
-	while (i < 148 * editor->doom->count_text / 4  + 20)
+	while (i < editor->new_win->mem_space)
 	{
 		editor->new_win->screen[i] = ft_memalloc(sizeof(Uint32) * C_WIDTH);
 		i++;

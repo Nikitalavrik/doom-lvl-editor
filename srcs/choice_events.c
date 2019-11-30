@@ -38,7 +38,7 @@ void		new_event3(t_editor *editor, SDL_Event event)
 	if (editor->new_win->events->down)
 	{
 		if (editor->new_win->cam_y < editor->new_win->mem_space - C_HEIGHT - 35)
-			editor->new_win->cam_y += 50;
+			editor->new_win->cam_y += 35;
 		else
 			editor->new_win->cam_y = editor->new_win->mem_space - C_HEIGHT;
 		draw_list_text(editor);

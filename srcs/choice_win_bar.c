@@ -71,7 +71,6 @@ t_coord		get_input_coord(int x, int y)
 	coord.y = y;
 	coord.x1 = x + 80;
 	coord.y1 = y + 20;
-	// printf("coord.x = %i\ncoord.y = %i\ncoord.x1 = %i\ncoord.y1 = %i\n\n", coord.x, coord.y, coord.x1, coord.y1);
 	return (coord);
 }
 
