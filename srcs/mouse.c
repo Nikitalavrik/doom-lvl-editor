@@ -12,7 +12,7 @@
 
 #include "ft_editor.h"
 
-void	mouse_zoom(t_editor *editor, SDL_Event	event)
+void	mouse_zoom(t_editor *editor, SDL_Event event)
 {
 	t_coords 	mouse_position;
 	double		sq_zoom;

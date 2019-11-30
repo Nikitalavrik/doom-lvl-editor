@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/30 12:59:44 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/30 17:19:48 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,9 @@ SRC =	editor_main.c		\
 		keyboard_switch.c	\
 		point.c				\
 		flag_managment.c	\
-		rot_map.c
+		rot_map.c			\
+		choice_win_bar.c	\
+		write_to_pole.c
 
 SRC_DOOM = mkhomich/srcs/main.c \
         mkhomich/srcs/raycasting.c \
