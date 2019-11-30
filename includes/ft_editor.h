@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 18:14:14 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/30 15:26:18 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,9 @@ typedef struct			s_eline
 	t_epoint			*points[2];
 	int					color;
 	int					num_of_textures;
+	int					begin_height;
+	int					height;
+	int					rot_angle;
 	struct s_eline		*next;
 	struct s_eline		*prev;
 }						t_eline;
@@ -159,6 +162,8 @@ typedef struct			s_room
 	t_esprite			*sprites;
 	int					max_sprites;
 	int					area;
+	int					height;
+	int					rot_angle;
 	unsigned char		alpha;
 	struct	s_room		*next;
 	struct	s_room		*prev;	
@@ -270,6 +275,9 @@ typedef	struct			s_editor
 	t_eline				*stick_line;
 	t_room				*stick_room;
 	t_epoint			*stick_point;
+	float				up_down;
+	float				left_right;
+	t_coord				absolute_center;
 }						t_editor;
 
 /*
@@ -425,5 +433,11 @@ void			god_rot_move(t_editor *editor, SDL_Event event);
 */
 
 void			null_editing_flags(t_flags *flags);
+
+/*
+** rotating map
+*/
+
+void			change_view(t_editor *editor);
 
 #endif

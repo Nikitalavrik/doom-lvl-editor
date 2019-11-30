@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:50:47 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 15:51:25 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/30 14:07:06 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void		coords_rerange(t_editor *editor)
 			SQUARE_SIZE * editor->zoom) - editor->center.x;
 			editor->coords[iterator.y][iterator.x].y = (int)(iterator.y *\
 			SQUARE_SIZE * editor->zoom) - editor->center.y;
+			editor->coords[iterator.y][iterator.x].z = 0;
 			if (!editor->coords[iterator.y][iterator.x].color)
 				editor->coords[iterator.y][iterator.x].color = STANDART_COLOR;
 			if (!editor->coords[iterator.y][iterator.x].inc)
@@ -51,4 +52,5 @@ void		coords_rerange(t_editor *editor)
 		}
 		iterator.y++;
 	}
+	change_view(editor);
 }

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:58:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 17:06:13 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/30 14:21:53 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	add_line(t_editor *editor)
 					push_line(&editor->lines, editor->point, editor->point->next);
 					editor->lines->color = WALL_COLOR;
 					editor->lines->id = editor->line_id;
+					editor->lines->height = 20;
 					editor->line_id++;
 					editor->max_sectors++;
 				}

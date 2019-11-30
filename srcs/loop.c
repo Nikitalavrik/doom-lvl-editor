@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:38:31 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 15:42:32 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/30 13:49:15 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	editor_loop(t_editor *editor)
 {
 	ft_bzero(editor->surf->pixels, E_WIDTH * E_HEIGHT * sizeof(int));
+	coords_rerange(editor);
 	draw_rooms(editor);
 	draw_stick_room(editor);
 	draw_lines(editor, editor->lines);
@@ -40,7 +41,6 @@ int		main_loop(t_editor *editor)
 	quit = 0;
 	while (!quit)
 	{
-
 		quit = detect_event(editor);
 		if (editor->flags.t_f.visual)
 			doom_loop(editor);

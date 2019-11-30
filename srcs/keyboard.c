@@ -6,16 +6,42 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:15 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 19:00:33 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:06:01 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
 
+
+
 void	keyboard_for_visual(t_editor *editor, SDL_Event event)
 {
 	(void)event;
 	(void)editor;
+	if (event.key.keysym.sym == SDLK_UP)
+	{
+		editor->doom->toch[0].y++;
+		editor->doom->toch[1].y++;
+		editor->doom->toch[2].y++;
+		editor->doom->toch[3].y++;
+		grid_sec(editor->doom, &editor->doom->sec[0]);
+		ft_printf("aim_sec = %i\n", editor->doom->aim_sec);
+	}
+}
+
+int		check_rotation(t_editor *editor, SDL_Event event)
+{
+	if (event.key.keysym.sym == SDLK_LEFT && editor->left_right < 0.7)
+		editor->left_right += 0.1;
+	else if (event.key.keysym.sym == SDLK_RIGHT && editor->left_right > -0.7)
+		editor->left_right -= 0.1;
+	else if (event.key.keysym.sym == SDLK_UP && editor->up_down < 1)
+		editor->up_down += 0.1;
+	else if (event.key.keysym.sym == SDLK_DOWN && editor->up_down > 0)
+		editor->up_down -= 0.1;
+	else
+		return (0);
+	return (1);
 }
 
 void	keyboard_for_editor(t_editor *editor, SDL_Event event)
@@ -36,6 +62,8 @@ void	keyboard_for_editor(t_editor *editor, SDL_Event event)
 		find_and_delete(editor);
 	else if (event.key.keysym.sym == SDLK_f)
 		switch_to_floor_build(editor);
+	else if (check_rotation(editor, event))
+		ft_printf("up_down = %f left_right = %f\n", editor->up_down, editor->left_right);
 }
 
 int		keyboard_events_down(t_editor *editor, SDL_Event event)

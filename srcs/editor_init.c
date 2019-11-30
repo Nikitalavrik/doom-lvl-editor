@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:20:39 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 15:51:06 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/30 13:53:58 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ t_editor	*init_editor(void)
 	editor->doom->z_buffer = (int*)malloc(sizeof(int) * WIDTH * HEIGHT);
 	editor->doom->window = editor->win;
 	editor->doom->surface = editor->surf;
+	editor->absolute_center.x = (editor->width - MENU_WIDTH) / 2;
+	editor->absolute_center.y = (editor->height) / 2;
 	ft_printf("x = %i y = %i\n", editor->center.x, editor->center.y);
 	return (editor);
 }

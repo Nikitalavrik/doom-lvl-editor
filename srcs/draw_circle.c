@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:36:13 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 16:04:58 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/30 13:05:07 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	draw_cells(t_editor *editor)
 	t_coords	step;
 
 	step.y = 0;
-	coords_rerange(editor);
 	while (step.y < editor->size.y)
 	{
 		step.x = 0;

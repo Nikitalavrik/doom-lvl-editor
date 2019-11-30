@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:32:57 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 15:34:25 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/30 14:04:58 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ t_coords	calc_delta(t_coords coord0, t_coords coord1,
 	return (coord);
 }
 
+void	draw_line_wall(t_editor *editor,t_coords coord)
+{
+	int		height;
+
+	height = 1;
+	while (height < coord.z)
+	{
+		put_epixel(editor, coord.x, coord.y + height, TEXTURE_COLOR);
+		height++;
+	}
+}
+
 void		draw_eline(t_editor *editor, t_coords coord0,
 										t_coords coord1, int color)
 {
@@ -40,6 +52,8 @@ void		draw_eline(t_editor *editor, t_coords coord0,
 	(coord0.y < 0 && coord1.y < 0)))
 	{
 		put_epixel(editor, coord.x, coord.y, color);
+		if (coord0.z)
+			draw_line_wall(editor, coord);
 		if (((coord.x == coord1.x)\
 					&& (coord.y == coord1.y)) || (coord.x < 0 && coord.y < 0))
 			break ;
