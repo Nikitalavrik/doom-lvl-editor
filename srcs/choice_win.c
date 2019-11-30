@@ -12,21 +12,6 @@
 
 #include "ft_editor.h"
 
-void 	add_text_to_space(t_editor *editor)
-{
-	SDL_Color	color;
-	SDL_Surface	*message;
-	SDL_Rect	f;
-
-	f.x = C_WIDTH + 25;
-	f.y = 25;
-	color = (SDL_Color){0, 0, 0, 0};
-	message = TTF_RenderText_Solid(editor->new_win->font, editor->new_win->input_text, color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->new_win->win), &f);
-	SDL_UpdateWindowSurface(editor->new_win->win);
-	SDL_FreeSurface(message);
-}
-
 Uint32	get_pix_from_text(SDL_Surface *text, int x, int y)
 {
 	Uint32	*tmp;
@@ -77,14 +62,14 @@ void	put_text_to_screen(t_editor *editor, int y, int x, int *k)
 
 	y1 = 0;
 	old_x = x;
-	while (y1 < 64)
+	while (y1 < 128)
 	{
 		x1 = 0;
 		x = old_x;
-		while (x1 < 64)
+		while (x1 < 128)
 		{
-			editor->new_win->screen[y][x] =\
-			get_pix_from_text(editor->textures[*k % TEXTNUM], x1, y1);
+			editor->new_win->screen[y][x] = editor->doom->text[*k].tex[y1 * 128 + x1];
+			// get_pix_from_text(editor->doom->text[*k % editor->doom->count_text], x1, y1);
 			x++;
 			x1++;
 		}
@@ -107,12 +92,15 @@ void	add_textures_to_screen(t_editor *editor)
 
 	x = 20;
 	y = 20;
-	k = 0;
-	while (y + 64 < 3000)
+	k = 1;
+	while (y + 128 < 148 * editor->doom->count_text / 4 + 20)
 	{
 		x = 20;
-		while (x + 64 < C_WIDTH)
+		while (x + 128 < C_WIDTH)
 		{
+			k %= editor->doom->count_text;
+			if (k == 0)
+				k++;
 			put_text_to_screen(editor, y, x, &k);
 			x += editor->new_win->delim_x;
 		}
@@ -142,12 +130,12 @@ t_coord		get_coord(t_editor *editor)
 {
 	t_coord	coord;
 
-	coord.x = (editor->new_win->mouse.x / 84 * 84 + 20);
-	coord.x1 = coord.x + 64;
-	coord.y = ((editor->new_win->mouse.y + editor->new_win->cam_y) / 84 * 84 + 20);
-	coord.y1 = coord.y + 64;
-	editor->new_win->active_num.tex_num = editor->new_win->mouse.x / 84  +\
-		(editor->new_win->mouse.y + editor->new_win->cam_y) / 84 * C_WIDTH / 84 ;
+	coord.x = (editor->new_win->mouse.x / 148 * 148 + 20);
+	coord.x1 = coord.x + 128;
+	coord.y = ((editor->new_win->mouse.y + editor->new_win->cam_y) / 148 * 148 + 20);
+	coord.y1 = coord.y + 128;
+	editor->new_win->active_num.tex_num = editor->new_win->mouse.x / 148  +\
+		(editor->new_win->mouse.y + editor->new_win->cam_y) / 148 * C_WIDTH / 148 ;
 	editor->new_win->active_num.coord.x = coord.x;
 	editor->new_win->active_num.coord.y = coord.y;
 	editor->new_win->active_num.coord.x1 = coord.x1;
@@ -221,46 +209,31 @@ void	new_win_init(t_editor *editor)
 	i = 0;
 	editor->new_win = ft_memalloc(sizeof(t_win));
 	editor->new_win->win = SDL_CreateWindow("Textures", SDL_WINDOWPOS_UNDEFINED, \
-		SDL_WINDOWPOS_UNDEFINED, 1024,\
+		SDL_WINDOWPOS_UNDEFINED, 924,\
 		712, 0);
 	editor->new_win->sur = SDL_GetWindowSurface(editor->new_win->win);
 	editor->new_win->win_id = SDL_GetWindowID(editor->new_win->win);
-	editor->new_win->screen = ft_memalloc(sizeof(Uint32 *) * 3000);
-	while (i < 3000)
+	editor->new_win->mem_space = 148 * editor->doom->count_text / 4 + 20;
+	editor->new_win->screen = ft_memalloc(sizeof(Uint32 *) * editor->new_win->mem_space);
+	while (i < 148 * editor->doom->count_text / 4  + 20)
 	{
 		editor->new_win->screen[i] = ft_memalloc(sizeof(Uint32) * C_WIDTH);
 		i++;
 	}
 	editor->new_win->cam_y = 0;
-	editor->new_win->delim_x = 84;
-	editor->new_win->delim_y = 84;
+	editor->new_win->delim_x = 148;
+	editor->new_win->delim_y = 148;
 	editor->new_win->events = ft_memalloc(sizeof(t_ev));
 	editor->new_win->active_num.tex_num = -1;
-	editor->new_win->input_text = ft_strdup("");
-	editor->new_win->font = TTF_OpenFont("fonts/font1.ttf", 14);
-}
-
-void		draw_white_space(t_editor *editor)
-{
-	t_coord coord;
-	Uint32	*pic;
-
-	coord.x = C_WIDTH + 20;
-	coord.y = 20;
-	coord.x1 = coord.x + 100;
-	coord.y1 = 40;
-	while (coord.x < coord.x1)
-	{
-		coord.y = 20;
-		while (coord.y < coord.y1)
-		{
-			pic = editor->new_win->sur->pixels + coord.y * editor->new_win->sur->pitch +
-			coord.x * editor->new_win->sur->format->BytesPerPixel;
-			*pic = BACKGROUND;
-			coord.y++;
-		}
-		coord.x++;
-	}
+	editor->new_win->wall_angle = ft_strdup("");
+	editor->new_win->height_wall = ft_strdup("");
+	editor->new_win->height_above = ft_strdup("");
+	editor->new_win->transp = ft_strdup("");
+	editor->new_win->ws_coord1 = get_input_coord(C_WIDTH + 210, 20);
+	editor->new_win->ws_coord2 = get_input_coord(C_WIDTH + 210, 60);
+	editor->new_win->ws_coord3 = get_input_coord(C_WIDTH + 210, 100);
+	editor->new_win->ws_coord4 = get_input_coord(C_WIDTH + 210, 140);
+	draw_right_menu(editor);
 }
 
 void		choice_win(t_editor *editor, SDL_Event event, int flag)
@@ -270,7 +243,6 @@ void		choice_win(t_editor *editor, SDL_Event event, int flag)
 	new_win_init(editor);
 	add_textures_to_screen(editor);
 	draw_list_text(editor);
-	draw_white_space(editor);
 	SDL_UpdateWindowSurface(editor->new_win->win);
 	while (1)
 	{

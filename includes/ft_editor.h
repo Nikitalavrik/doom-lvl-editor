@@ -42,7 +42,7 @@
 # define SPRITE_COLOR 0xc93706
 # define BACKGROUND 0xfefffa
 # define SPRITE_SIZE 10
-#define C_WIDTH 712
+#define C_WIDTH 612
 #define C_HEIGHT 712
 #define TEXTNUM 9
 // # define STANDART_COLOR 0xc38d9e
@@ -69,7 +69,11 @@ typedef	union			s_flags
 		unsigned char 	visual 	: 1;
 		unsigned char 	floor 	: 1;
 		unsigned char 	line 	: 1;
-		unsigned char 	any 	: 6;
+		unsigned char	pole_1	: 1;
+		unsigned char	pole_2	: 1;
+		unsigned char	pole_3	: 1;
+		unsigned char	pole_4	: 1;
+		unsigned char 	any 	: 2;
 	}					t_f;
 }						t_flags;
 
@@ -227,8 +231,15 @@ typedef struct		s_win
 	int				delim_y;
 	t_act			active_num;
 	t_ev			*events;
-	char			*input_text;
-	TTF_Font		*font;
+	int				mem_space;
+	t_coord			ws_coord1;
+	t_coord			ws_coord2;
+	t_coord			ws_coord3;
+	t_coord			ws_coord4;
+	char			*wall_angle;
+	char			*height_wall;
+	char			*height_above;
+	char			*transp;
 }					t_win;
 
 /*
@@ -239,6 +250,7 @@ typedef	struct			s_editor
 {
 
 	TTF_Font			*font;
+	TTF_Font			*font1;
 	SDL_Color			fg;
 	SDL_Window			*win;
 	SDL_Surface			*surf;
@@ -380,8 +392,14 @@ void			choice_win(t_editor *editor, SDL_Event event, int flag);
 void			new_event(t_editor *editor, SDL_Event event);
 void			draw_rectangle(t_editor *editor);
 void			draw_list_text(t_editor *editor);
-void 			add_text_to_space(t_editor *editor);
-void			draw_white_space(t_editor *editor);
+void 			add_text_to_space(t_editor *editor, t_coord coord,\
+				SDL_Window *win, char *text);
+void			draw_white_space(t_coord coord, SDL_Surface *surf);
+void			draw_right_menu(t_editor *editor);
+t_coord			get_input_coord(int x, int y);
+void			get_pole_num(t_editor *editor);
+void			write_to_pole(t_editor *editor, char **text, SDL_Event event);
+t_coord			get_coord_from_flag(t_editor *editor);
 
 /*
 ** FREE

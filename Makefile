@@ -46,7 +46,9 @@ SRC =	editor_main.c		\
 		keyboard_events.c	\
 		keyboard_switch.c	\
 		point.c				\
-		flag_managment.c
+		flag_managment.c	\
+		choice_win_bar.c	\
+		write_to_pole.c
 
 SRC_DOOM = mkhomich/srcs/main.c \
         mkhomich/srcs/raycasting.c \

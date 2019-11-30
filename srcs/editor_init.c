@@ -16,6 +16,7 @@ void		init_music_font(t_editor *editor)
 {
 	TTF_Init();
 	editor->font = TTF_OpenFont("fonts/Aller_b.ttf", 24);
+	editor->font1 = TTF_OpenFont("fonts/font1.ttf", 14);
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 		print_error("SDL : ", " mixer didn`t init\n");
 	editor->music = Mix_LoadMUS("music/Majestic.mp3");

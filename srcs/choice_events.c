@@ -37,10 +37,10 @@ void		new_event3(t_editor *editor, SDL_Event event)
 		editor->new_win->events->down = event.key.type == SDL_KEYDOWN;
 	if (editor->new_win->events->down)
 	{
-		if (editor->new_win->cam_y < 3000 - 712 - 50)
+		if (editor->new_win->cam_y < editor->new_win->mem_space - C_HEIGHT - 35)
 			editor->new_win->cam_y += 50;
 		else
-			editor->new_win->cam_y = 2288;
+			editor->new_win->cam_y = editor->new_win->mem_space - C_HEIGHT;
 		draw_list_text(editor);
 		SDL_UpdateWindowSurface(editor->new_win->win);
 		editor->new_win->events->up = 0;
@@ -54,10 +54,10 @@ void		new_event2(t_editor *editor, SDL_Event event)
 	{
 		if (event.wheel.y > 0)
 		{
-			if (editor->new_win->cam_y < 3000 - 712 - 35)
+			if (editor->new_win->cam_y < editor->new_win->mem_space - C_HEIGHT - 35)
 				editor->new_win->cam_y += 35;
 			else
-				editor->new_win->cam_y = 2288;
+				editor->new_win->cam_y = editor->new_win->mem_space - C_HEIGHT;
 			draw_list_text(editor);
 		}
 		if (event.wheel.y < 0)
@@ -77,8 +77,6 @@ void		new_event2(t_editor *editor, SDL_Event event)
 
 void		new_event(t_editor *editor, SDL_Event event)
 {
-	char *tmp;
-
 	if (event.window.event == SDL_WINDOWEVENT_CLOSE)
 	{
 		SDL_FreeSurface(editor->new_win->sur);
@@ -87,7 +85,6 @@ void		new_event(t_editor *editor, SDL_Event event)
 		editor->new_win = NULL;
 		SDL_StopTextInput();
 		return ;
-
 	}
 	if (event.button.clicks == 1)
 	{
@@ -96,30 +93,17 @@ void		new_event(t_editor *editor, SDL_Event event)
 			editor->new_win->mouse.x < C_WIDTH - 20 &&\
 			((editor->new_win->mouse.y + editor->new_win->cam_y) %\
 			editor->new_win->delim_y) > 20 && (editor->new_win->mouse.y +\
-			editor->new_win->cam_y) < 2940)
+			editor->new_win->cam_y) < editor->new_win->mem_space)
 			draw_rectangle(editor);
+		get_pole_num(editor);
 	}
-	else if (event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN)
-	{
-		if (event.key.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_BACKSPACE && ft_strlen(editor->new_win->input_text) > 0)
-		{
-			tmp = editor->new_win->input_text;
-			editor->new_win->input_text = ft_strsub(tmp, 0, ft_strlen(editor->new_win->input_text) - 1);
-			free(tmp);
-		}
-		else if (event.type == SDL_TEXTINPUT &&\
-			ft_strlen(editor->new_win->input_text) < 10 &&\
-			((event.text.text[0] >= '0' && event.text.text[0] <= '9')\
-			|| (event.text.text[0] == '.' &&\
-			!ft_strchr(editor->new_win->input_text, '.'))))
-		{
-			tmp = editor->new_win->input_text;
-			editor->new_win->input_text = ft_strjoin(tmp, event.text.text);
-			free(tmp);
-		}
-		draw_white_space(editor);
-		add_text_to_space(editor);
-		printf("%s\n", editor->new_win->input_text);
-	}
+	else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
+		write_to_pole(editor, &editor->new_win->wall_angle, event);
+	else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_2)
+		write_to_pole(editor, &editor->new_win->height_wall, event);
+	else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_3)
+		write_to_pole(editor, &editor->new_win->height_above, event);
+	else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_4)
+		write_to_pole(editor, &editor->new_win->transp, event);
 	new_event2(editor, event);
 }
