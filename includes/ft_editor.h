@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/30 15:26:18 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:21:07 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct			s_eline
 	int					begin_height;
 	int					height;
 	int					rot_angle;
+	int					alpha;
 	struct s_eline		*next;
 	struct s_eline		*prev;
 }						t_eline;
