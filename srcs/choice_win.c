@@ -12,6 +12,26 @@
 
 #include "ft_editor.h"
 
+void	draw_button(t_editor *editor, int button_num)
+{
+	SDL_Rect	rect1;
+	SDL_Color	color;
+	SDL_Surface	*message;
+	SDL_Rect	f;
+
+	rect1.x = editor->new_win->button_coord.x;
+	rect1.y = editor->new_win->button_coord.y;
+	rect1.w = editor->new_win->button_coord.x1 - editor->new_win->button_coord.x;
+	rect1.h = editor->new_win->button_coord.y1 - editor->new_win->button_coord.y;
+	SDL_BlitScaled(editor->button[button_num], NULL ,editor->new_win->sur, &rect1);
+	f.x = rect1.x + 95;
+	f.y = rect1.y + 10;
+	color = (SDL_Color){200, 200, 100, 0};
+	message = TTF_RenderText_Solid(editor->font1, "SAVE AND EXIT", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->new_win->win), &f);
+	SDL_UpdateWindowSurface(editor->new_win->win);
+}
+
 Uint32	get_pix_from_text(SDL_Surface *text, int x, int y)
 {
 	Uint32	*tmp;
@@ -201,9 +221,45 @@ void		draw_rectangle(t_editor *editor)
 	draw_list_text(editor);
 }
 
-void	new_win_init(t_editor *editor)
+void		draw_first_rectangle(t_editor *editor)
 {
 	int		i;
+	int		n;
+
+	i = 0;
+	n = 10;
+	while (n > 0)
+	{
+		i = editor->new_win->active_num.coord.x - n;
+		while (i < editor->new_win->active_num.coord.x1 + n)
+		{
+			put_to_screen(editor, i, editor->new_win->active_num.coord.y - n, 0x0062ff);
+			put_to_screen(editor, i, editor->new_win->active_num.coord.y1 + n, 0x0062ff);
+			i++;
+		}
+		i = editor->new_win->active_num.coord.y - n;
+		while (i <= editor->new_win->active_num.coord.y1 + n)
+		{
+			put_to_screen(editor, editor->new_win->active_num.coord.x - n, i, 0x0062ff);
+			put_to_screen(editor, editor->new_win->active_num.coord.x1 + n, i, 0x0062ff);
+			i++;
+		}
+		n--;
+	}
+}
+
+void	set_up_text(t_editor *editor, t_coord *coord)
+{
+	coord->x = editor->new_win->active_num.tex_num % 4 * 148 + 20;
+	coord->y = editor->new_win->active_num.tex_num / 4 * 148 + 20;
+	coord->x1 = coord->x + 128;
+	coord->y1 = coord->y + 128;
+}
+
+void	new_win_init(t_editor *editor, void *param, int flag)
+{
+	int		i;
+	t_eline	*line;
 
 	i = 0;
 	editor->new_win = ft_memalloc(sizeof(t_win));
@@ -224,24 +280,30 @@ void	new_win_init(t_editor *editor)
 	editor->new_win->delim_y = 148;
 	editor->new_win->events = ft_memalloc(sizeof(t_ev));
 	editor->new_win->active_num.tex_num = -1;
-	editor->new_win->wall_angle = ft_strdup("");
-	editor->new_win->height_wall = ft_strdup("");
-	editor->new_win->height_above = ft_strdup("");
-	editor->new_win->transp = ft_strdup("");
 	editor->new_win->ws_coord1 = get_input_coord(C_WIDTH + 210, 20);
 	editor->new_win->ws_coord2 = get_input_coord(C_WIDTH + 210, 60);
 	editor->new_win->ws_coord3 = get_input_coord(C_WIDTH + 210, 100);
 	editor->new_win->ws_coord4 = get_input_coord(C_WIDTH + 210, 140);
+	editor->new_win->param = param;
+	editor->new_win->button_coord.x = C_WIDTH + 5;
+	editor->new_win->button_coord.y = C_HEIGHT - 50;
+	editor->new_win->button_coord.x1 = editor->new_win->button_coord.x + 300;
+	editor->new_win->button_coord.y1 = editor->new_win->button_coord.y + 32;
+	line = (t_eline *)param;
+	editor->new_win->param_flag = flag;
+	editor->new_win->active_num.tex_num = line->num_of_textures - 1;
+	set_up_text(editor,  &editor->new_win->active_num.coord);
 	draw_right_menu(editor);
 }
 
-void		choice_win(t_editor *editor, SDL_Event event, int flag)
+void		choice_win(t_editor *editor, SDL_Event event, int flag, void *param)
 {
-	flag++;
 	SDL_StartTextInput();
-	new_win_init(editor);
+	new_win_init(editor, param, flag);
 	add_textures_to_screen(editor);
+	draw_first_rectangle(editor);
 	draw_list_text(editor);
+	draw_button(editor, 1);
 	SDL_UpdateWindowSurface(editor->new_win->win);
 	while (1)
 	{

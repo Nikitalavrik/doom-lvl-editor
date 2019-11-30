@@ -25,7 +25,7 @@ void	keyboard_for_visual(t_editor *editor, SDL_Event event)
 		editor->doom->toch[2].y++;
 		editor->doom->toch[3].y++;
 		grid_sec(editor->doom, &editor->doom->sec[0]);
-		ft_printf("aim_sec = %i\n", editor->doom->aim_sec);
+		// ft_printf("aim_sec = %i\n", editor->doom->aim_sec);
 	}
 }
 

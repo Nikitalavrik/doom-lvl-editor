@@ -12,6 +12,48 @@
 
 #include "ft_editor.h"
 
+int			check_currsor(t_editor *editor)
+{
+	if (editor->new_win->mouse.x > editor->new_win->button_coord.x &&\
+		editor->new_win->mouse.x < editor->new_win->button_coord.x1 &&\
+		editor->new_win->mouse.y > editor->new_win->button_coord.y &&\
+		editor->new_win->mouse.y < editor->new_win->button_coord.y1)
+		return (1);
+	return (0);
+}
+
+void		close_choice_win(t_editor *editor)
+{
+	t_eline	*line;
+	int		i;
+
+	line = (t_eline *)editor->new_win->param;
+	line->rot_angle = ft_atoi(editor->new_win->wall_angle);
+	line->height = ft_atoi(editor->new_win->height_wall);
+	line->begin_height = ft_atoi(editor->new_win->height_above);
+	line->alpha = ft_atoi(editor->new_win->transp);
+	line->num_of_textures = (editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
+	if (!line->num_of_textures)
+		line->num_of_textures++;
+	free(editor->new_win->wall_angle);
+	free(editor->new_win->height_wall);
+	free(editor->new_win->height_above);
+	free(editor->new_win->transp);
+	i = 0;
+	while (i < editor->new_win->mem_space)
+	{
+		free(editor->new_win->screen[i]);
+		i++;
+	}
+	free(editor->new_win->screen);
+	free(editor->new_win->events);
+	SDL_FreeSurface(editor->new_win->sur);
+	SDL_DestroyWindow(SDL_GetWindowFromID(editor->new_win->win_id));
+	free(editor->new_win);
+	editor->new_win = NULL;
+	SDL_StopTextInput();
+}
+
 void		new_event4(t_editor *editor, SDL_Event event)
 {
 	if (editor->new_win->events->up)
@@ -79,31 +121,39 @@ void		new_event(t_editor *editor, SDL_Event event)
 {
 	if (event.window.event == SDL_WINDOWEVENT_CLOSE)
 	{
-		SDL_FreeSurface(editor->new_win->sur);
-		SDL_DestroyWindow(SDL_GetWindowFromID(editor->new_win->win_id));
-		free(editor->new_win);
-		editor->new_win = NULL;
-		SDL_StopTextInput();
+		close_choice_win(editor);
 		return ;
 	}
-	if (event.button.clicks == 1)
+	else
 	{
-		SDL_GetMouseState(&editor->new_win->mouse.x, &editor->new_win->mouse.y);
-		if ((editor->new_win->mouse.x % editor->new_win->delim_x) > 20 &&\
-			editor->new_win->mouse.x < C_WIDTH - 20 &&\
-			((editor->new_win->mouse.y + editor->new_win->cam_y) %\
-			editor->new_win->delim_y) > 20 && (editor->new_win->mouse.y +\
-			editor->new_win->cam_y) < editor->new_win->mem_space)
-			draw_rectangle(editor);
-		get_pole_num(editor);
+		if(editor->new_win)
+		{
+			SDL_GetMouseState(&editor->new_win->mouse.x, &editor->new_win->mouse.y);
+		
+			if (check_currsor(editor) == 1)
+				draw_button(editor, 0);
+			else
+				draw_button(editor, 1);
+			if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
+			{
+				if ((editor->new_win->mouse.x % editor->new_win->delim_x) > 20 &&\
+					editor->new_win->mouse.x < C_WIDTH - 20 &&\
+					((editor->new_win->mouse.y + editor->new_win->cam_y) %\
+					editor->new_win->delim_y) > 20 && (editor->new_win->mouse.y +\
+					editor->new_win->cam_y) < editor->new_win->mem_space)
+					draw_rectangle(editor);
+
+				get_pole_num(editor);
+			}
+			else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
+				write_to_pole(editor, &editor->new_win->wall_angle, event);
+			else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_2)
+				write_to_pole(editor, &editor->new_win->height_wall, event);
+			else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_3)
+				write_to_pole(editor, &editor->new_win->height_above, event);
+			else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_4)
+				write_to_pole(editor, &editor->new_win->transp, event);
+			new_event2(editor, event);
+		}
 	}
-	else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
-		write_to_pole(editor, &editor->new_win->wall_angle, event);
-	else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_2)
-		write_to_pole(editor, &editor->new_win->height_wall, event);
-	else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_3)
-		write_to_pole(editor, &editor->new_win->height_above, event);
-	else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_4)
-		write_to_pole(editor, &editor->new_win->transp, event);
-	new_event2(editor, event);
 }

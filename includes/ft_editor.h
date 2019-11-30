@@ -242,10 +242,13 @@ typedef struct		s_win
 	t_coord			ws_coord2;
 	t_coord			ws_coord3;
 	t_coord			ws_coord4;
+	t_coord			button_coord;
 	char			*wall_angle;
 	char			*height_wall;
 	char			*height_above;
 	char			*transp;
+	void			*param;
+	int				param_flag;
 }					t_win;
 
 /*
@@ -397,7 +400,7 @@ void			load_to_editor(t_editor *editor, char *filename);
 ** choice textures functions
 */
 
-void			choice_win(t_editor *editor, SDL_Event event, int flag);
+void			choice_win(t_editor *editor, SDL_Event event, int flag, void *param);
 void			new_event(t_editor *editor, SDL_Event event);
 void			draw_rectangle(t_editor *editor);
 void			draw_list_text(t_editor *editor);
@@ -409,6 +412,7 @@ t_coord			get_input_coord(int x, int y);
 void			get_pole_num(t_editor *editor);
 void			write_to_pole(t_editor *editor, char **text, SDL_Event event);
 t_coord			get_coord_from_flag(t_editor *editor);
+void			draw_button(t_editor *editor, int button_num);
 
 /*
 ** FREE
