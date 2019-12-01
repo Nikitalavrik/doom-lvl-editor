@@ -96,24 +96,44 @@ void		draw_white_space(t_coord coord, SDL_Surface *surf)
 
 void		draw_right_menu(t_editor *editor)
 {
-	t_eline	*line;
-
-	line = (t_eline *)editor->new_win->param;
-	draw_background(editor);
-	draw_caption(editor, editor->new_win->ws_coord1, editor->new_win->win, "Wall angle:");
-	draw_caption(editor, editor->new_win->ws_coord2, editor->new_win->win, "Height the wall:");
-	draw_caption(editor, editor->new_win->ws_coord3, editor->new_win->win, "Height wall above the floor:");
-	draw_caption(editor, editor->new_win->ws_coord4, editor->new_win->win, "Transparency:");
-	draw_white_space(editor->new_win->ws_coord1, editor->new_win->sur);
-	draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur);
-	draw_white_space(editor->new_win->ws_coord3, editor->new_win->sur);
-	draw_white_space(editor->new_win->ws_coord4, editor->new_win->sur);
-	editor->new_win->wall_angle = ft_itoa(line->rot_angle);
-	add_text_to_space(editor, editor->new_win->ws_coord1, editor->new_win->win, editor->new_win->wall_angle);
-	editor->new_win->height_wall = ft_itoa(line->height);
-	add_text_to_space(editor, editor->new_win->ws_coord2, editor->new_win->win, editor->new_win->height_wall);
-	editor->new_win->height_above = ft_itoa(line->begin_height);
-	add_text_to_space(editor, editor->new_win->ws_coord3, editor->new_win->win, editor->new_win->height_above);
-	editor->new_win->transp = ft_itoa(line->alpha);
-	add_text_to_space(editor, editor->new_win->ws_coord4, editor->new_win->win, editor->new_win->transp);
+	if (editor->new_win->param_flag == 1)
+	{
+		draw_background(editor);
+		draw_caption(editor, editor->new_win->ws_coord1, editor->new_win->win, "Wall angle:");
+		draw_caption(editor, editor->new_win->ws_coord2, editor->new_win->win, "Height the wall:");
+		draw_caption(editor, editor->new_win->ws_coord3, editor->new_win->win, "Height wall above the floor:");
+		// draw_caption(editor, editor->new_win->ws_coord4, editor->new_win->win, "Transparency:");
+		draw_white_space(editor->new_win->ws_coord1, editor->new_win->sur);
+		draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur);
+		draw_white_space(editor->new_win->ws_coord3, editor->new_win->sur);
+		// draw_white_space(editor->new_win->ws_coord4, editor->new_win->sur);
+		editor->new_win->wall_angle = ft_itoa(editor->new_win->param_par.line->rot_angle);
+		add_text_to_space(editor, editor->new_win->ws_coord1, editor->new_win->win, editor->new_win->wall_angle);
+		editor->new_win->height_wall = ft_itoa(editor->new_win->param_par.line->height);
+		add_text_to_space(editor, editor->new_win->ws_coord2, editor->new_win->win, editor->new_win->height_wall);
+		editor->new_win->height_above = ft_itoa(editor->new_win->param_par.line->begin_height);
+		add_text_to_space(editor, editor->new_win->ws_coord3, editor->new_win->win, editor->new_win->height_above);
+		// editor->new_win->transp = ft_itoa(line->alpha);
+		// add_text_to_space(editor, editor->new_win->ws_coord4, editor->new_win->win, editor->new_win->transp);
+	}
+	if (editor->new_win->param_flag == 2)
+	{
+		draw_background(editor);
+		draw_caption(editor, editor->new_win->ws_coord1, editor->new_win->win, "Floor x-axis angle :");
+		draw_caption(editor, editor->new_win->ws_coord2, editor->new_win->win, "Floor y-axis angle :");
+		draw_caption(editor, editor->new_win->ws_coord3, editor->new_win->win, "Height:");
+		// draw_caption(editor, editor->new_win->ws_coord4, editor->new_win->win, "Transparency:");
+		draw_white_space(editor->new_win->ws_coord1, editor->new_win->sur);
+		draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur);
+		draw_white_space(editor->new_win->ws_coord3, editor->new_win->sur);
+		// draw_white_space(editor->new_win->ws_coord4, editor->new_win->sur);
+		editor->new_win->f_x_angle = ft_itoa(editor->new_win->param_par.room->f_x_angle);
+		add_text_to_space(editor, editor->new_win->ws_coord1, editor->new_win->win, editor->new_win->f_x_angle);
+		editor->new_win->f_y_angle = ft_itoa(editor->new_win->param_par.room->f_y_angle);
+		add_text_to_space(editor, editor->new_win->ws_coord2, editor->new_win->win, editor->new_win->f_y_angle);
+		editor->new_win->f_height = ft_itoa(editor->new_win->param_par.room->f_height);
+		add_text_to_space(editor, editor->new_win->ws_coord3, editor->new_win->win, editor->new_win->f_height);
+		// editor->new_win->transp = ft_itoa(line->alpha);
+		// add_text_to_space(editor, editor->new_win->ws_coord4, editor->new_win->win, editor->new_win->transp);
+	}
 }

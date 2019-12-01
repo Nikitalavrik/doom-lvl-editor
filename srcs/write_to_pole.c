@@ -44,16 +44,16 @@ void	get_pole_num(t_editor *editor)
 		editor->flags.t_f.pole_3 = 1;
 		editor->flags.t_f.pole_4 = 0;
 	}
-	else if (editor->new_win->mouse.x > editor->new_win->ws_coord4.x &&\
-		editor->new_win->mouse.x < editor->new_win->ws_coord4.x1 &&\
-		editor->new_win->mouse.y > editor->new_win->ws_coord4.y &&\
-		editor->new_win->mouse.y < editor->new_win->ws_coord4.y1)
-	{
-		editor->flags.t_f.pole_1 = 0;
-		editor->flags.t_f.pole_2 = 0;
-		editor->flags.t_f.pole_3 = 0;
-		editor->flags.t_f.pole_4 = 1;
-	}
+	// else if (editor->new_win->mouse.x > editor->new_win->ws_coord4.x &&\
+	// 	editor->new_win->mouse.x < editor->new_win->ws_coord4.x1 &&\
+	// 	editor->new_win->mouse.y > editor->new_win->ws_coord4.y &&\
+	// 	editor->new_win->mouse.y < editor->new_win->ws_coord4.y1)
+	// {
+	// 	editor->flags.t_f.pole_1 = 0;
+	// 	editor->flags.t_f.pole_2 = 0;
+	// 	editor->flags.t_f.pole_3 = 0;
+	// 	editor->flags.t_f.pole_4 = 1;
+	// }
 	else
 	{
 		editor->flags.t_f.pole_1 = 0;
@@ -71,8 +71,8 @@ t_coord	get_coord_from_flag(t_editor *editor)
 		return (editor->new_win->ws_coord2);
 	if (editor->flags.t_f.pole_3 == 1)
 		return (editor->new_win->ws_coord3);
-	if (editor->flags.t_f.pole_4 == 1)
-		return (editor->new_win->ws_coord4);
+	// if (editor->flags.t_f.pole_4 == 1)
+	// 	return (editor->new_win->ws_coord4);
 	return (editor->new_win->ws_coord1);
 }
 
@@ -90,10 +90,8 @@ void	write_to_pole(t_editor *editor, char **text, SDL_Event event)
 		free(tmp);
 	}
 	else if (event.type == SDL_TEXTINPUT &&\
-		ft_strlen(*text) < 9 &&\
-		((event.text.text[0] >= '0' && event.text.text[0] <= '9')\
-		|| (event.text.text[0] == '.' &&\
-		!ft_strchr(*text, '.'))))
+		ft_strlen(*text) < 3 &&\
+		event.text.text[0] >= '0' && event.text.text[0] <= '9')
 	{
 		tmp = *text;
 		*text = ft_strjoin(tmp, event.text.text);

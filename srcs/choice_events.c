@@ -12,6 +12,34 @@
 
 #include "ft_editor.h"
 
+void		save_parametrs(t_editor *editor)
+{
+	if (editor->new_win->param_flag == 1)
+	{
+		editor->new_win->param_par.line->rot_angle = ft_atoi(editor->new_win->wall_angle);
+		editor->new_win->param_par.line->height = ft_atoi(editor->new_win->height_wall);
+		editor->new_win->param_par.line->begin_height = ft_atoi(editor->new_win->height_above);
+		// line->alpha = ft_atoi(editor->new_win->transp);
+		editor->new_win->param_par.line->num_of_textures = (editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
+		if (!editor->new_win->param_par.line->num_of_textures)
+			editor->new_win->param_par.line->num_of_textures++;
+	}
+	if (editor->new_win->param_flag == 2)
+	{
+		editor->new_win->param_par.room->f_x_angle = ft_atoi(editor->new_win->f_x_angle);
+		editor->new_win->param_par.room->f_y_angle = ft_atoi(editor->new_win->f_y_angle);
+		editor->new_win->param_par.room->f_height = ft_atoi(editor->new_win->f_height);
+		// line->alpha = ft_atoi(editor->new_win->transp);
+		editor->new_win->param_par.room->num_of_textures = (editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
+		if (!editor->new_win->param_par.room->num_of_textures)
+			editor->new_win->param_par.room->num_of_textures++;
+	}
+	// if (editor->new_win->param_flag == 3)
+	// {
+
+	// }
+}
+
 int			check_currsor(t_editor *editor)
 {
 	if (editor->new_win->mouse.x > editor->new_win->button_coord.x &&\
@@ -24,17 +52,8 @@ int			check_currsor(t_editor *editor)
 
 void		close_choice_win(t_editor *editor)
 {
-	t_eline	*line;
 	int		i;
 
-	line = (t_eline *)editor->new_win->param;
-	line->rot_angle = ft_atoi(editor->new_win->wall_angle);
-	line->height = ft_atoi(editor->new_win->height_wall);
-	line->begin_height = ft_atoi(editor->new_win->height_above);
-	line->alpha = ft_atoi(editor->new_win->transp);
-	line->num_of_textures = (editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
-	if (!line->num_of_textures)
-		line->num_of_textures++;
 	free(editor->new_win->wall_angle);
 	free(editor->new_win->height_wall);
 	free(editor->new_win->height_above);
@@ -138,6 +157,7 @@ void		new_event(t_editor *editor, SDL_Event event)
 				draw_button(editor, 1);
 			if (check_currsor(editor) == 1 && event.button.type == SDL_MOUSEBUTTONUP)
 			{
+				save_parametrs(editor);
 				close_choice_win(editor);
 				return ;
 			}
@@ -152,14 +172,26 @@ void		new_event(t_editor *editor, SDL_Event event)
 
 				get_pole_num(editor);
 			}
-			else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
-				write_to_pole(editor, &editor->new_win->wall_angle, event);
-			else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_2)
-				write_to_pole(editor, &editor->new_win->height_wall, event);
-			else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_3)
-				write_to_pole(editor, &editor->new_win->height_above, event);
-			else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_4)
-				write_to_pole(editor, &editor->new_win->transp, event);
+			if (editor->new_win->param_flag == 1)
+			{
+				if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
+					write_to_pole(editor, &editor->new_win->wall_angle, event);
+				else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_2)
+					write_to_pole(editor, &editor->new_win->height_wall, event);
+				else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_3)
+					write_to_pole(editor, &editor->new_win->height_above, event);
+			}
+			else if (editor->new_win->param_flag == 2)
+			{
+				if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
+					write_to_pole(editor, &editor->new_win->f_x_angle, event);
+				else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_2)
+					write_to_pole(editor, &editor->new_win->f_y_angle, event);
+				else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_3)
+					write_to_pole(editor, &editor->new_win->f_height, event);
+			}
+			// else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_4)
+			// 	write_to_pole(editor, &editor->new_win->transp, event);
 			new_event2(editor, event);
 		}
 	}

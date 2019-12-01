@@ -92,6 +92,10 @@ void	add_room(t_editor *editor)
 					editor->point_cnt = 0;
 					delete_stick_line_room(editor);
 					push_room(&editor->rooms, editor->room_point);
+					editor->rooms->num_of_textures = 2;
+					editor->rooms->f_x_angle = 2;
+					editor->rooms->f_y_angle = 2;
+					editor->rooms->f_height = 2;
 					calc_max_min(editor->rooms);
 					editor->rooms->alpha = 80;
 					editor->max_sectors++;

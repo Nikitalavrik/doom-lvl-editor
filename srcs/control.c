@@ -20,6 +20,10 @@ void	right_click_event(t_editor *editor, SDL_Event event)
 	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
 		if ((param = check_line(editor, mouse_position)))
 			choice_win(editor, event, 1, param);
+		else if ((param = check_rooms(editor, mouse_position, 1)))
+			choice_win(editor, event, 2, param);
+		// else if ((param = check_sprite(editor, mouse_position, editor->zoom)))
+		// 	choice_win(editor, event, 3, param);
 }
 
 void	mouse_events(t_editor *editor, SDL_Event event)

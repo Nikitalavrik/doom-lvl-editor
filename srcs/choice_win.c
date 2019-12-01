@@ -88,7 +88,10 @@ void	put_text_to_screen(t_editor *editor, int y, int x, int *k)
 		x = old_x;
 		while (x1 < 128)
 		{
-			editor->new_win->screen[y][x] = editor->doom->text[*k].tex[y1 * 128 + x1];
+			if (editor->new_win->param_flag == 1 || editor->new_win->param_flag == 2)
+				editor->new_win->screen[y][x] = editor->doom->text[*k].tex[y1 * 128 + x1];
+			else if (editor->new_win->param_flag == 3)
+				editor->new_win->screen[y][x] = editor->doom->text[*k].tex[y1 * 128 + x1];
 			x++;
 			x1++;
 		}
@@ -259,7 +262,6 @@ void	set_up_text(t_editor *editor, t_coord *coord)
 void	new_win_init(t_editor *editor, void *param, int flag)
 {
 	int		i;
-	t_eline	*line;
 
 	i = 0;
 	editor->new_win = ft_memalloc(sizeof(t_win));
@@ -289,10 +291,21 @@ void	new_win_init(t_editor *editor, void *param, int flag)
 	editor->new_win->button_coord.y = C_HEIGHT - 50;
 	editor->new_win->button_coord.x1 = editor->new_win->button_coord.x + 300;
 	editor->new_win->button_coord.y1 = editor->new_win->button_coord.y + 32;
-	line = (t_eline *)param;
+	if (flag == 1)
+	{
+		editor->new_win->param_par.line = (t_eline *)param;
+		editor->new_win->active_num.tex_num = editor->new_win->param_par.line->num_of_textures - 1;
+		set_up_text(editor,  &editor->new_win->active_num.coord);
+	}
+	else if (flag == 2)
+	{
+		editor->new_win->param_par.room = (t_room *)param;
+		editor->new_win->active_num.tex_num = editor->new_win->param_par.room->num_of_textures - 1;
+		set_up_text(editor,  &editor->new_win->active_num.coord);
+	}
+	else if (flag == 3)
+		editor->new_win->param_par.sprite = (t_esprite *)param;
 	editor->new_win->param_flag = flag;
-	editor->new_win->active_num.tex_num = line->num_of_textures - 1;
-	set_up_text(editor,  &editor->new_win->active_num.coord);
 	draw_right_menu(editor);
 }
 

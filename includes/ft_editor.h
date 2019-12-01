@@ -170,6 +170,10 @@ typedef struct			s_room
 	int					height;
 	int					rot_angle;
 	unsigned char		alpha;
+	int					f_x_angle;
+	int					f_y_angle;
+	int					f_height;
+	int					num_of_textures;
 	struct	s_room		*next;
 	struct	s_room		*prev;	
 }						t_room;
@@ -222,6 +226,17 @@ typedef struct		s_act
 }					t_act;
 
 /*
+** param to choice window
+*/
+
+typedef struct		s_param
+{
+	t_eline			*line;
+	t_room			*room;
+	t_esprite		*sprite;
+}					t_param;
+
+/*
 ** new window to choose textures
 */
 
@@ -247,8 +262,12 @@ typedef struct		s_win
 	char			*height_wall;
 	char			*height_above;
 	char			*transp;
+	char			*f_x_angle;
+	char			*f_y_angle;
+	char			*f_height;
 	void			*param;
 	int				param_flag;
+	t_param			param_par;
 }					t_win;
 
 /*
