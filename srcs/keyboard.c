@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:15 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/30 17:06:01 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:28:20 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,23 @@
 
 void	keyboard_for_visual(t_editor *editor, SDL_Event event)
 {
+	int		point[4];
 	(void)event;
 	(void)editor;
 	if (event.key.keysym.sym == SDLK_UP)
 	{
-		editor->doom->toch[0].y++;
-		editor->doom->toch[1].y++;
-		editor->doom->toch[2].y++;
-		editor->doom->toch[3].y++;
-		grid_sec(editor->doom, &editor->doom->sec[0]);
+		if (editor->doom->aim_sec != -1)
+		{
+			point[0] = editor->doom->sec[editor->doom->aim_sec].pts[0];
+			point[1] = editor->doom->sec[editor->doom->aim_sec].pts[1];
+			point[2] = editor->doom->sec[editor->doom->aim_sec].pts[2];
+			point[3] = editor->doom->sec[editor->doom->aim_sec].pts[3];
+			editor->doom->toch[point[0]].y++;
+			editor->doom->toch[point[1]].y++;
+			editor->doom->toch[point[2]].y++;
+			editor->doom->toch[point[3]].y++;
+			grid_sec(editor->doom, &editor->doom->sec[editor->doom->aim_sec]);	
+		}
 		ft_printf("aim_sec = %i\n", editor->doom->aim_sec);
 	}
 }
