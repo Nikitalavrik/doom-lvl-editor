@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:13 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 17:05:56 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/12/01 13:51:48 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,21 @@ void	convert_sec_to_line(t_editor *editor, t_doom *doom, int i)
 {
 	t_coords coord;
 
-	coord.x = (int)doom->toch[i * 4].x >> 4;
-	coord.y = (int)doom->toch[i * 4].z >> 4;
+	coord.x = (int)doom->toch[i * 4].x >> CONVERT_ZOOM;
+	coord.y = (int)doom->toch[i * 4].z >> CONVERT_ZOOM;
 	push_point(&editor->rooms->point, &editor->coords[coord.y][coord.x]);
 	editor->rooms->point->x = coord.x;
 	editor->rooms->point->y = coord.y;
-	coord.x = (int)doom->toch[i * 4 + 2].x >> 4;
-	coord.y = (int)doom->toch[i * 4 + 2].z >> 4;
+	coord.x = (int)doom->toch[i * 4 + 2].x >> CONVERT_ZOOM;
+	coord.y = (int)doom->toch[i * 4 + 2].z >> CONVERT_ZOOM;
 	push_point(&editor->rooms->point, &editor->coords[coord.y][coord.x]);
 	editor->rooms->point->x = coord.x;
 	editor->rooms->point->y = coord.y;
 	push_line(&editor->lines, editor->rooms->point, editor->rooms->point->next);
 	editor->lines->color = WALL_COLOR;
+	editor->lines->begin_height = (int)doom->toch[i * 4].y;
+	editor->lines->height = (int)doom->toch[i * 4 + 2].y;
+	editor->lines->num_of_textures = doom->sec[i].t_full;
 }
 
 void	convert_floor_to_room(t_editor *editor, t_doom *doom, int i)
@@ -45,10 +48,10 @@ void	convert_floor_to_room(t_editor *editor, t_doom *doom, int i)
 	t_coords	origin;
 
 	push_room(&editor->rooms, NULL);
-	editor->rooms->min_xy.x = (int)doom->toch[i * 4].x >> 4;
-	editor->rooms->max_xy.y = (int)doom->toch[i * 4].z >> 4;
-	editor->rooms->min_xy.y = (int)doom->toch[i * 4 + 1].z >> 4;
-	editor->rooms->max_xy.x = (int)doom->toch[i * 4 + 2].x >> 4;
+	editor->rooms->min_xy.x = (int)doom->toch[i * 4].x >> CONVERT_ZOOM;
+	editor->rooms->max_xy.y = (int)doom->toch[i * 4].z >> CONVERT_ZOOM;
+	editor->rooms->min_xy.y = (int)doom->toch[i * 4 + 1].z >> CONVERT_ZOOM;
+	editor->rooms->max_xy.x = (int)doom->toch[i * 4 + 2].x >> CONVERT_ZOOM;
 	editor->rooms->alpha = 80;
 	editor->rooms->area = pow(editor->rooms->max_xy.x - editor->rooms->min_xy.x, 2) +\
 	pow(editor->rooms->max_xy.y - editor->rooms->min_xy.y, 2);
@@ -56,8 +59,8 @@ void	convert_floor_to_room(t_editor *editor, t_doom *doom, int i)
 	s = 0;
 	while (s < doom->sec[i].max_sp)
 	{
-		origin.x = (int)doom->sec[i].sp[s].sp.x >> 4;
-		origin.y = (int)doom->sec[i].sp[s].sp.z >> 4;
+		origin.x = (int)doom->sec[i].sp[s].sp.x >> CONVERT_ZOOM;
+		origin.y = (int)doom->sec[i].sp[s].sp.z >> CONVERT_ZOOM;
 		coord = get_coords(editor, origin);
 		push_sprite(&editor->rooms->sprites, &editor->coords[origin.y][origin.x]);
 		editor->rooms->sprites->origin.x = (int)doom->sec[i].sp[s].sp.x % 16 * 2;

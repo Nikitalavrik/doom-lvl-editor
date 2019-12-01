@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:58:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/30 14:21:53 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/12/01 14:12:50 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,20 @@ void		pop_line(t_eline **begin)
 	}
 }
 
+t_eline	*find_line_by_id(t_editor *editor, int id)
+{
+	t_eline	*iter;
+
+	iter = editor->lines;
+	while (iter)
+	{
+		if (iter->id == id)
+			return (iter);
+		iter = iter->next;
+	}
+	return (NULL);
+}
+
 void	add_line(t_editor *editor)
 {
 	t_coords 	mouse_position;
@@ -92,10 +106,8 @@ void	add_line(t_editor *editor)
 					editor->point_cnt = 1;
 					push_line(&editor->lines, editor->point, editor->point->next);
 					editor->lines->color = WALL_COLOR;
-					editor->lines->id = editor->line_id;
 					editor->lines->height = 20;
 					editor->lines->num_of_textures = 14;
-					editor->line_id++;
 					editor->max_sectors++;
 				}
 			}

@@ -6,35 +6,58 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:15 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/12/01 12:51:08 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/12/01 19:23:34 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
 
-
-
 void	keyboard_for_visual(t_editor *editor, SDL_Event event)
 {
+	int		aim;
+	t_eline	*find_sec;
+	t_room	*find_room;
 	int		point[4];
-	(void)event;
-	(void)editor;
+
+	aim = editor->doom->aim_sp != -1 ? editor->doom->aim_sp : editor->doom->aim_sec;
+	if (aim == -1)
+		return ;
+	if (editor->doom->aim_sp == -1)
+	{
+		point[0] = editor->doom->sec[aim].pts[0];
+		point[1] = editor->doom->sec[aim].pts[1];
+		point[2] = editor->doom->sec[aim].pts[2];
+		point[3] = editor->doom->sec[aim].pts[3];
+	}
 	if (event.key.keysym.sym == SDLK_UP)
 	{
-		if (editor->doom->aim_sec != -1)
-		{
-			point[0] = editor->doom->sec[editor->doom->aim_sec].pts[0];
-			point[1] = editor->doom->sec[editor->doom->aim_sec].pts[1];
-			point[2] = editor->doom->sec[editor->doom->aim_sec].pts[2];
-			point[3] = editor->doom->sec[editor->doom->aim_sec].pts[3];
-			editor->doom->toch[point[0]].y++;
-			editor->doom->toch[point[1]].y++;
-			editor->doom->toch[point[2]].y++;
-			editor->doom->toch[point[3]].y++;
-			grid_sec(editor->doom, &editor->doom->sec[editor->doom->aim_sec]);	
-		}
-		ft_printf("aim_sec = %i\n", editor->doom->aim_sec);
+		editor->doom->toch[point[0]].y++;
+		editor->doom->toch[point[1]].y++;
+		editor->doom->toch[point[2]].y++;
+		editor->doom->toch[point[3]].y++;
+		if (editor->doom->sec[aim].tape == 0 && (find_room = find_room_by_id(editor, aim)))
+			find_room->height++;
+		else if ((find_sec = find_line_by_id(editor, aim)))
+			find_sec->begin_height++;
+		grid_sec(editor->doom, &editor->doom->sec[aim]);	
 	}
+	else if (event.key.keysym.sym == SDLK_DOWN)
+	{
+		editor->doom->toch[point[0]].y--;
+		editor->doom->toch[point[1]].y--;
+		editor->doom->toch[point[2]].y--;
+		editor->doom->toch[point[3]].y--;
+		if (editor->doom->sec[aim].tape == 0 &&\
+		(find_room = find_room_by_id(editor, aim)))
+			find_room->height--;
+		else if ((find_sec = find_line_by_id(editor, aim)))
+			find_sec->begin_height--;
+		grid_sec(editor->doom, &editor->doom->sec[aim]);	
+	}
+	else if (event.key.keysym.sym == SDLK_1)
+		editor->flags.t_f.rot_ax = 0;
+	else if (event.key.keysym.sym == SDLK_2)
+		editor->flags.t_f.rot_ax = 1;
 }
 
 int		check_rotation(t_editor *editor, SDL_Event event)

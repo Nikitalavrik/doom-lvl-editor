@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:55:01 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 17:06:35 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/12/01 14:14:02 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,19 @@ void		pop_room(t_room **begin)
 	}
 }
 
+t_room	*find_room_by_id(t_editor *editor, int id)
+{
+	t_room	*iter;
+
+	iter = editor->rooms;
+	while (iter)
+	{
+		if (iter->id == id)
+			return (iter);
+		iter = iter->next;
+	}
+	return (NULL);
+}
 
 void	add_room(t_editor *editor)
 {
