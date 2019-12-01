@@ -130,10 +130,17 @@ void		new_event(t_editor *editor, SDL_Event event)
 		{
 			SDL_GetMouseState(&editor->new_win->mouse.x, &editor->new_win->mouse.y);
 		
-			if (check_currsor(editor) == 1)
+			if (check_currsor(editor) == 1 && event.button.type != SDL_MOUSEBUTTONDOWN)
 				draw_button(editor, 0);
+			else if (check_currsor(editor) == 1 && event.button.type == SDL_MOUSEBUTTONDOWN)
+				draw_button(editor, 2);
 			else
 				draw_button(editor, 1);
+			if (check_currsor(editor) == 1 && event.button.type == SDL_MOUSEBUTTONUP)
+			{
+				close_choice_win(editor);
+				return ;
+			}
 			if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
 			{
 				if ((editor->new_win->mouse.x % editor->new_win->delim_x) > 20 &&\
