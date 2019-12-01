@@ -96,6 +96,9 @@ void		draw_white_space(t_coord coord, SDL_Surface *surf)
 
 void		draw_right_menu(t_editor *editor)
 {
+	t_eline	*line;
+
+	line = (t_eline *)editor->new_win->param;
 	draw_background(editor);
 	draw_caption(editor, editor->new_win->ws_coord1, editor->new_win->win, "Wall angle:");
 	draw_caption(editor, editor->new_win->ws_coord2, editor->new_win->win, "Height the wall:");
@@ -105,8 +108,12 @@ void		draw_right_menu(t_editor *editor)
 	draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur);
 	draw_white_space(editor->new_win->ws_coord3, editor->new_win->sur);
 	draw_white_space(editor->new_win->ws_coord4, editor->new_win->sur);
-	add_text_to_space(editor, editor->new_win->ws_coord1, editor->new_win->win, "0");
-	add_text_to_space(editor, editor->new_win->ws_coord2, editor->new_win->win, "0");
-	add_text_to_space(editor, editor->new_win->ws_coord3, editor->new_win->win, "0");
-	add_text_to_space(editor, editor->new_win->ws_coord4, editor->new_win->win, "0");
+	editor->new_win->wall_angle = ft_itoa(line->rot_angle);
+	add_text_to_space(editor, editor->new_win->ws_coord1, editor->new_win->win, editor->new_win->wall_angle);
+	editor->new_win->height_wall = ft_itoa(line->height);
+	add_text_to_space(editor, editor->new_win->ws_coord2, editor->new_win->win, editor->new_win->height_wall);
+	editor->new_win->height_above = ft_itoa(line->begin_height);
+	add_text_to_space(editor, editor->new_win->ws_coord3, editor->new_win->win, editor->new_win->height_above);
+	editor->new_win->transp = ft_itoa(line->alpha);
+	add_text_to_space(editor, editor->new_win->ws_coord4, editor->new_win->win, editor->new_win->transp);
 }

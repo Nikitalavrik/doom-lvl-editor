@@ -12,20 +12,24 @@
 
 #include "ft_editor.h"
 
-void	mouse_events(t_editor *editor, SDL_Event event)
+void	right_click_event(t_editor *editor, SDL_Event event)
 {
 	t_coords 	mouse_position;
+	void		*param;
 
+	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+		if ((param = check_line(editor, mouse_position)))
+			choice_win(editor, event, 1, param);
+}
+
+void	mouse_events(t_editor *editor, SDL_Event event)
+{
 	if (event.type == SDL_MOUSEWHEEL)
 		mouse_zoom(editor, event);
 	if (event.type == SDL_MOUSEBUTTONDOWN)
 		mouse_button_down(editor);
 	if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_RIGHT)
-	{
-		SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-		if (check_line(editor, mouse_position))
-			choice_win(editor, event, 1);
-	}
+		right_click_event(editor, event);
 	if (event.type == SDL_MOUSEBUTTONUP && editor->flags.t_f.move)
 		editor->flags.t_f.move = 0;
 	if (editor->flags.t_f.move)

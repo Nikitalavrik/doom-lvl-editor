@@ -94,6 +94,7 @@ void	add_line(t_editor *editor)
 					editor->lines->color = WALL_COLOR;
 					editor->lines->id = editor->line_id;
 					editor->lines->height = 20;
+					editor->lines->num_of_textures = 14;
 					editor->line_id++;
 					editor->max_sectors++;
 				}
