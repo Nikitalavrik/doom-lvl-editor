@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/30 17:21:07 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/12/01 19:22:52 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@
 # define SPRITE_COLOR 0xc93706
 # define BACKGROUND 0xffffff
 # define SPRITE_SIZE 10
-#define C_WIDTH 612
-#define C_HEIGHT 712
-#define TEXTNUM 9
+# define C_WIDTH 612
+# define C_HEIGHT 712
+# define TEXTNUM 9
+# define CONVERT_ZOOM 3
 // # define STANDART_COLOR 0xc38d9e
 // # define WALL_COLOR 0xe27d60
 // # define TEXTURE_COLOR 0x41b3a3
@@ -73,7 +74,8 @@ typedef	union			s_flags
 		unsigned char	pole_2	: 1;
 		unsigned char	pole_3	: 1;
 		unsigned char	pole_4	: 1;
-		unsigned char 	any 	: 2;
+		unsigned char	rot_ax	: 1;
+		unsigned char 	any 	: 1;
 	}					t_f;
 }						t_flags;
 
@@ -313,6 +315,7 @@ typedef	struct			s_editor
 	float				up_down;
 	float				left_right;
 	t_coord				absolute_center;
+	char				rot_axis;
 }						t_editor;
 
 /*
@@ -454,6 +457,13 @@ void			add_room(t_editor *editor);
 void       	 	push_room(t_room **begin, t_epoint *point);
 void			pop_room(t_room **begin);
 void			delete_room(t_editor *editor, t_room *room);
+t_room			*find_room_by_id(t_editor *editor, int id);
+
+/*
+** line func
+*/
+
+t_eline			*find_line_by_id(t_editor *editor, int id);
 
 /*
 ** stick line and room func
