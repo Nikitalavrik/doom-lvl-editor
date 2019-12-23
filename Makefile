@@ -49,7 +49,9 @@ SRC =	editor_main.c		\
 		flag_managment.c	\
 		rot_map.c			\
 		choice_win_bar.c	\
-		write_to_pole.c
+		write_to_pole.c		\
+		active_rectangle.c	\
+		new_win_init.c
 
 SRC_DOOM = mkhomich/srcs/main.c \
         mkhomich/srcs/raycasting.c \

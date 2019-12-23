@@ -151,6 +151,7 @@ typedef struct			s_esprite
 	int						flag_a;
 	t_coords				dist;
 	t_coords				origin;
+	int						num_of_textures;
 	struct	s_esprite		*next;
 	struct	s_esprite		*prev;
 }						t_esprite;
@@ -325,6 +326,7 @@ typedef	struct			s_editor
 t_editor		*init_editor(void);
 void			coords_init(t_editor *editor, t_coords *size);
 void			load_textures(t_editor *editor);
+void			new_win_init(t_editor *editor, void *param, int flag);
 
 /*
 ** drawning function
@@ -435,6 +437,8 @@ void			get_pole_num(t_editor *editor);
 void			write_to_pole(t_editor *editor, char **text, SDL_Event event);
 t_coord			get_coord_from_flag(t_editor *editor);
 void			draw_button(t_editor *editor, int button_num);
+void			draw_first_rectangle(t_editor *editor);
+void			put_to_screen(t_editor *editor, int x, int y, Uint32 collor);
 
 /*
 ** FREE

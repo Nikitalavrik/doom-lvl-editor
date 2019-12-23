@@ -119,6 +119,7 @@ void	add_sprite(t_editor *editor)
 				editor->coords[coord.y][coord.x].y) / editor->zoom;
 				editor->selected->sprites->size = SPRITE_SIZE * editor->zoom;
 				editor->selected->sprites->alpha = 140;
+				editor->selected->sprites->num_of_textures = 5;
 				editor->selected->sprites->x = coord.x;
 				editor->selected->sprites->y = coord.y;
 				editor->selected->max_sprites++;

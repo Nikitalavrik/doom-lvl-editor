@@ -91,7 +91,9 @@ void	put_text_to_screen(t_editor *editor, int y, int x, int *k)
 			if (editor->new_win->param_flag == 1 || editor->new_win->param_flag == 2)
 				editor->new_win->screen[y][x] = editor->doom->text[*k].tex[y1 * 128 + x1];
 			else if (editor->new_win->param_flag == 3)
-				editor->new_win->screen[y][x] = editor->doom->text[*k].tex[y1 * 128 + x1];
+			{
+				editor->new_win->screen[y][x] = editor->doom->sp->text[*k].tex[y1 * 128 + x1];
+			}
 			x++;
 			x1++;
 		}
@@ -130,6 +132,30 @@ void	add_textures_to_screen(t_editor *editor)
 	}
 }
 
+void	add_sprites_to_screen(t_editor *editor)
+{
+	int		x;
+	int		y;
+	int		k;
+
+	x = 20;
+	y = 20;
+	k = 1;
+	while (y + 128 < 148 * editor->doom->count_text / 4 + 20)
+	{
+		x = 20;
+		while (x + 128 < C_WIDTH)
+		{
+			k %= editor->doom->count_sp;
+			if (k == 0)
+				k++;
+			put_text_to_screen(editor, y, x, &k);
+			x += editor->new_win->delim_x;
+		}
+		y += editor->new_win->delim_y;
+	}
+}
+
 void	ft_clear_new_screen(t_editor *editor)
 {
 	int		x;
@@ -148,172 +174,14 @@ void	ft_clear_new_screen(t_editor *editor)
 	}
 }
 
-t_coord		get_coord(t_editor *editor)
-{
-	t_coord	coord;
-
-	coord.x = (editor->new_win->mouse.x / 148 * 148 + 20);
-	coord.x1 = coord.x + 128;
-	coord.y = ((editor->new_win->mouse.y + editor->new_win->cam_y) / 148 * 148 + 20);
-	coord.y1 = coord.y + 128;
-	editor->new_win->active_num.tex_num = editor->new_win->mouse.x / 148  +\
-		(editor->new_win->mouse.y + editor->new_win->cam_y) / 148 * C_WIDTH / 148 ;
-	editor->new_win->active_num.coord.x = coord.x;
-	editor->new_win->active_num.coord.y = coord.y;
-	editor->new_win->active_num.coord.x1 = coord.x1;
-	editor->new_win->active_num.coord.y1 = coord.y1;
-	return (coord);
-}
-
-void		remove_rectangle(t_editor *editor)
-{
-	int		i;
-	int		n;
-
-	n = 10;
-	while (n > 0)
-	{
-		i = editor->new_win->active_num.coord.x - n;
-		while (i < editor->new_win->active_num.coord.x1 + n)
-		{
-			put_to_screen(editor, i, editor->new_win->active_num.coord.y - n, 0x000000);
-			put_to_screen(editor, i, editor->new_win->active_num.coord.y1 + n, 0x000000);
-			i++;
-		}
-		i = editor->new_win->active_num.coord.y - n;
-		while (i <= editor->new_win->active_num.coord.y1 + n)
-		{
-			put_to_screen(editor, editor->new_win->active_num.coord.x - n, i, 0x000000);
-			put_to_screen(editor, editor->new_win->active_num.coord.x1 + n, i, 0x000000);
-			i++;
-		}
-		n--;
-	}
-	draw_list_text(editor);
-}
-
-void		draw_rectangle(t_editor *editor)
-{
-	t_coord	coord;
-	int		i;
-	int		n;
-
-	i = 0;
-	n = 10;
-	if (editor->new_win->active_num.tex_num > -1)
-		remove_rectangle(editor);
-	coord = get_coord(editor);
-	while (n > 0)
-	{
-		i = coord.x - n;
-		while (i < coord.x1 + n)
-		{
-			put_to_screen(editor, i, coord.y - n, 0x0062ff);
-			put_to_screen(editor, i, coord.y1 + n, 0x0062ff);
-			i++;
-		}
-		i = coord.y - n;
-		while (i <= coord.y1 + n)
-		{
-			put_to_screen(editor, coord.x - n, i, 0x0062ff);
-			put_to_screen(editor, coord.x1 + n, i, 0x0062ff);
-			i++;
-		}
-		n--;
-	}
-	draw_list_text(editor);
-}
-
-void		draw_first_rectangle(t_editor *editor)
-{
-	int		i;
-	int		n;
-
-	i = 0;
-	n = 10;
-	while (n > 0)
-	{
-		i = editor->new_win->active_num.coord.x - n;
-		while (i < editor->new_win->active_num.coord.x1 + n)
-		{
-			put_to_screen(editor, i, editor->new_win->active_num.coord.y - n, 0x0062ff);
-			put_to_screen(editor, i, editor->new_win->active_num.coord.y1 + n, 0x0062ff);
-			i++;
-		}
-		i = editor->new_win->active_num.coord.y - n;
-		while (i <= editor->new_win->active_num.coord.y1 + n)
-		{
-			put_to_screen(editor, editor->new_win->active_num.coord.x - n, i, 0x0062ff);
-			put_to_screen(editor, editor->new_win->active_num.coord.x1 + n, i, 0x0062ff);
-			i++;
-		}
-		n--;
-	}
-}
-
-void	set_up_text(t_editor *editor, t_coord *coord)
-{
-	coord->x = editor->new_win->active_num.tex_num % 4 * 148 + 20;
-	coord->y = editor->new_win->active_num.tex_num / 4 * 148 + 20;
-	coord->x1 = coord->x + 128;
-	coord->y1 = coord->y + 128;
-}
-
-void	new_win_init(t_editor *editor, void *param, int flag)
-{
-	int		i;
-
-	i = 0;
-	editor->new_win = ft_memalloc(sizeof(t_win));
-	editor->new_win->win = SDL_CreateWindow("Textures", SDL_WINDOWPOS_UNDEFINED, \
-		SDL_WINDOWPOS_UNDEFINED, 924,\
-		712, 0);
-	editor->new_win->sur = SDL_GetWindowSurface(editor->new_win->win);
-	editor->new_win->win_id = SDL_GetWindowID(editor->new_win->win);
-	editor->new_win->mem_space = 148 * editor->doom->count_text / 4 + 20;
-	editor->new_win->screen = ft_memalloc(sizeof(Uint32 *) * editor->new_win->mem_space);
-	while (i < editor->new_win->mem_space)
-	{
-		editor->new_win->screen[i] = ft_memalloc(sizeof(Uint32) * C_WIDTH);
-		i++;
-	}
-	editor->new_win->cam_y = 0;
-	editor->new_win->delim_x = 148;
-	editor->new_win->delim_y = 148;
-	editor->new_win->events = ft_memalloc(sizeof(t_ev));
-	editor->new_win->active_num.tex_num = -1;
-	editor->new_win->ws_coord1 = get_input_coord(C_WIDTH + 210, 20);
-	editor->new_win->ws_coord2 = get_input_coord(C_WIDTH + 210, 60);
-	editor->new_win->ws_coord3 = get_input_coord(C_WIDTH + 210, 100);
-	editor->new_win->ws_coord4 = get_input_coord(C_WIDTH + 210, 140);
-	editor->new_win->param = param;
-	editor->new_win->button_coord.x = C_WIDTH + 5;
-	editor->new_win->button_coord.y = C_HEIGHT - 50;
-	editor->new_win->button_coord.x1 = editor->new_win->button_coord.x + 300;
-	editor->new_win->button_coord.y1 = editor->new_win->button_coord.y + 32;
-	if (flag == 1)
-	{
-		editor->new_win->param_par.line = (t_eline *)param;
-		editor->new_win->active_num.tex_num = editor->new_win->param_par.line->num_of_textures - 1;
-		set_up_text(editor,  &editor->new_win->active_num.coord);
-	}
-	else if (flag == 2)
-	{
-		editor->new_win->param_par.room = (t_room *)param;
-		editor->new_win->active_num.tex_num = editor->new_win->param_par.room->num_of_textures - 1;
-		set_up_text(editor,  &editor->new_win->active_num.coord);
-	}
-	else if (flag == 3)
-		editor->new_win->param_par.sprite = (t_esprite *)param;
-	editor->new_win->param_flag = flag;
-	draw_right_menu(editor);
-}
-
 void		choice_win(t_editor *editor, SDL_Event event, int flag, void *param)
 {
 	SDL_StartTextInput();
 	new_win_init(editor, param, flag);
-	add_textures_to_screen(editor);
+	if (flag == 1 || flag == 2)
+		add_textures_to_screen(editor);
+	else
+		add_sprites_to_screen(editor);
 	draw_first_rectangle(editor);
 	draw_list_text(editor);
 	draw_button(editor, 1);
