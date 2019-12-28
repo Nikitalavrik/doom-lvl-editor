@@ -23,7 +23,7 @@ void	draw_button(t_editor *editor, int button_num)
 	rect1.y = editor->new_win->button_coord.y;
 	rect1.w = editor->new_win->button_coord.x1 - editor->new_win->button_coord.x;
 	rect1.h = editor->new_win->button_coord.y1 - editor->new_win->button_coord.y;
-	SDL_BlitScaled(editor->button[button_num], NULL ,editor->new_win->sur, &rect1);
+	SDL_BlitScaled(editor->button[button_num], NULL, editor->new_win->sur, &rect1);
 	f.x = rect1.x + 95;
 	f.y = rect1.y + 10;
 	color = (SDL_Color){200, 200, 100, 0};
