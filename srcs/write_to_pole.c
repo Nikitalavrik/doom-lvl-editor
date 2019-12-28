@@ -20,8 +20,11 @@ void	get_pole_num(t_editor *editor)
 		editor->new_win->mouse.y < editor->new_win->ws_coord1.y1)
 	{
 		editor->flags.t_f.pole_1 = 1;
+		draw_white_space(editor->new_win->ws_coord1, editor->new_win->sur, ACT_BACK);
 		editor->flags.t_f.pole_2 = 0;
+		draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur, BACKGROUND);
 		editor->flags.t_f.pole_3 = 0;
+		draw_white_space(editor->new_win->ws_coord3, editor->new_win->sur, BACKGROUND);
 		editor->flags.t_f.pole_4 = 0;
 	}
 	else if (editor->new_win->mouse.x > editor->new_win->ws_coord2.x &&\
@@ -30,8 +33,11 @@ void	get_pole_num(t_editor *editor)
 		editor->new_win->mouse.y < editor->new_win->ws_coord2.y1)
 	{
 		editor->flags.t_f.pole_1 = 0;
+		draw_white_space(editor->new_win->ws_coord1, editor->new_win->sur, BACKGROUND);
 		editor->flags.t_f.pole_2 = 1;
+		draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur, ACT_BACK);
 		editor->flags.t_f.pole_3 = 0;
+		draw_white_space(editor->new_win->ws_coord3, editor->new_win->sur, BACKGROUND);
 		editor->flags.t_f.pole_4 = 0;
 	}
 	else if (editor->new_win->mouse.x > editor->new_win->ws_coord3.x &&\
@@ -40,8 +46,11 @@ void	get_pole_num(t_editor *editor)
 		editor->new_win->mouse.y < editor->new_win->ws_coord3.y1)
 	{
 		editor->flags.t_f.pole_1 = 0;
+		draw_white_space(editor->new_win->ws_coord1, editor->new_win->sur, BACKGROUND);
 		editor->flags.t_f.pole_2 = 0;
+		draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur, BACKGROUND);
 		editor->flags.t_f.pole_3 = 1;
+		draw_white_space(editor->new_win->ws_coord3, editor->new_win->sur, ACT_BACK);
 		editor->flags.t_f.pole_4 = 0;
 	}
 	// else if (editor->new_win->mouse.x > editor->new_win->ws_coord4.x &&\
@@ -60,7 +69,12 @@ void	get_pole_num(t_editor *editor)
 		editor->flags.t_f.pole_2 = 0;
 		editor->flags.t_f.pole_3 = 0;
 		editor->flags.t_f.pole_4 = 0;
+		draw_white_space(editor->new_win->ws_coord1, editor->new_win->sur, BACKGROUND);
+		draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur, BACKGROUND);
+		draw_white_space(editor->new_win->ws_coord3, editor->new_win->sur, BACKGROUND);
 	}
+	rewrite_text_to_pole(editor);
+	// write_text_to_pole(editor);
 }
 
 t_coord	get_coord_from_flag(t_editor *editor)
@@ -97,6 +111,6 @@ void	write_to_pole(t_editor *editor, char **text, SDL_Event event)
 		*text = ft_strjoin(tmp, event.text.text);
 		free(tmp);
 	}
-	draw_white_space(coord, editor->new_win->sur);
+	draw_white_space(coord, editor->new_win->sur, ACT_BACK);
 	add_text_to_space(editor, coord, editor->new_win->win, *text);
 }

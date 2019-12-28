@@ -41,6 +41,7 @@
 # define PRESS_WALL_COLOR 0x85dcb
 # define SPRITE_COLOR 0xc93706
 # define BACKGROUND 0xffffff
+# define ACT_BACK 0x006eff
 # define SPRITE_SIZE 10
 # define C_WIDTH 612
 # define C_HEIGHT 712
@@ -430,7 +431,7 @@ void			draw_rectangle(t_editor *editor);
 void			draw_list_text(t_editor *editor);
 void 			add_text_to_space(t_editor *editor, t_coord coord,\
 				SDL_Window *win, char *text);
-void			draw_white_space(t_coord coord, SDL_Surface *surf);
+void			draw_white_space(t_coord coord, SDL_Surface *surf, Uint32 color);
 void			draw_right_menu(t_editor *editor);
 t_coord			get_input_coord(int x, int y);
 void			get_pole_num(t_editor *editor);
@@ -439,6 +440,11 @@ t_coord			get_coord_from_flag(t_editor *editor);
 void			draw_button(t_editor *editor, int button_num);
 void			draw_first_rectangle(t_editor *editor);
 void			put_to_screen(t_editor *editor, int x, int y, Uint32 collor);
+void			write_text_to_pole(t_editor *editor);
+void			write_to_first_pole(t_editor *editor);
+void			write_to_second_pole(t_editor *editor);
+void			write_to_third_pole(t_editor *editor);
+void			rewrite_text_to_pole(t_editor *editor);
 
 /*
 ** FREE

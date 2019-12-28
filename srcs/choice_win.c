@@ -29,6 +29,7 @@ void	draw_button(t_editor *editor, int button_num)
 	color = (SDL_Color){200, 200, 100, 0};
 	message = TTF_RenderText_Solid(editor->font1, "SAVE AND EXIT", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->new_win->win), &f);
+	SDL_FreeSurface(message);
 	SDL_UpdateWindowSurface(editor->new_win->win);
 }
 
