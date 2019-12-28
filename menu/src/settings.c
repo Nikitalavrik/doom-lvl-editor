@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   settings.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahlai <tbahlai@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 12:31:11 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/09/03 12:31:11 by tbahlai          ###   ########.fr       */
+/*   Updated: 2019/12/28 16:31:31 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "menu.h"
 
 void	arrow_right(t_l *l, int a)
 {

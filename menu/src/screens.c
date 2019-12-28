@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   screens.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahlai <tbahlai@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 12:54:31 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/10/23 12:54:31 by tbahlai          ###   ########.fr       */
+/*   Updated: 2019/12/28 18:18:12 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "menu.h"
 
 void	screen1(t_l *l)
 {
@@ -49,5 +49,9 @@ void	choose_screen(t_l *l)
 	if (l->screen == 4)
 		exit(0);
 	if (l->screen == 5)
-		system("../editor"); // Никита, придумай как из меню запустить едитор
+	{
+		start_editor(l->win);
+		l->screen = 3;
+	
+	}
 }

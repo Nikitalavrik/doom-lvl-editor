@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   menu_multipl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahlai <tbahlai@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 11:06:39 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/10/06 11:06:40 by tbahlai          ###   ########.fr       */
+/*   Updated: 2019/12/28 16:31:07 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "menu.h"
 
 void	mult_text(t_l *l, int x, int y, SDL_Color color)
 {

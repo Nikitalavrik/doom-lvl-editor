@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   start_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahlai <tbahlai@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 12:29:50 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/09/10 12:29:51 by tbahlai          ###   ########.fr       */
+/*   Updated: 2019/12/28 16:31:34 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "menu.h"
 
 void	get_heig(t_l *l, SDL_Rect *btn)
 {

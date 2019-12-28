@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sett_sizes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahlai <tbahlai@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 17:44:29 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/09/11 17:44:30 by tbahlai          ###   ########.fr       */
+/*   Updated: 2019/12/28 16:31:24 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "menu.h"
 
 void	get_y_h(t_l *l, SDL_Rect *btn)
 {

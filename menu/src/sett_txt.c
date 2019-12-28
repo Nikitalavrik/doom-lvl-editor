@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sett_txt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahlai <tbahlai@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 17:38:03 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/09/11 17:38:04 by tbahlai          ###   ########.fr       */
+/*   Updated: 2019/12/28 16:31:27 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "menu.h"
 
 void	text_on_off(t_l *l, int x, int y, int step)
 {

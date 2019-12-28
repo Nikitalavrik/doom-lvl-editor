@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   params_btn.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahlai <tbahlai@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 15:17:13 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/10/20 15:17:14 by tbahlai          ###   ########.fr       */
+/*   Updated: 2019/12/28 16:31:15 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "menu.h"
 
 int		animation_btn(t_l *l, SDL_Rect *btn, int fl)
 {

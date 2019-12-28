@@ -1,66 +1,95 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yganzha <yganzha@student.unit.ua>          +#+  +:+       +#+         #
+#    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/13 13:28:00 by yganzha           #+#    #+#              #
-#    Updated: 2019/06/13 13:28:01 by yganzha          ###   ########.fr        #
+#    Updated: 2019/12/28 17:37:26 by nlavrine         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 NAME    = doom
 
-SRC     = src/main.c \
-		src/level_edit.c \
-		src/buttons.c \
-		src/settings.c \
-		src/start_game.c \
-		src/sett_txt.c \
-		src/sett_sizes.c \
-		src/menu_multipl.c \
-		src/menu_mult_1.c \
-		src/params_btn.c \
-		src/screens.c \
-		src/events.c
+SRC     = main.c \
+		level_edit.c \
+		buttons.c \
+		settings.c \
+		start_game.c \
+		sett_txt.c \
+		sett_sizes.c \
+		menu_multipl.c \
+		menu_mult_1.c \
+		params_btn.c \
+		screens.c \
+		events.c
 
-OUT     = $(SRC:.c=.o)
+NAME = menu
 
-LIBFT   = lib/
 
-HDR		= includes/doom.h
+LIB_DOOM = ../mkhomich/doom-nukem.a
+LIB_EDITOR = ../editor/editor.a
+H_DOOM = -I ../mkhomich/incs
+H_EDITOR = -I ../editor/includes/
 
-CC      = /usr/bin/gcc
+CC = gcc
+FLAGS = -Wall -Wextra -Werror -g -Og
+SRC_DIR = src
+H_DIR = includes
 
-CFLAGS  = -Wall -Wextra -g # -fsanitize=address  -Werror
+OBJ_DIR = obj
+LIB = ../libft/libft.a
+PRINTF = ../libft/ft_printf/libftprintf.a
+GREEN = \033[0;32m
 
-SDL_HEADER = -I ./frameworks/SDL2.framework/A/Headers/ \
-    -I ./frameworks/SDL2_ttf.framework/Versions/A/Headers/ \
-    -I ./frameworks/SDL2_image.framework/Versions/A/Headers/ \
-    -I ./frameworks/SDL2_mixer.framework/Headers/ \
- 	-F ./frameworks/
+INCLUDES = 	-I ../frameworks/SDL2.framework/Headers/ 			\
+			-I ../frameworks/SDL2_image.framework/Headers/ 	\
+			-I ../frameworks/SDL2_ttf.framework/Headers/ 		\
+			-I ../frameworks/SDL2_mixer.framework/Headers/ 	\
+			-F ../frameworks
 
-SDL_FLAGS = -framework SDL2 -framework SDL2_mixer -framework SDL2_image -framework SDL2_ttf
 
-SDL2_P = -rpath ./frameworks/
+FRAMEWORKS =  	-F ../frameworks 								\
+    			-rpath ../frameworks 						\
+    			-framework AppKit -framework OpenGL 		\
+    			-framework SDL2 -framework SDL2_image 		\
+    			-framework SDL2_ttf -framework SDL2_mixer	\
 
-all:        $(NAME)
-$(NAME):    $(OUT) $(LIBFT)
-	@make -C $(LIBFT)	
-	@$(CC) $(CFLAGS) -L $(LIBFT) -lft $(SDL_HEADER) $(SDL2_P) $(SDL_FLAGS) $(OUT) -o $(NAME) -I $(HDR) 
 
-%.o : %.c $(HDR) $(LIBFT)
-	@$(CC) $(CFLAGS) $(SDL_HEADER) -o $@ -c $< -I .
+SRCS = $(addprefix $(SRC_DIR)/,$(SRC))
+
+OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
+
+all: $(NAME) 
+
+$(NAME): $(LIB) $(PRINTF) $(OBJS)
+		@echo "$(GREEN)Compile $(NAME)"
+		$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(LIB_DOOM) $(LIB_EDITOR) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) $(H_DOOM) $(H_EDITOR)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+		@mkdir -p $(OBJ_DIR)
+		@$(CC) $(FLAGS) -o $@ -c $< -I $(H_DIR) $(H_EDITOR) $(H_DOOM) $(INCLUDES) 
+
+$(LIB):
+	@echo "$(GREEN)Compile libft"
+	@make -C ../libft/
+
+$(PRINTF):
+	@echo "$(GREEN)Compile ft_printf"
+	@make -C ../libft/ft_printf/
 
 clean:
-	@make fclean -C $(LIBFT)
-	@rm -f $(OUT)
+	@echo "$(GREEN)Clear objs"
+	@rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR2)
+	@make -C ../libft/ clean
+	@make -C ../libft/ft_printf/ clean
 
-fclean:     clean
-	@make -C $(LIBFT) fclean
+fclean: clean
+	@echo "$(GREEN)Clear $(NAME)"
 	@rm -f $(NAME)
+	@make -C ../libft/ fclean
+	@make -C ../libft/ft_printf/ fclean
 
-re:     fclean all
-	
-.PHONY:     re all clean fclean
+re: fclean all

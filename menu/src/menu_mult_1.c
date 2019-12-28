@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   menu_mult_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahlai <tbahlai@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 15:05:11 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/10/20 15:05:11 by tbahlai          ###   ########.fr       */
+/*   Updated: 2019/12/28 16:31:04 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "menu.h"
 
 void	arrow_l(t_l *l)
 {

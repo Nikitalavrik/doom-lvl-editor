@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   butons.c                                           :+:      :+:    :+:   */
+/*   buttons.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahlai <tbahlai@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 18:06:40 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/08/28 18:06:40 by tbahlai          ###   ########.fr       */
+/*   Updated: 2019/12/28 16:30:48 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "menu.h"
 
 void	get_wid_heig(SDL_Rect *btn, int *a, int flag, t_l *l)
 {
