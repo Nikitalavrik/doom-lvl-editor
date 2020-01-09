@@ -93,7 +93,7 @@ void	put_text_to_screen(t_editor *editor, int y, int x, int *k)
 				editor->new_win->screen[y][x] = editor->doom->text[*k].tex[y1 * 128 + x1];
 			else if (editor->new_win->param_flag == 3)
 			{
-				editor->new_win->screen[y][x] = editor->doom->sp->text[*k].tex[y1 * 128 + x1];
+				editor->new_win->screen[y][x] = (Uint32)editor->new_win->editor_sprite[*k].text[0].tex[y1 * 128 + x1];
 			}
 			x++;
 			x1++;
@@ -133,21 +133,42 @@ void	add_textures_to_screen(t_editor *editor)
 	}
 }
 
+void	load_correct_scale_sprite(t_editor *editor)
+{
+	int i;
+
+	i = 0;
+	editor->new_win->editor_sprite = (t_sprite*)malloc(sizeof(t_sprite) * 7);
+	while (i < 10)
+	{
+		editor->new_win->editor_sprite[i].text = (t_text*)malloc(sizeof(t_text));
+		i++;
+	}
+	editor->new_win->editor_sprite[0].text[0] = convert_tex(IMG_Load("sprite/monsters/people/walk/A1.png"), 128, 128); //9 - 15
+	editor->new_win->editor_sprite[1].text[0] = convert_tex(IMG_Load("sprite/monsters/chargingdemon/walk/A1.bmp"), 128, 128);			
+	editor->new_win->editor_sprite[2].text[0] = convert_tex(IMG_Load("sprite/monsters/motherdemon/walk/A1.bmp"), 128, 128);
+	editor->new_win->editor_sprite[3].text[0] = convert_tex(IMG_Load("sprite/BAR1B0.png"), 128, 128);
+	editor->new_win->editor_sprite[4].text[0] = convert_tex(IMG_Load("sprite/armor.png"), 128, 128);
+	editor->new_win->editor_sprite[5].text[0] = convert_tex(IMG_Load("sprite/medkit.png"), 128, 128);
+	editor->new_win->editor_sprite[6].text[0] = convert_tex(IMG_Load("sprite/ammo.png"), 128, 128);
+}
+
 void	add_sprites_to_screen(t_editor *editor)
 {
 	int		x;
 	int		y;
 	int		k;
 
+	load_correct_scale_sprite(editor);
 	x = 20;
 	y = 20;
 	k = 1;
-	while (y + 128 < 148 * editor->doom->count_text / 4 + 20)
+	while (y + 128 < editor->new_win->mem_space)
 	{
 		x = 20;
 		while (x + 128 < C_WIDTH)
 		{
-			k %= editor->doom->count_sp;
+			k %= 7;
 			if (k == 0)
 				k++;
 			put_text_to_screen(editor, y, x, &k);
@@ -181,7 +202,7 @@ void		choice_win(t_editor *editor, SDL_Event event, int flag, void *param)
 	new_win_init(editor, param, flag);
 	if (flag == 1 || flag == 2)
 		add_textures_to_screen(editor);
-	else
+	else if (flag == 3)
 		add_sprites_to_screen(editor);
 	draw_first_rectangle(editor);
 	draw_list_text(editor);

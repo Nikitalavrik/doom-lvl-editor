@@ -89,7 +89,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(PRINTF) $(OBJS) $(TEST_MAIN_O)
 		@echo "$(GREEN)Compile $(NAME)"
-		$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(SRC_DOOM) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) #-fsanitize=address
+		$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(SRC_DOOM) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) -fsanitize=address
 
 lib: $(OBJS)
 	@echo "$(GREEN)Compile $(NAME)"
@@ -107,23 +107,23 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 $(LIB):
 	@echo "$(GREEN)Compile libft"
-	@make -C ./libft/
+	@make -C ../libft/
 
 $(PRINTF):
 	@echo "$(GREEN)Compile ft_printf"
-	@make -C ./libft/ft_printf/
+	@make -C ../libft/ft_printf/
 
 clean:
 	@echo "$(GREEN)Clear objs"
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(OBJ_DIR2)
-	@make -C ./libft/ clean
-	@make -C ./libft/ft_printf/ clean
+	@make -C ../libft/ clean
+	@make -C ../libft/ft_printf/ clean
 
 fclean: clean
 	@echo "$(GREEN)Clear $(NAME)"
 	@rm -f $(NAME)
-	@make -C ./libft/ fclean
-	@make -C ./libft/ft_printf/ fclean
+	@make -C ../libft/ fclean
+	@make -C ../libft/ft_printf/ fclean
 
 re: fclean all

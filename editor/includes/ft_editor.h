@@ -271,6 +271,7 @@ typedef struct		s_win
 	char			*f_height;
 	void			*param;
 	int				param_flag;
+	t_sprite		*editor_sprite;
 	t_param			param_par;
 }					t_win;
 
@@ -448,6 +449,7 @@ void			write_to_first_pole(t_editor *editor);
 void			write_to_second_pole(t_editor *editor);
 void			write_to_third_pole(t_editor *editor);
 void			rewrite_text_to_pole(t_editor *editor);
+t_text   		convert_tex(SDL_Surface *dst, int w, int h);
 
 /*
 ** FREE
