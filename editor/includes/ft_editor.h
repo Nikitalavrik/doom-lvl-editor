@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/12/28 17:32:42 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/12 13:38:48 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include "doom.h"
 
 # define NUMBER_OF_TEXTURES 9
-# define E_WIDTH 1024
-# define E_HEIGHT 768
+# define E_WIDTH 640
+# define E_HEIGHT 480
 # define WALL_HEIGHT HEIGHT
 # define MENU_WIDTH 300
 # define SQUARE_SIZE 30
@@ -391,6 +391,7 @@ void			mouse_move(t_editor *editor);
 void			mouse_motion(t_editor *editor);
 t_coords		get_coords(t_editor *editor, t_coords mouse);
 void			delete_line(t_editor *editor, t_eline *line);
+double			calc_short_dist(t_eline *line, t_coords mouse);
 
 /*
 ** KEYBOARD FUNCTION

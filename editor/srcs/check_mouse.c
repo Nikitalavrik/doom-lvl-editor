@@ -6,39 +6,13 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:55:10 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 17:51:20 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/12 13:37:41 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editor.h"
 
-
-double		calc_short_dist(t_eline *line, t_coords mouse)
-{
-	double a;
-	double b;
-	double c;
-	double s;
-	double h;
-
-	a = pow(mouse.x - line->points[0]->coord->x, 2) + pow(mouse.y - line->points[0]->coord->y, 2);
-	b = pow(mouse.x - line->points[1]->coord->x, 2) + pow(mouse.y - line->points[1]->coord->y, 2);
-	c = pow(line->points[1]->coord->x - line->points[0]->coord->x, 2) + pow(line->points[1]->coord->y\
-	- line->points[0]->coord->y, 2);
-	s = abs((mouse.x  - line->points[1]->coord->x) * (line->points[0]->coord->y - line->points[1]->coord->y) -\
-	(line->points[0]->coord->x  - line->points[1]->coord->x) * (mouse.y - line->points[1]->coord->y));
-	h = 2 * s / sqrt(c);
-	if ((a + c) < b || (b + c) < a)
-	{
-		if (a < b)
-			return (sqrt(a));
-		if (b < a)
-			return (sqrt(b));
-	}
-	return (h);
-}
-
-t_eline	 *check_line(t_editor *editor, t_coords mouse)
+t_eline		*check_line(t_editor *editor, t_coords mouse)
 {
 	double		calc_dist;
 	double		min_dist;
@@ -51,7 +25,7 @@ t_eline	 *check_line(t_editor *editor, t_coords mouse)
 	while (lines)
 	{
 		lines->color = WALL_COLOR;
-		calc_dist = calc_short_dist(lines, mouse);	
+		calc_dist = calc_short_dist(lines, mouse);
 		if (calc_dist < min_dist)
 		{
 			min_dist = calc_dist;
@@ -93,40 +67,49 @@ t_esprite	*check_sprite(t_room *selected, t_coords mouse, double zoom)
 	return (choosen);
 }
 
-t_room	*check_rooms(t_editor *editor, t_coords mouse, int type)
+void		check_hover_room(t_editor *editor, t_coords mouse, t_room *iter,
+													t_coords min_max_area[3])
 {
 	t_coords	min;
 	t_coords	max;
+
+	min = min_max_area[0];
+	max = min_max_area[1];
+	if (mouse.x >= min.x && mouse.x <= max.x\
+	&& mouse.y >= min.y && mouse.y <= max.y && iter->area < min_max_area[2].x)
+	{
+		iter->flags.t_f.hover = 1;
+		(&min_max_area[2])->x = iter->area;
+		if (min_max_area[2].y)
+		{
+			iter->flags.t_f.select = 1;
+			editor->selected = iter;
+		}
+	}
+	else if (min_max_area[2].y && editor->selected && iter->flags.t_f.select)
+	{
+		iter->flags.t_f.select = 0;
+		editor->flags.t_f.sprite = 0;
+		editor->selected = editor->selected == iter ? NULL : editor->selected;
+	}
+}
+
+t_room		*check_rooms(t_editor *editor, t_coords mouse, int type)
+{
 	t_room		*iter;
-	int			min_area;
+	t_coords	min_max_area[3];
 
 	iter = editor->rooms;
-	min_area = INT16_MAX;
+	min_max_area[2].x = INT16_MAX;
+	min_max_area[2].y = type;
 	while (iter && iter->next)
 		iter = iter->next;
 	while (iter)
 	{
-		min = editor->coords[iter->min_xy.y][iter->min_xy.x];
-		max = editor->coords[iter->max_xy.y][iter->max_xy.x];
+		min_max_area[0] = editor->coords[iter->min_xy.y][iter->min_xy.x];
+		min_max_area[1] = editor->coords[iter->max_xy.y][iter->max_xy.x];
 		iter->flags.t_f.hover = 0;
-		if (mouse.x >= min.x && mouse.x <= max.x\
-		&& mouse.y >= min.y && mouse.y <= max.y &&\
-		iter->area < min_area)
-		{
-			iter->flags.t_f.hover = 1;
-			min_area = iter->area;
-			if (type)
-			{
-				iter->flags.t_f.select = 1;
-				editor->selected = iter;
-			}
-		}
-		else if (type && editor->selected && iter->flags.t_f.select)
-		{
-			iter->flags.t_f.select = 0;
-			editor->flags.t_f.sprite = 0;
-			editor->selected = editor->selected == iter ? NULL : editor->selected;
-		}
+		check_hover_room(editor, mouse, iter, min_max_area);
 		iter = iter->prev;
 	}
 	iter = editor->selected;
@@ -150,12 +133,12 @@ t_coords	*check_point(t_editor *editor, t_coords mouse_position)
 			mouse_position.x >= finded->x - tmp &&\
 			mouse_position.y <= finded->y + tmp &&\
 			mouse_position.y >= finded->y - tmp)
-			{
-				finded->inc = 1;
-				finded->r = 3;
-				editor->finded = finded;
-				return (finded);
-			}
+		{
+			finded->inc = 1;
+			finded->r = 3;
+			editor->finded = finded;
+			return (finded);
+		}
 	}
 	return (NULL);
 }

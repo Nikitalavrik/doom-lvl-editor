@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2019/12/28 18:59:00 by nlavrine         ###   ########.fr        #
+#    Updated: 2020/01/12 11:54:24 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,23 +107,23 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 $(LIB):
 	@echo "$(GREEN)Compile libft"
-	@make -C ./libft/
+	@make -C ../libft/
 
 $(PRINTF):
 	@echo "$(GREEN)Compile ft_printf"
-	@make -C ./libft/ft_printf/
+	@make -C ../libft/ft_printf/
 
 clean:
 	@echo "$(GREEN)Clear objs"
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(OBJ_DIR2)
-	@make -C ./libft/ clean
-	@make -C ./libft/ft_printf/ clean
+	@make -C ../libft/ clean
+	@make -C ../libft/ft_printf/ clean
 
 fclean: clean
 	@echo "$(GREEN)Clear $(NAME)"
 	@rm -f $(NAME)
-	@make -C ./libft/ fclean
-	@make -C ./libft/ft_printf/ fclean
+	@make -C ../libft/ fclean
+	@make -C ../libft/ft_printf/ fclean
 
 re: fclean all
