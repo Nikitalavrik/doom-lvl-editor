@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:11:09 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 17:53:22 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/12 17:30:45 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,8 @@ void	add_sprite(t_editor *editor)
 	{
 		if (coord.x != INT16_MAX)
 		{
-			
 			if (check_sprites(editor->selected->sprites, mouse, editor->zoom))
 			{
-				// ft_printf("zoom %f\n", editor->zoom);
 				push_sprite(&editor->selected->sprites, &editor->coords[coord.y][coord.x]);
 				editor->selected->sprites->origin.x = (mouse.x -\
 				editor->coords[coord.y][coord.x].x) / editor->zoom;

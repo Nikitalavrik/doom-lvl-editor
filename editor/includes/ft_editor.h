@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 13:38:48 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/12 14:50:53 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include "doom.h"
 
 # define NUMBER_OF_TEXTURES 9
-# define E_WIDTH 640
-# define E_HEIGHT 480
+# define E_WIDTH 1024
+# define E_HEIGHT 780
 # define WALL_HEIGHT HEIGHT
 # define MENU_WIDTH 300
 # define SQUARE_SIZE 30

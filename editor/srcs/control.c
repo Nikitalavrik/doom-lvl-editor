@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 14:02:00 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/12 16:27:22 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,24 @@ void	right_click_event(t_editor *editor, SDL_Event event)
 
 void	mouse_events(t_editor *editor, SDL_Event event)
 {
-	if (event.type == SDL_MOUSEWHEEL)
-		mouse_zoom(editor, event);
-	if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
-		mouse_button_down(editor);
-	if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_RIGHT)
-		right_click_event(editor, event);
-	if (event.type == SDL_MOUSEBUTTONUP && editor->flags.t_f.move)
-		editor->flags.t_f.move = 0;
-	if (editor->flags.t_f.move)
-		mouse_move(editor);
-	if (event.type == SDL_MOUSEMOTION)
-		mouse_motion(editor);
+	t_coords 	mouse_position;
+
+	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+	if (mouse_position.x < editor->width - MENU_WIDTH)
+	{
+		if (event.type == SDL_MOUSEWHEEL)
+			mouse_zoom(editor, event);
+		if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
+			mouse_button_down(editor);
+		if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_RIGHT)
+			right_click_event(editor, event);
+		if (event.type == SDL_MOUSEBUTTONUP && editor->flags.t_f.move)
+			editor->flags.t_f.move = 0;
+		if (editor->flags.t_f.move)
+			mouse_move(editor);
+		if (event.type == SDL_MOUSEMOTION)
+			mouse_motion(editor);
+	}
 }
 
 int		detect_event(t_editor *editor)
