@@ -15,6 +15,7 @@
 void	editor_loop(t_editor *editor)
 {
 	ft_bzero(editor->surf->pixels, editor->width * editor->height * sizeof(int));
+	draw_editor_menu(editor);
 	coords_rerange(editor);
 	draw_rooms(editor);
 	draw_stick_room(editor);
@@ -51,6 +52,7 @@ int		main_loop(t_editor *editor)
 	free_doom(editor->doom);
 	partly_free_editor(editor);
 	ft_memdel((void **)&editor);
+	SDL_StopTextInput();
 	// SDL_FreeSurface(editor->surf);
 	// SDL_DestroyWindow(editor->win);
 	// Mix_Quit();
