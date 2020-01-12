@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:54:16 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 15:54:18 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/12 14:29:37 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ void    close_room(t_editor *editor)
 		calc_max_min(editor->rooms);
 		editor->point = NULL;
 		editor->rooms->alpha = 80;
+		editor->rooms->num_of_textures = 2;
+		editor->rooms->f_x_angle = 2;
+		editor->rooms->f_y_angle = 2;
+		editor->rooms->f_height = 2;
 		editor->max_sectors++;
 		delete_stick_line_room(editor);
 		editor->point_cnt = 0;
