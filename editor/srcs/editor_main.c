@@ -42,7 +42,7 @@ int		start_editor(SDL_Window *win)
 	editor->doom->surface = editor->surf;
 	editor->absolute_center.x = (editor->width - MENU_WIDTH) / 2;
 	editor->absolute_center.y = (editor->height) / 2;
-	ft_printf("w = %i h = %i\n", editor->width, editor->height);
+	// ft_printf("w = %i h = %i\n", editor->width, editor->height);
 	main_loop(editor);
 	return (0);
 }

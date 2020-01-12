@@ -48,7 +48,10 @@ void	create_new_win(t_editor *editor)
 	SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 924, 712, 0);
 	editor->new_win->sur = SDL_GetWindowSurface(editor->new_win->win);
 	editor->new_win->win_id = SDL_GetWindowID(editor->new_win->win);
-	editor->new_win->mem_space = 148 * editor->doom->count_text / 4 + 20;
+	if (editor->new_win->param_flag == 3)
+		editor->new_win->mem_space = 612 * 712;
+	else
+		editor->new_win->mem_space = 148 * editor->doom->count_text / 4 + 20;
 	editor->new_win->screen =\
 	ft_memalloc(sizeof(Uint32 *) * editor->new_win->mem_space);
 	while (i < editor->new_win->mem_space)
@@ -80,7 +83,9 @@ void	new_win_init(t_editor *editor, void *param, int flag)
 	{
 		editor->new_win->param_par.sprite = (t_esprite *)param;
 		editor->new_win->active_num.tex_num =\
-		editor->new_win->param_par.sprite->num_of_textures - 1;
+		editor->new_win->param_par.sprite->num_of_textures - 1 ;
+		ft_printf("editor->new_win->active_num.tex_num = %i\n", editor->new_win->active_num.tex_num);
+		set_up_text(editor, &editor->new_win->active_num.coord);
 	}
 	editor->new_win->param_flag = flag;
 	draw_right_menu(editor);
