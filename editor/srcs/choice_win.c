@@ -198,7 +198,6 @@ void	ft_clear_new_screen(t_editor *editor)
 
 void		choice_win(t_editor *editor, SDL_Event event, int flag, void *param)
 {
-	SDL_StartTextInput();
 	new_win_init(editor, param, flag);
 	if (flag == 1 || flag == 2)
 		add_textures_to_screen(editor);

@@ -15,6 +15,7 @@
 void		init_music_font(t_editor *editor)
 {
 	TTF_Init();
+	SDL_StartTextInput();
 	editor->font = TTF_OpenFont("fonts/Aller_b.ttf", 24);
 	editor->font1 = TTF_OpenFont("fonts/font1.ttf", 14);
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
@@ -29,6 +30,7 @@ void		init_music_font(t_editor *editor)
 t_editor	*init_editor(void)
 {
 	t_editor	*editor;
+	char *num;
 
 	editor = ft_memalloc(sizeof(t_editor));
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -48,6 +50,9 @@ t_editor	*init_editor(void)
 	editor->center.y = editor->size.y / 2 * SQUARE_SIZE * editor->zoom - (editor->height) / 2;
 	editor->flags.t_f.select = 1;
 	editor->doom = ft_memalloc(sizeof(t_doom));
+	num = ft_itoa((unsigned short int)&editor->doom);
+	editor->filename = ft_strdup(num);
+	ft_memdel((void **)&num);
 	editor->doom->x_aim = editor->width / 2;
 	editor->doom->y_aim = editor->height * 0.62;
 	editor->doom->gravity = 0.015;

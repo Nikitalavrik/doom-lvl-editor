@@ -70,7 +70,6 @@ void		close_choice_win(t_editor *editor)
 	SDL_DestroyWindow(SDL_GetWindowFromID(editor->new_win->win_id));
 	free(editor->new_win);
 	editor->new_win = NULL;
-	SDL_StopTextInput();
 }
 
 void		new_event4(t_editor *editor, SDL_Event event)
@@ -169,7 +168,6 @@ void		new_event(t_editor *editor, SDL_Event event)
 					editor->new_win->delim_y) > 20 && (editor->new_win->mouse.y +\
 					editor->new_win->cam_y) < editor->new_win->mem_space)
 					draw_rectangle(editor);
-
 				get_pole_num(editor);
 			}
 			if (editor->new_win->param_flag == 1)

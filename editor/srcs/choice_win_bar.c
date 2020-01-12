@@ -35,18 +35,17 @@ void	draw_background(t_editor *editor)
 }
 
 void	draw_caption(t_editor *editor, t_coord coord,\
-	SDL_Window *win, char *caption)
+	SDL_Window *win, t_capt caption)
 {
 	SDL_Color	color;
 	SDL_Surface	*message;
 	SDL_Rect	f;
 
-	f.x = coord.x - 190;
+	f.x = coord.x - caption.delim;
 	f.y = coord.y + 5;
 	color = (SDL_Color){0, 0, 0, 0};
-	message = TTF_RenderText_Solid(editor->font1, caption, color);
+	message = TTF_RenderText_Solid(editor->font1, caption.caption, color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(win), &f);
-	SDL_UpdateWindowSurface(win);
 	SDL_FreeSurface(message);
 }
 
@@ -62,7 +61,6 @@ void 	add_text_to_space(t_editor *editor, t_coord coord,\
 	color = (SDL_Color){0, 0, 0, 0};
 	message = TTF_RenderText_Solid(editor->font1, text, color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(win), &f);
-	SDL_UpdateWindowSurface(win);
 	SDL_FreeSurface(message);
 }
 
@@ -160,15 +158,22 @@ void		write_text_to_pole(t_editor *editor)
 
 void		draw_right_menu(t_editor *editor)
 {
+	t_capt caption;
+
+	caption.delim = 190;
 	if (editor->new_win->param_flag == 1)
 	{
+		caption.caption = "Wall angle:";
+		caption.delim = 190;
 		draw_background(editor);
 		draw_caption(editor, editor->new_win->ws_coord1,\
-		editor->new_win->win, "Wall angle:");
+		editor->new_win->win, caption);
+		caption.caption = "Height the wall:";
 		draw_caption(editor, editor->new_win->ws_coord2,\
-		editor->new_win->win, "Height the wall:");
+		editor->new_win->win, caption);
+		caption.caption = "Height wall above the floor:";
 		draw_caption(editor, editor->new_win->ws_coord3,\
-		editor->new_win->win, "Height wall above the floor:");
+		editor->new_win->win, caption);
 		draw_white_space(editor->new_win->ws_coord1,\
 		editor->new_win->sur, BACKGROUND);
 		draw_white_space(editor->new_win->ws_coord2,\
@@ -180,12 +185,15 @@ void		draw_right_menu(t_editor *editor)
 	if (editor->new_win->param_flag == 2)
 	{
 		draw_background(editor);
+		caption.caption = "Floor x-axis angle :";
 		draw_caption(editor, editor->new_win->ws_coord1,\
-		editor->new_win->win, "Floor x-axis angle :");
+		editor->new_win->win, caption);
+		caption.caption = "Floor y-axis angle :";
 		draw_caption(editor, editor->new_win->ws_coord2,\
-		editor->new_win->win, "Floor y-axis angle :");
+		editor->new_win->win, caption);
+		caption.caption = "Height:";
 		draw_caption(editor, editor->new_win->ws_coord3,\
-		editor->new_win->win, "Height:");
+		editor->new_win->win, caption);
 		draw_white_space(editor->new_win->ws_coord1,\
 		editor->new_win->sur, BACKGROUND);
 		draw_white_space(editor->new_win->ws_coord2,\

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 16:27:22 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/12 17:32:05 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	mouse_events(t_editor *editor, SDL_Event event)
 		if (event.type == SDL_MOUSEMOTION)
 			mouse_motion(editor);
 	}
+	else
+		editor_menu_events(editor, mouse_position);
 }
 
 int		detect_event(t_editor *editor)

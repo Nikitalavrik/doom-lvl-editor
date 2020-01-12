@@ -39,17 +39,16 @@ void		put_player(t_editor *editor)
 	editor->doom->play[0].speed = 1;
 }
 
-void		editor_autosave(t_doom *doom)
+void		editor_autosave(t_editor *editor)
 {
-	char *filename;
-	char *num;
+	char *tmp;
 
-	num = ft_itoa((unsigned short int)&doom);
-	filename = ft_strjoin("saves/", num);
-	ft_printf("save to %s\n", filename);
-	save_map(doom, filename);
-	ft_memdel((void **)&filename);
-	ft_memdel((void **)&num);
+	tmp = editor->filename;
+	editor->filename = ft_strjoin("saves/",tmp);
+	ft_memdel((void **)&tmp);
+	ft_printf("save to %s\n", editor->filename);
+	save_map(editor->doom, editor->filename);
+	ft_memdel((void **)&editor->filename);
 }
 
 void		d3_init(t_editor *editor)
@@ -67,6 +66,6 @@ void		d3_init(t_editor *editor)
 		grid_all_sec(editor);
 		put_player(editor);
 		editor->flags.t_f.visual = 1;
-		editor_autosave(editor->doom);
+		editor_autosave(editor);
 	}
 }

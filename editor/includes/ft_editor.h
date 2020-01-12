@@ -137,6 +137,7 @@ typedef struct			s_eline
 	struct s_eline		*prev;
 }						t_eline;
 
+
 /*
 ** struct for sprite, square in editor
 */
@@ -203,6 +204,18 @@ typedef struct		s_coord
 	int				x1;
 	int				y1;
 }					t_coord;
+
+typedef struct		s_capt
+{
+	char			*caption;
+	int				delim;
+}					t_capt;
+
+typedef struct		s_menu
+{
+	t_coord			coord;
+	t_capt			caption;
+}					t_menu;
 
 /*
 ** struct new_win events
@@ -319,6 +332,8 @@ typedef	struct			s_editor
 	float				left_right;
 	t_coord				absolute_center;
 	char				rot_axis;
+	char				*filename;
+	t_menu				menu;
 }						t_editor;
 
 /*
@@ -343,6 +358,9 @@ void			draw_cells(t_editor *editor);
 void			draw_stick_line(t_editor *editor);
 void			draw_stick_room(t_editor *editor);
 void			coords_rerange(t_editor *editor);
+void			draw_editor_menu(t_editor *editor);
+void			draw_caption(t_editor *editor, t_coord coord,\
+				SDL_Window *win, t_capt caption);
 
 /*
 ** main function
@@ -393,6 +411,7 @@ void			mouse_motion(t_editor *editor);
 t_coords		get_coords(t_editor *editor, t_coords mouse);
 void			delete_line(t_editor *editor, t_eline *line);
 double			calc_short_dist(t_eline *line, t_coords mouse);
+void			editor_menu_events(t_editor *editor, t_coords mouse_position);
 
 /*
 ** KEYBOARD FUNCTION

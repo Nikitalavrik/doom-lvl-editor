@@ -51,7 +51,9 @@ SRC =	editor_main.c		\
 		choice_win_bar.c	\
 		write_to_pole.c		\
 		active_rectangle.c	\
-		new_win_init.c
+		new_win_init.c		\
+		editor_menu.c		\
+		editor_menu_events.c
 
 SRC_DOOM = ../mkhomich/doom-nukem.a
 CC = gcc
