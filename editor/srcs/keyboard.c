@@ -77,31 +77,34 @@ int		check_rotation(t_editor *editor, SDL_Event event)
 
 void	keyboard_for_editor(t_editor *editor, SDL_Event event)
 {
-	if (event.key.keysym.sym == SDLK_s)
-		switch_to_select(editor);
-	else if (event.key.keysym.sym == SDLK_LCTRL)
-		editor->flags.t_f.lctrl = 1;
-	else if (editor->flags.t_f.lctrl && event.key.keysym.sym == SDLK_z)
-		delete_prev(editor);
-	else if (event.key.keysym.sym == SDLK_SPACE && editor->point)
-		close_room(editor);
-	else if (event.key.keysym.sym == SDLK_c && editor->selected)
-		switch_to_sprite_put(editor);
-	else if (event.key.keysym.sym == SDLK_l)
-		switch_to_line_build(editor);
-	else if (event.key.keysym.sym == SDLK_d)
-		find_and_delete(editor);
-	else if (event.key.keysym.sym == SDLK_f)
-		switch_to_floor_build(editor);
-	else if (check_rotation(editor, event))
-		ft_printf("up_down = %f left_right = %f\n", editor->up_down, editor->left_right);
+	if (editor->flags.t_f.m_pole == 0)
+	{
+		if (event.key.keysym.sym == SDLK_s)
+			switch_to_select(editor);
+		else if (event.key.keysym.sym == SDLK_LCTRL)
+			editor->flags.t_f.lctrl = 1;
+		else if (editor->flags.t_f.lctrl && event.key.keysym.sym == SDLK_z)
+			delete_prev(editor);
+		else if (event.key.keysym.sym == SDLK_SPACE && editor->point)
+			close_room(editor);
+		else if ((event.key.keysym.sym == SDLK_c) && editor->selected)
+			switch_to_sprite_put(editor);
+		else if (event.key.keysym.sym == SDLK_l)
+			switch_to_line_build(editor);
+		else if (event.key.keysym.sym == SDLK_d)
+			find_and_delete(editor);
+		else if (event.key.keysym.sym == SDLK_f)
+			switch_to_floor_build(editor);
+		else if (check_rotation(editor, event))
+			ft_printf("up_down = %f left_right = %f\n", editor->up_down, editor->left_right);
+	}
 }
 
 int		keyboard_events_down(t_editor *editor, SDL_Event event)
 {
 	if (event.key.keysym.sym == SDLK_ESCAPE)
 		return (1);
-	else if (event.key.keysym.sym == SDLK_n)
+	else if (event.key.keysym.sym == SDLK_n && editor->flags.t_f.m_pole == 0)
 		switch_to_visual_3d(editor);
 	if (editor->flags.t_f.visual)
 		keyboard_for_visual(editor, event);

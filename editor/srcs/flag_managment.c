@@ -18,4 +18,8 @@ void	null_editing_flags(t_flags *flags)
 	flags->t_f.select = 0;
 	flags->t_f.floor = 0;
 	flags->t_f.sprite = 0;
+	flags->t_f.m_pole = 0;
+	flags->t_f.f_butt = 0;
+	flags->t_f.s_butt = 0;
+	flags->t_f.t_butt = 0;
 }

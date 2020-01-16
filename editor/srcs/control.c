@@ -47,7 +47,7 @@ void	mouse_events(t_editor *editor, SDL_Event event)
 			mouse_motion(editor);
 	}
 	else
-		editor_menu_events(editor, mouse_position);
+		editor_menu_events(editor, mouse_position, event);
 }
 
 int		detect_event(t_editor *editor)

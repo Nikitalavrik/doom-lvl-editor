@@ -58,6 +58,8 @@ void	load_textures(t_editor *editor)
 	editor->button[0] = load_texture("./textures/widgets_1.png", editor);
 	editor->button[1] = load_texture("./textures/widgets_2.png", editor);
 	editor->button[2] = load_texture("./textures/widgets_3.png", editor);
+	editor->button[3] = load_texture("./text/grey_circle.png", editor);
+	editor->button[4] = load_texture("./text/green_boxTick.png", editor);
 	// i = 0;
 	// while (i < NUMBER_OF_TEXTURES)
 	// {

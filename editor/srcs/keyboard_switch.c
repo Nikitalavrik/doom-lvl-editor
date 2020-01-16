@@ -16,6 +16,7 @@ void	switch_to_sprite_put(t_editor *editor)
 {
 	null_editing_flags(&editor->flags);
 	editor->flags.t_f.sprite = 1;
+	editor->flags.t_f.t_butt = 1;
 }
 
 void	switch_to_select(t_editor *editor)
@@ -31,12 +32,14 @@ void	switch_to_line_build(t_editor *editor)
 {
 	null_editing_flags(&editor->flags);
 	editor->flags.t_f.line = 1;
+	editor->flags.t_f.f_butt = 1;
 }
 
 void	switch_to_floor_build(t_editor *editor)
 {
 	null_editing_flags(&editor->flags);
 	editor->flags.t_f.floor = 1;
+	editor->flags.t_f.s_butt = 1;
 	delete_stick_point(editor);
 }
 

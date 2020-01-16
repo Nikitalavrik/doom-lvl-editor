@@ -58,6 +58,7 @@ t_editor	*init_editor(void)
 	editor->doom->gravity = 0.015;
 	editor->doom->min_z = 0.5;
 	load_texture_wall(editor->doom);
+	init_emenu_buttons(editor);
 	init_skybox(editor->doom);
 	editor->doom->z_buffer = (int*)malloc(sizeof(int) * WIDTH * HEIGHT);
 	editor->doom->window = editor->win;

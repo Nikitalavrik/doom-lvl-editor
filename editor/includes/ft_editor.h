@@ -58,7 +58,7 @@
 
 typedef	union			s_flags
 {
-	short int			flag;
+	long				flag;
 	struct				s_f
 	{
 		unsigned char 	build 	: 1;
@@ -76,7 +76,12 @@ typedef	union			s_flags
 		unsigned char	pole_3	: 1;
 		unsigned char	pole_4	: 1;
 		unsigned char	rot_ax	: 1;
-		unsigned char 	any 	: 1;
+		unsigned char 	m_pole 	: 1;
+		unsigned char	f_butt	: 1;
+		unsigned char	s_butt	: 1;
+		unsigned char	t_butt	: 1;
+		unsigned char	any		: 8;
+		unsigned char	any1	: 5;
 	}					t_f;
 }						t_flags;
 
@@ -211,11 +216,14 @@ typedef struct		s_capt
 	int				delim;
 }					t_capt;
 
-typedef struct		s_menu
+typedef struct		s_emenu
 {
 	t_coord			coord;
 	t_capt			caption;
-}					t_menu;
+	t_coord			f_cb_coord;
+	t_coord			s_cb_coord;
+	t_coord			t_cb_coord;
+}					t_emenu;
 
 /*
 ** struct new_win events
@@ -311,7 +319,7 @@ typedef	struct			s_editor
 	t_room				*rooms;
 	t_coords			**coords;
 	SDL_Surface			*textures[9];
-	SDL_Surface			*button[3];
+	SDL_Surface			*button[5];
 	t_coords			center;
 	t_coords			move_map;
 	t_coords			move_save;
@@ -333,7 +341,8 @@ typedef	struct			s_editor
 	t_coord				absolute_center;
 	char				rot_axis;
 	char				*filename;
-	t_menu				menu;
+	t_emenu				menu;
+	int					param_flag;
 }						t_editor;
 
 /*
@@ -347,6 +356,7 @@ t_editor		*init_editor(void);
 void			coords_init(t_editor *editor, t_coords *size);
 void			load_textures(t_editor *editor);
 void			new_win_init(t_editor *editor, void *param, int flag);
+void			init_emenu_buttons(t_editor *editor);
 
 /*
 ** drawning function
@@ -411,7 +421,8 @@ void			mouse_motion(t_editor *editor);
 t_coords		get_coords(t_editor *editor, t_coords mouse);
 void			delete_line(t_editor *editor, t_eline *line);
 double			calc_short_dist(t_eline *line, t_coords mouse);
-void			editor_menu_events(t_editor *editor, t_coords mouse_position);
+void			editor_menu_events(t_editor *editor,\
+				t_coords mouse_position, SDL_Event event);
 
 /*
 ** KEYBOARD FUNCTION
