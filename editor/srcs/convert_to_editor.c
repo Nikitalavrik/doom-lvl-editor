@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:13 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 14:12:41 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/12 17:30:13 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ void	convert_floor_to_room(t_editor *editor, t_doom *doom, int i)
 	s = 0;
 	while (s < doom->sec[i].max_sp)
 	{
-		origin.x = (int)doom->sec[i].sp[s].sp.x >> CONVERT_ZOOM;
-		origin.y = (int)doom->sec[i].sp[s].sp.z >> CONVERT_ZOOM;
+		origin.x = ((int)doom->sec[i].sp[s].sp.x) >> CONVERT_ZOOM;
+		origin.y = ((int)doom->sec[i].sp[s].sp.z) >> CONVERT_ZOOM;
 		coord = get_coords(editor, origin);
 		push_sprite(&editor->rooms->sprites, &editor->coords[origin.y][origin.x]);
-		editor->rooms->sprites->origin.x = ((int)doom->sec[i].sp[s].sp.x >> CONVERT_ZOOM) - ((int)doom->sec[i].sp[s].sp.x % 50);
-		editor->rooms->sprites->origin.y = ((int)doom->sec[i].sp[s].sp.z >> CONVERT_ZOOM) - ((int)doom->sec[i].sp[s].sp.z % 50);
+		editor->rooms->sprites->origin.x = ((((unsigned int)doom->sec[i].sp[s].sp.x << (32 - CONVERT_ZOOM)) >> (32 - CONVERT_ZOOM)) + doom->sec[i].sp[s].sp.x - (int)doom->sec[i].sp[s].sp.x) * 4;
+		editor->rooms->sprites->origin.y = ((((unsigned int)doom->sec[i].sp[s].sp.z << (32 - CONVERT_ZOOM)) >> (32 - CONVERT_ZOOM)) + doom->sec[i].sp[s].sp.z - (int)doom->sec[i].sp[s].sp.z) * 4;
 		editor->rooms->sprites->size = SPRITE_SIZE * editor->zoom;
 		editor->rooms->sprites->alpha = 140;
 		editor->rooms->sprites->x = origin.x;

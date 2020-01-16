@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:20:39 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 12:01:32 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/12 15:51:32 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_editor	*init_editor(void)
 	load_texture_wall(editor->doom);
 	init_emenu_buttons(editor);
 	init_skybox(editor->doom);
-	editor->doom->z_buffer = (int*)malloc(sizeof(int) * WIDTH * HEIGHT);
+	editor->doom->z_buffer = (int*)malloc(sizeof(int) * editor->height * editor->width);
 	editor->doom->window = editor->win;
 	editor->doom->surface = editor->surf;
 	editor->absolute_center.x = (editor->width - MENU_WIDTH) / 2;
