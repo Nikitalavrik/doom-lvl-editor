@@ -22,4 +22,5 @@ void	null_editing_flags(t_flags *flags)
 	flags->t_f.f_butt = 0;
 	flags->t_f.s_butt = 0;
 	flags->t_f.t_butt = 0;
+	flags->t_f.d_butt = 0;
 }

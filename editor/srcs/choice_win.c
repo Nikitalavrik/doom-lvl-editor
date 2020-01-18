@@ -139,7 +139,7 @@ void	load_correct_scale_sprite(t_editor *editor)
 
 	i = 0;
 	editor->new_win->editor_sprite = (t_sprite*)malloc(sizeof(t_sprite) * 7);
-	while (i < 10)
+	while (i < 7)
 	{
 		editor->new_win->editor_sprite[i].text = (t_text*)malloc(sizeof(t_text));
 		i++;

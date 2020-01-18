@@ -99,6 +99,7 @@ void		write_to_third_pole(t_editor *editor)
 {
 	if (editor->new_win->param_flag == 1)
 	{
+		ft_strdel(&editor->new_win->height_above);
 		editor->new_win->height_above = \
 		ft_itoa(editor->new_win->param_par.line->begin_height);
 		add_text_to_space(editor, editor->new_win->ws_coord3,\
@@ -106,6 +107,7 @@ void		write_to_third_pole(t_editor *editor)
 	}
 	if (editor->new_win->param_flag == 2)
 	{
+		ft_strdel(&editor->new_win->f_height);
 		editor->new_win->f_height =\
 		ft_itoa(editor->new_win->param_par.room->f_height);
 		add_text_to_space(editor, editor->new_win->ws_coord3,\
@@ -117,6 +119,7 @@ void		write_to_second_pole(t_editor *editor)
 {
 	if (editor->new_win->param_flag == 1)
 	{
+		ft_strdel(&editor->new_win->height_wall);
 		editor->new_win->height_wall =\
 		ft_itoa(editor->new_win->param_par.line->height);
 		add_text_to_space(editor, editor->new_win->ws_coord2,\
@@ -124,6 +127,7 @@ void		write_to_second_pole(t_editor *editor)
 	}
 	if (editor->new_win->param_flag == 2)
 	{
+		ft_strdel(&editor->new_win->f_y_angle);
 		editor->new_win->f_y_angle =\
 		ft_itoa(editor->new_win->param_par.room->f_y_angle);
 		add_text_to_space(editor, editor->new_win->ws_coord2,\
@@ -135,6 +139,7 @@ void		write_to_first_pole(t_editor *editor)
 {
 	if (editor->new_win->param_flag == 1)
 	{
+		ft_strdel(&editor->new_win->wall_angle);
 		editor->new_win->wall_angle =\
 		ft_itoa(editor->new_win->param_par.line->rot_angle);
 		add_text_to_space(editor, editor->new_win->ws_coord1,\
@@ -142,6 +147,7 @@ void		write_to_first_pole(t_editor *editor)
 	}
 	if (editor->new_win->param_flag == 2)
 	{
+		ft_strdel(&editor->new_win->f_x_angle);
 		editor->new_win->f_x_angle =\
 		ft_itoa(editor->new_win->param_par.room->f_x_angle);
 		add_text_to_space(editor, editor->new_win->ws_coord1,\
@@ -164,7 +170,6 @@ void		draw_right_menu(t_editor *editor)
 	if (editor->new_win->param_flag == 1)
 	{
 		caption.caption = "Wall angle:";
-		caption.delim = 190;
 		draw_background(editor);
 		draw_caption(editor, editor->new_win->ws_coord1,\
 		editor->new_win->win, caption);

@@ -21,6 +21,7 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.f_butt = 0;
 		editor->flags.t_f.s_butt = 0;
 		editor->flags.t_f.t_butt = 0;
+		editor->flags.t_f.d_butt = 0;
 	}
 	else if (editor->param_flag == 2 &&\
 		event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
@@ -29,6 +30,7 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.f_butt = 1;
 		editor->flags.t_f.s_butt = 0;
 		editor->flags.t_f.t_butt = 0;
+		editor->flags.t_f.d_butt = 0;
 	}
 	else if (editor->param_flag  == 3 &&\
 		event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
@@ -37,6 +39,7 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.f_butt = 0;
 		editor->flags.t_f.s_butt = 1;
 		editor->flags.t_f.t_butt = 0;
+		editor->flags.t_f.d_butt = 0;
 	}
 	else if (editor->param_flag == 4 &&\
 		event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
@@ -45,6 +48,16 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.f_butt = 0;
 		editor->flags.t_f.s_butt = 0;
 		editor->flags.t_f.t_butt = 1;
+		editor->flags.t_f.d_butt = 0;
+	}
+	else if (editor->param_flag == 5 &&\
+		event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
+	{
+		editor->flags.t_f.m_pole = 0;
+		editor->flags.t_f.f_butt = 0;
+		editor->flags.t_f.s_butt = 0;
+		editor->flags.t_f.t_butt = 0;
+		editor->flags.t_f.d_butt = 1;
 	}
 	else if (editor->param_flag == 0 &&\
 		event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
@@ -53,7 +66,21 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.f_butt = 0;
 		editor->flags.t_f.s_butt = 0;
 		editor->flags.t_f.t_butt = 0;
+		editor->flags.t_f.d_butt = 0;
 	}
+	if (editor->param_flag == 6 &&
+		event.button.button == SDL_BUTTON_LEFT && 
+		event.button.type == SDL_MOUSEBUTTONDOWN)
+	{
+		editor->flags.t_f.m_pole = 0;
+		editor->flags.t_f.f_butt = 0;
+		editor->flags.t_f.s_butt = 0;
+		editor->flags.t_f.t_butt = 0;
+		editor->flags.t_f.d_butt = 0;
+		editor->flags.t_f.c_butt = 1;
+	}
+	else
+		editor->flags.t_f.c_butt = 0;
 }
 
 void		write_to_emenu_pole(SDL_Event event, char **text)
@@ -103,6 +130,20 @@ void		check_emenu_cursor(t_editor *editor, t_coords mouse_position)
 		mouse_position.y <= editor->menu.t_cb_coord.y1)
 	{
 		editor->param_flag = 4;
+	}
+	else if (mouse_position.x >= editor->menu.del_cb_coord.x &&
+		mouse_position.x <= editor->menu.del_cb_coord.x1 &&
+		mouse_position.y >= editor->menu.del_cb_coord.y &&
+		mouse_position.y <= editor->menu.del_cb_coord.y1)
+	{
+		editor->param_flag = 5;
+	}
+	else if (mouse_position.x >= editor->menu.clo_cb_coord.x &&
+		mouse_position.x <= editor->menu.clo_cb_coord.x1 &&
+		mouse_position.y >= editor->menu.clo_cb_coord.y &&
+		mouse_position.y <= editor->menu.clo_cb_coord.y1)
+	{
+		editor->param_flag = 6;
 	}
 	else
 		editor->param_flag = 0;

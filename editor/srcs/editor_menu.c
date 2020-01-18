@@ -20,6 +20,10 @@ void	check_emenu_pole(t_editor *editor)
 		switch_to_floor_build(editor);
 	if (editor->flags.t_f.t_butt == 1 && editor->selected)
 		switch_to_sprite_put(editor);
+	if (editor->flags.t_f.d_butt == 1)
+		find_and_delete(editor);
+	if (editor->flags.t_f.c_butt == 1 && editor->point)
+		close_room(editor);
 }
 
 void	init_emenu_buttons(t_editor *editor)
@@ -36,6 +40,14 @@ void	init_emenu_buttons(t_editor *editor)
 	editor->menu.t_cb_coord.x1 = editor->menu.t_cb_coord.x + 16;
 	editor->menu.t_cb_coord.y = 130;
 	editor->menu.t_cb_coord.y1 = editor->menu.t_cb_coord.y + 16;
+	editor->menu.del_cb_coord.x = editor->width - MENU_WIDTH + 10;
+	editor->menu.del_cb_coord.x1 = editor->menu.del_cb_coord.x + 16;
+	editor->menu.del_cb_coord.y = 160;
+	editor->menu.del_cb_coord.y1 = editor->menu.del_cb_coord.y + 16;
+	editor->menu.clo_cb_coord.x = editor->width - MENU_WIDTH + 10;
+	editor->menu.clo_cb_coord.x1 = editor->menu.clo_cb_coord.x + 16;
+	editor->menu.clo_cb_coord.y = 190;
+	editor->menu.clo_cb_coord.y1 = editor->menu.clo_cb_coord.y + 16;
 
 }
 
@@ -51,14 +63,20 @@ void	write_button_name(t_editor *editor)
 	message = TTF_RenderText_Solid(editor->font1, "Draw wall", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
-	f.x = editor->menu.s_cb_coord.x + 30;
 	f.y = editor->menu.s_cb_coord.y + 2;
 	message = TTF_RenderText_Solid(editor->font1, "Draw floor", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
-	f.x = editor->menu.t_cb_coord.x + 30;
 	f.y = editor->menu.t_cb_coord.y + 2;
 	message = TTF_RenderText_Solid(editor->font1, "Draw sprite", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
+	SDL_FreeSurface(message);
+	f.y = editor->menu.del_cb_coord.y + 2;
+	message = TTF_RenderText_Solid(editor->font1, "Delete", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
+	SDL_FreeSurface(message);
+	f.y = editor->menu.clo_cb_coord.y + 2;
+	message = TTF_RenderText_Solid(editor->font1, "Close room", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
 }
@@ -82,6 +100,21 @@ void	draw_emenu_check_buttons(t_editor *editor)
 	rect1.w = 16;
 	rect1.h = 16;
 	SDL_BlitScaled(editor->button[editor->flags.t_f.t_butt == 1 ? 4 : 3], NULL, editor->surf, &rect1);
+	rect1.x = editor->menu.del_cb_coord.x;
+	rect1.y = editor->menu.del_cb_coord.y;
+	rect1.w = 16;
+	rect1.h = 16;
+	SDL_BlitScaled(editor->button[editor->flags.t_f.d_butt == 1 ? 4 : 3], NULL, editor->surf, &rect1);
+	rect1.x = editor->menu.clo_cb_coord.x;
+	rect1.y = editor->menu.clo_cb_coord.y;
+	rect1.w = 16;
+	rect1.h = 16;
+	if (editor->flags.t_f.c_butt == 1)
+		SDL_BlitScaled(editor->button[6], NULL, editor->surf, &rect1);
+	else if (editor->flags.t_f.c_butt == 0 && editor->param_flag == 6)
+		SDL_BlitScaled(editor->button[5], NULL, editor->surf, &rect1);
+	else
+		SDL_BlitScaled(editor->button[7], NULL, editor->surf, &rect1);
 	write_button_name(editor);
 	
 }

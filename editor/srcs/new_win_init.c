@@ -84,7 +84,6 @@ void	new_win_init(t_editor *editor, void *param, int flag)
 		editor->new_win->param_par.sprite = (t_esprite *)param;
 		editor->new_win->active_num.tex_num =\
 		editor->new_win->param_par.sprite->num_of_textures - 1 ;
-		ft_printf("editor->new_win->active_num.tex_num = %i\n", editor->new_win->active_num.tex_num);
 		set_up_text(editor, &editor->new_win->active_num.coord);
 	}
 	editor->new_win->param_flag = flag;

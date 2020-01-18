@@ -80,8 +80,10 @@ typedef	union			s_flags
 		unsigned char	f_butt	: 1;
 		unsigned char	s_butt	: 1;
 		unsigned char	t_butt	: 1;
+		unsigned char	d_butt	: 1;
+		unsigned char	c_butt	: 1;
 		unsigned char	any		: 8;
-		unsigned char	any1	: 5;
+		unsigned char	any1	: 3;
 	}					t_f;
 }						t_flags;
 
@@ -223,6 +225,8 @@ typedef struct		s_emenu
 	t_coord			f_cb_coord;
 	t_coord			s_cb_coord;
 	t_coord			t_cb_coord;
+	t_coord			del_cb_coord;
+	t_coord			clo_cb_coord;
 }					t_emenu;
 
 /*
@@ -319,7 +323,7 @@ typedef	struct			s_editor
 	t_room				*rooms;
 	t_coords			**coords;
 	SDL_Surface			*textures[9];
-	SDL_Surface			*button[5];
+	SDL_Surface			*button[8];
 	t_coords			center;
 	t_coords			move_map;
 	t_coords			move_save;

@@ -33,6 +33,9 @@ void		save_parametrs(t_editor *editor)
 		editor->new_win->param_par.room->num_of_textures = (editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
 		if (!editor->new_win->param_par.room->num_of_textures)
 			editor->new_win->param_par.room->num_of_textures++;
+		ft_strdel(&editor->new_win->f_x_angle);
+		ft_strdel(&editor->new_win->f_y_angle);
+		ft_strdel(&editor->new_win->f_height);
 	}
 	// if (editor->new_win->param_flag == 3)
 	// {
@@ -54,10 +57,24 @@ void		close_choice_win(t_editor *editor)
 {
 	int		i;
 
-	free(editor->new_win->wall_angle);
-	free(editor->new_win->height_wall);
-	free(editor->new_win->height_above);
-	free(editor->new_win->transp);
+	ft_strdel(&editor->new_win->wall_angle);
+	ft_strdel(&editor->new_win->height_wall);
+	ft_strdel(&editor->new_win->height_above);
+	ft_strdel(&editor->new_win->transp);
+	ft_strdel(&editor->new_win->f_x_angle);
+	ft_strdel(&editor->new_win->f_y_angle);
+	ft_strdel(&editor->new_win->f_height);
+	i = 0;
+	if (editor->new_win->param_flag == 3)
+	{
+		while (i < 7)
+		{
+			free(editor->new_win->editor_sprite[i].text[0].tex);
+			free(editor->new_win->editor_sprite[i].text);
+			i++;
+		}
+		free(editor->new_win->editor_sprite);	
+	}
 	i = 0;
 	while (i < editor->new_win->mem_space)
 	{

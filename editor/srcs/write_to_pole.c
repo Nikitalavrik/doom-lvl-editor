@@ -55,11 +55,15 @@ void	get_pole_num(t_editor *editor)
 	}
 	draw_white_space(editor->new_win->ws_coord1, editor->new_win->sur,\
 	color = editor->flags.t_f.pole_1 == 1 ? ACT_BACK : BACKGROUND);
-	draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur,\
-	color = editor->flags.t_f.pole_2 == 1 ? ACT_BACK : BACKGROUND);
-	draw_white_space(editor->new_win->ws_coord3, editor->new_win->sur,\
-	color = editor->flags.t_f.pole_3 == 1 ? ACT_BACK : BACKGROUND);
-	rewrite_text_to_pole(editor);
+	if (editor->new_win->param_flag == 1 || editor->new_win->param_flag == 2)
+	{
+		draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur,\
+		color = editor->flags.t_f.pole_2 == 1 ? ACT_BACK : BACKGROUND);
+		draw_white_space(editor->new_win->ws_coord3, editor->new_win->sur,\
+		color = editor->flags.t_f.pole_3 == 1 ? ACT_BACK : BACKGROUND);
+		rewrite_text_to_pole(editor);
+	}
+	
 }
 
 t_coord	get_coord_from_flag(t_editor *editor)
