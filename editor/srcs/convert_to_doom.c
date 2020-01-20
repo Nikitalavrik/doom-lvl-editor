@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 14:59:07 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 15:30:21 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void		parse_walls(t_editor *editor, t_eline *lines, int *i, int *r)
 		editor->doom->sec[*r].pts = (int*)ft_memalloc(sizeof(int) *\
 		editor->doom->sec[*r].max_toch);
 		editor->doom->sec[*r].pts[0] = *i;
-		editor->doom->toch[++(*i)].x = iter->points[2]->x << CONVERT_ZOOM;
-		editor->doom->toch[*i].z = (iter->points[2]->y << CONVERT_ZOOM) + iter->points[2]->rot;
+		editor->doom->toch[++(*i)].x = (iter->points[2]->x << CONVERT_ZOOM) + iter->points[2]->rot_x;
+		editor->doom->toch[*i].z = (iter->points[2]->y << CONVERT_ZOOM) + iter->points[2]->rot_y;
 		editor->doom->toch[*i].y = iter->begin_height + iter->height;
 		editor->doom->sec[*r].pts[1] = *i;
-		editor->doom->toch[++(*i)].x = iter->points[3]->x << CONVERT_ZOOM;
-		editor->doom->toch[*i].z = (iter->points[3]->y << CONVERT_ZOOM) + iter->points[3]->rot;
+		editor->doom->toch[++(*i)].x = (iter->points[3]->x << CONVERT_ZOOM) + iter->points[3]->rot_x;
+		editor->doom->toch[*i].z = (iter->points[3]->y << CONVERT_ZOOM) + iter->points[3]->rot_y;
 		editor->doom->toch[*i].y = iter->begin_height + iter->height;
 		editor->doom->sec[*r].pts[2] = *i;
 		editor->doom->toch[++(*i)].x = iter->points[1]->x << CONVERT_ZOOM;

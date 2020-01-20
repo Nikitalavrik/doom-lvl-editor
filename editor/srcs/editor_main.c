@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:01:36 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/12/28 18:57:21 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 16:47:02 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		start_editor(SDL_Window *win)
 	editor->doom->y_aim = editor->height * 0.62;
 	editor->doom->gravity = 0.015;
 	editor->doom->min_z = 0.5;
+	editor->floor = 1;
 	load_texture_wall(editor->doom);
 	init_skybox(editor->doom);
 	editor->doom->z_buffer = (int*)ft_memalloc(sizeof(int) * editor->width * editor->height);

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 14:26:51 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 16:48:46 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,16 @@ typedef struct			s_dcoords
 ** point save coords
 */
 
-typedef	struct			s_epoint
+typedef	struct				s_epoint
 {
-	t_coords			*coord;
-	int					x;
-	int					y;
-	double				rot;
+	t_coords				*coord;
+	int						x;
+	int						y;
+	double					rot_x;
+	double					rot_y;
 	struct	s_epoint		*next;
 	struct	s_epoint		*prev;
-}						t_epoint;
+}							t_epoint;
 
 /*
 ** line in editor, walls in doom
@@ -139,7 +140,8 @@ typedef struct			s_eline
 	int					color;
 	int					num_of_textures;
 	int					begin_height;
-	int					height;
+	double				height;
+	int					floor;
 	int					rot_angle;
 	int					alpha;
 	struct s_eline		*next;
@@ -187,6 +189,7 @@ typedef struct			s_room
 	int					f_x_angle;
 	int					f_y_angle;
 	int					f_height;
+	int					floor;
 	int					num_of_textures;
 	struct	s_room		*next;
 	struct	s_room		*prev;	
@@ -334,6 +337,7 @@ typedef	struct			s_editor
 	t_eline				*lines;
 	t_room				*selected;
 	t_doom				*doom;
+	int					floor;
 	t_epoint			*room_point;
 	int					num_of_rooms;
 	int					max_sectors;

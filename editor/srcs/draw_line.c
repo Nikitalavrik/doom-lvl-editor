@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:32:57 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/30 14:04:58 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 16:50:42 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,9 @@ void	draw_lines(t_editor *editor, t_eline *lines)
 	iterator = lines;
 	while (iterator)
 	{
-		draw_eline(editor, *iterator->points[0]->coord,\
-		*iterator->points[1]->coord, iterator->color);
+		if (editor->floor == iterator->floor)
+			draw_eline(editor, *iterator->points[0]->coord,\
+			*iterator->points[1]->coord, iterator->color);
 		iterator = iterator->next;
 	}
 }

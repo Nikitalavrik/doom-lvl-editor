@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:58:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 14:35:30 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 16:50:05 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void	add_line(t_editor *editor)
 					push_line(&editor->lines, editor->point, editor->point->next);
 					editor->lines->color = WALL_COLOR;
 					editor->lines->height = 20;
+					editor->lines->floor = editor->floor;
 					editor->lines->num_of_textures = 14;
 					editor->max_sectors++;
 				}
