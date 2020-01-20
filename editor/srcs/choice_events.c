@@ -19,7 +19,6 @@ void		save_parametrs(t_editor *editor)
 		editor->new_win->param_par.line->rot_angle = ft_atoi(editor->new_win->wall_angle);
 		editor->new_win->param_par.line->height = ft_atoi(editor->new_win->height_wall);
 		editor->new_win->param_par.line->begin_height = ft_atoi(editor->new_win->height_above);
-		// line->alpha = ft_atoi(editor->new_win->transp);
 		editor->new_win->param_par.line->num_of_textures = (editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
 		if (!editor->new_win->param_par.line->num_of_textures)
 			editor->new_win->param_par.line->num_of_textures++;
@@ -29,7 +28,6 @@ void		save_parametrs(t_editor *editor)
 		editor->new_win->param_par.room->f_x_angle = ft_atoi(editor->new_win->f_x_angle);
 		editor->new_win->param_par.room->f_y_angle = ft_atoi(editor->new_win->f_y_angle);
 		editor->new_win->param_par.room->f_height = ft_atoi(editor->new_win->f_height);
-		// line->alpha = ft_atoi(editor->new_win->transp);
 		editor->new_win->param_par.room->num_of_textures = (editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
 		if (!editor->new_win->param_par.room->num_of_textures)
 			editor->new_win->param_par.room->num_of_textures++;
@@ -37,10 +35,10 @@ void		save_parametrs(t_editor *editor)
 		ft_strdel(&editor->new_win->f_y_angle);
 		ft_strdel(&editor->new_win->f_height);
 	}
-	// if (editor->new_win->param_flag == 3)
-	// {
-
-	// }
+	if (editor->new_win->param_flag == 3)
+	{
+		editor->new_win->param_par.sprite->num_of_textures = (editor->new_win->active_num.tex_num + 1) % 7 + 9;
+	}
 }
 
 int			check_currsor(t_editor *editor)

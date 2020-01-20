@@ -33,19 +33,6 @@ SDL_Surface		*load_texture(char *path, t_editor *editor)
 
 void	load_textures(t_editor *editor)
 {
-	// int	i;
-
-	// editor->textures[0] =load_texture("./texture/glass_light_blue.png", wolf);
-	// editor->textures[1] = load_texture("./texture/brick.png", editor);
-	// editor->textures[2] =\
-	// load_texture("./texture/redstone_lamp_on.png", editor);
-	// editor->textures[3] =\
-	// load_texture("./texture/crafting_table_front.png", editor);
-	// editor->textures[4] = load_texture("./texture/diamond_block.png", editor);
-	// editor->textures[5] = load_texture("./texture/diamond_ore.png", editor);
-	// editor->textures[6] = load_texture("./texture/glass_lime.png", editor);
-	// editor->textures[7] = load_texture("./texture/gravel.png", editor);
-	// editor->textures[8] = load_texture("./texture/redstone_block.png", editor);
 	editor->textures[0] = load_texture("textures/Bookshell.png", editor);
 	editor->textures[1] = load_texture("textures/MultibrickD.png", editor);
 	editor->textures[2] = load_texture("textures/wallbrick.png", editor);
@@ -63,11 +50,4 @@ void	load_textures(t_editor *editor)
 	editor->button[5] = load_texture("./text/green_button07.png", editor);
 	editor->button[6] = load_texture("./text/green_button08.png", editor);
 	editor->button[7] = load_texture("./text/green_button09.png", editor);
-	// i = 0;
-	// while (i < NUMBER_OF_TEXTURES)
-	// {
-	// 	if (!editor->textures[i])
-	// 		print_error(ft_itoa(i), " : num of textures didn`t load\n");
-	// 	i++;
-	// }
 }

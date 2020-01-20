@@ -144,7 +144,7 @@ void	load_correct_scale_sprite(t_editor *editor)
 		editor->new_win->editor_sprite[i].text = (t_text*)malloc(sizeof(t_text));
 		i++;
 	}
-	editor->new_win->editor_sprite[0].text[0] = convert_tex(IMG_Load("sprite/monsters/people/walk/A1.png"), 128, 128); //9 - 15
+	editor->new_win->editor_sprite[0].text[0] = convert_tex(IMG_Load("sprite/monsters/people/walk/A1.png"), 128, 128);
 	editor->new_win->editor_sprite[1].text[0] = convert_tex(IMG_Load("sprite/monsters/chargingdemon/walk/A1.bmp"), 128, 128);			
 	editor->new_win->editor_sprite[2].text[0] = convert_tex(IMG_Load("sprite/monsters/motherdemon/walk/A1.bmp"), 128, 128);
 	editor->new_win->editor_sprite[3].text[0] = convert_tex(IMG_Load("sprite/BAR1B0.png"), 128, 128);
@@ -169,8 +169,6 @@ void	add_sprites_to_screen(t_editor *editor)
 		while (x + 128 < C_WIDTH)
 		{
 			k %= 7;
-			if (k == 0)
-				k++;
 			put_text_to_screen(editor, y, x, &k);
 			x += editor->new_win->delim_x;
 		}

@@ -82,8 +82,10 @@ typedef	union			s_flags
 		unsigned char	t_butt	: 1;
 		unsigned char	d_butt	: 1;
 		unsigned char	c_butt	: 1;
+		unsigned char	f_floor	: 1;
+		unsigned char	s_floor	: 1;
+		unsigned char	t_floor	: 1;
 		unsigned char	any		: 8;
-		unsigned char	any1	: 3;
 	}					t_f;
 }						t_flags;
 
@@ -229,6 +231,9 @@ typedef struct		s_emenu
 	t_coord			t_cb_coord;
 	t_coord			del_cb_coord;
 	t_coord			clo_cb_coord;
+	t_coord			first_floor;
+	t_coord			second_floor;
+	t_coord			third_floor;
 }					t_emenu;
 
 /*
@@ -349,6 +354,7 @@ typedef	struct			s_editor
 	char				*filename;
 	t_emenu				menu;
 	int					param_flag;
+	int					param_sflag;
 }						t_editor;
 
 /*
