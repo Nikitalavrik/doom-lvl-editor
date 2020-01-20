@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:55:01 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/12/01 14:14:02 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 14:36:48 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	add_room(t_editor *editor)
 					editor->rooms->f_x_angle = 2;
 					editor->rooms->f_y_angle = 2;
 					editor->rooms->f_height = 2;
+					editor->rooms->num_of_textures = 8;
 					calc_max_min(editor->rooms);
 					editor->rooms->alpha = 80;
 					editor->max_sectors++;

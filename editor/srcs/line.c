@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:58:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/12/01 14:12:50 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 14:35:30 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ void        push_line(t_eline **begin, t_epoint *point1, t_epoint *point2)
 	new_point = ft_memalloc(sizeof(t_eline));
 	new_point->points[0] = point1;
 	new_point->points[1] = point2;
+	new_point->points[2] = ft_memalloc(sizeof(t_epoint));
+	new_point->points[3] = ft_memalloc(sizeof(t_epoint));
+	new_point->points[2]->x = point1->x;
+	new_point->points[2]->y = point1->y;
+	new_point->points[3]->x = point2->x;
+	new_point->points[3]->y = point2->y;
 	if (*begin)
 	{
 		iterator = *begin;

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:13 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 17:30:13 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 14:52:08 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ void	convert_sec_to_line(t_editor *editor, t_doom *doom, int i)
 	editor->rooms->point->y = coord.y;
 	push_line(&editor->lines, editor->rooms->point, editor->rooms->point->next);
 	editor->lines->color = WALL_COLOR;
+	editor->lines->points[2] = ft_memalloc(sizeof(t_epoint));
+	editor->lines->points[2]->x = editor->lines->points[0]->x;
+	editor->lines->points[2]->y = editor->lines->points[0]->y;
+	editor->lines->points[3] = ft_memalloc(sizeof(t_epoint));
+	editor->lines->points[3]->x = editor->lines->points[1]->x;
+	editor->lines->points[3]->y = editor->lines->points[1]->y;
 	editor->lines->begin_height = (int)doom->toch[i * 4].y;
 	editor->lines->height = (int)doom->toch[i * 4 + 2].y;
 	editor->lines->num_of_textures = doom->sec[i].t_full;
@@ -56,6 +62,7 @@ void	convert_floor_to_room(t_editor *editor, t_doom *doom, int i)
 	editor->rooms->area = pow(editor->rooms->max_xy.x - editor->rooms->min_xy.x, 2) +\
 	pow(editor->rooms->max_xy.y - editor->rooms->min_xy.y, 2);
 	editor->num_of_rooms++;
+	editor->rooms->num_of_textures = doom->sec[i].t_full;
 	s = 0;
 	while (s < doom->sec[i].max_sp)
 	{

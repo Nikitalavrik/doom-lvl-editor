@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:12:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 12:58:20 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 14:42:29 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,38 +86,51 @@ void	free_sec_toch(t_sec *sec)
 	ft_memdel((void **)&sec->toch);
 }
 
-void	rot_sec_by_z(t_doom *doom, int *points, t_dcoords coord, float rot_angle)
+void	rot_sec_by_z(t_doom *doom, int *points, t_dcoords coord, t_editor *editor)
 {
+	t_eline	*find_sec;
+	
+	find_sec = find_line_by_id(editor, doom->aim_sec);
 	doom->toch[points[1]].x = doom->toch[points[0]].x -\
-						(coord.x * SDL_cos(rot_angle) - coord.y * SDL_sin(rot_angle));
+						(coord.x * SDL_cos(coord.rot) - coord.y * SDL_sin(coord.rot));
 
 	doom->toch[points[1]].y = doom->toch[points[0]].y -\
-					(coord.x * SDL_sin(rot_angle) + coord.y * SDL_cos(rot_angle));
-
-
+					(coord.x * SDL_sin(coord.rot) + coord.y * SDL_cos(coord.rot));
 	doom->toch[points[2]].x = doom->toch[points[3]].x -\
-					(coord.x * SDL_cos(rot_angle) - coord.y * SDL_sin(rot_angle));
+					(coord.x * SDL_cos(coord.rot) - coord.y * SDL_sin(coord.rot));
 	doom->toch[points[2]].y = doom->toch[points[3]].y -\
-					(coord.x * SDL_sin(rot_angle) + coord.y * SDL_cos(rot_angle));
+					(coord.x * SDL_sin(coord.rot) + coord.y * SDL_cos(coord.rot));
+	
+	// find_sec->points[1]->x = (int)doom->toch[points[2]].x << CONVERT_ZOOM;
+	if (find_sec)
+	{
+		// ft_printf("before x = %i\n", find_sec->points[0]->x);
+		find_sec->points[2]->x = ((int)doom->toch[points[1]].x) >> CONVERT_ZOOM;
+		find_sec->points[3]->x = ((int)doom->toch[points[2]].x) >> CONVERT_ZOOM;
+		// find_sec->points[3]->x = ((int)doom->toch[points[1]].x) >> CONVERT_ZOOM;
+		// find_sec->points[4]->x = ((int)doom->toch[points[2]].x) >> CONVERT_ZOOM;
+		// ft_printf("after x = %i\n", find_sec->points[0]->x);
+		find_sec->height = doom->toch[points[2]].y;	
+	}
+
 }
 
-void	rot_sec_by_x(t_doom *doom, int *points, t_dcoords coord, float rot_angle)
+void	rot_sec_by_x(t_doom *doom, int *points, t_dcoords coord)
 {
 	doom->toch[points[1]].y = doom->toch[points[0]].y -\
-					(coord.y * SDL_cos(rot_angle) - coord.z * SDL_sin(rot_angle));
+					(coord.y * SDL_cos(coord.rot) - coord.z * SDL_sin(coord.rot));
 	doom->toch[points[1]].z = doom->toch[points[0]].z -\
-					(coord.y * SDL_sin(rot_angle) + coord.z * SDL_cos(rot_angle));
+					(coord.y * SDL_sin(coord.rot) + coord.z * SDL_cos(coord.rot));
 	doom->toch[points[2]].y = doom->toch[points[3]].y -\
-					(coord.y * SDL_cos(rot_angle) - coord.z * SDL_sin(rot_angle));
+					(coord.y * SDL_cos(coord.rot) - coord.z * SDL_sin(coord.rot));
 	doom->toch[points[2]].z = doom->toch[points[3]].z -\
-					(coord.y * SDL_sin(rot_angle) + coord.z * SDL_cos(rot_angle));
+					(coord.y * SDL_sin(coord.rot) + coord.z * SDL_cos(coord.rot));
 }
 
 void	rot_sector_by_wheel(t_editor *editor, SDL_Event event)
 {
 	int			aim;
 	t_dcoords	coord;
-	float		rot_angle;
 	int			points[4];
 
 	aim = editor->doom->aim_sp != -1 ? editor->doom->aim_sp : editor->doom->aim_sec;
@@ -130,14 +143,14 @@ void	rot_sector_by_wheel(t_editor *editor, SDL_Event event)
 		points[2] = editor->doom->sec[aim].pts[2];
 		points[3] = editor->doom->sec[aim].pts[3];
 	}
-	rot_angle = ((event.wheel.y > 0) ? 3 : -3) * PI / 180;
+	coord.rot = ((event.wheel.y > 0) ? 3 : -3) * PI / 180;
 	coord.x = (float)editor->doom->sec[aim].v1.x;
 	coord.y = (float)editor->doom->sec[aim].v1.y;
 	coord.z = (float)editor->doom->sec[aim].v1.z;
 	if (!editor->flags.t_f.rot_ax)
-		rot_sec_by_x(editor->doom, points, coord, rot_angle);
+		rot_sec_by_x(editor->doom, points, coord);
 	else
-		rot_sec_by_z(editor->doom, points, coord, rot_angle);
+		rot_sec_by_z(editor->doom, points, coord, editor);
 	free_sec_toch(&editor->doom->sec[aim]);
 	grid_sec(editor->doom, &editor->doom->sec[aim]);
 }

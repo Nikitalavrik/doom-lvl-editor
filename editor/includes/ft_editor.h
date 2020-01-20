@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 14:50:53 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 14:26:51 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct			s_dcoords
 	double				x;
 	double				y;
 	double				z;
+	double				rot;
 }						t_dcoords;
 
 /*
@@ -122,6 +123,7 @@ typedef	struct			s_epoint
 	t_coords			*coord;
 	int					x;
 	int					y;
+	double				rot;
 	struct	s_epoint		*next;
 	struct	s_epoint		*prev;
 }						t_epoint;
@@ -133,7 +135,7 @@ typedef	struct			s_epoint
 typedef struct			s_eline
 {
 	int					id;
-	t_epoint			*points[2];
+	t_epoint			*points[4];
 	int					color;
 	int					num_of_textures;
 	int					begin_height;

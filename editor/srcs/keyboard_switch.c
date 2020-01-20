@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:25:50 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 18:14:04 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 14:55:13 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	switch_to_select(t_editor *editor)
 		delete_stick_point(editor);
 	null_editing_flags(&editor->flags);
 	editor->flags.t_f.select = 1;
-
 }
 
 void	switch_to_line_build(t_editor *editor)

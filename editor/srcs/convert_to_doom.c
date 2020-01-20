@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 17:30:28 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 14:59:07 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void		parse_walls(t_editor *editor, t_eline *lines, int *i, int *r)
 		editor->doom->sec[*r].pts = (int*)ft_memalloc(sizeof(int) *\
 		editor->doom->sec[*r].max_toch);
 		editor->doom->sec[*r].pts[0] = *i;
-		editor->doom->toch[++(*i)].x = iter->points[0]->x << CONVERT_ZOOM;
-		editor->doom->toch[*i].z = iter->points[0]->y << CONVERT_ZOOM;
+		editor->doom->toch[++(*i)].x = iter->points[2]->x << CONVERT_ZOOM;
+		editor->doom->toch[*i].z = (iter->points[2]->y << CONVERT_ZOOM) + iter->points[2]->rot;
 		editor->doom->toch[*i].y = iter->begin_height + iter->height;
 		editor->doom->sec[*r].pts[1] = *i;
-		editor->doom->toch[++(*i)].x = iter->points[1]->x << CONVERT_ZOOM;
-		editor->doom->toch[*i].z = iter->points[1]->y << CONVERT_ZOOM;
+		editor->doom->toch[++(*i)].x = iter->points[3]->x << CONVERT_ZOOM;
+		editor->doom->toch[*i].z = (iter->points[3]->y << CONVERT_ZOOM) + iter->points[3]->rot;
 		editor->doom->toch[*i].y = iter->begin_height + iter->height;
 		editor->doom->sec[*r].pts[2] = *i;
 		editor->doom->toch[++(*i)].x = iter->points[1]->x << CONVERT_ZOOM;
@@ -48,7 +48,7 @@ void		parse_walls(t_editor *editor, t_eline *lines, int *i, int *r)
 
 void		parse_sprites(t_editor *editor, t_esprite *sprites, int sec, int s)
 {
-	editor->doom->sec[sec].sp[s].nb_sp = 12;
+	editor->doom->sec[sec].sp[s].nb_sp = sprites->num_of_textures;
 	editor->doom->sec[sec].sp[s].sp.x = (sprites->x << CONVERT_ZOOM) +\
 	(sprites->origin.x + sprites->move.x) / 4;
 	editor->doom->sec[sec].sp[s].sp.z = (sprites->y << CONVERT_ZOOM) +\
@@ -85,7 +85,7 @@ void		init_floor(t_editor *editor, t_room *room, int *i, int *r)
 	editor->doom->toch[*i].z = room->max_xy.y << CONVERT_ZOOM;
 	editor->doom->toch[*i].y = room->height;
 	editor->doom->sec[*r].pts[3] = *i;
-	editor->doom->sec[*r].t_full = 8;
+	editor->doom->sec[*r].t_full = room->num_of_textures;
 	editor->doom->sec[*r].t_win = 0;
 	editor->doom->sec[*r].tape = 0;
 	editor->doom->sec[*r].max_sp = room->max_sprites;
