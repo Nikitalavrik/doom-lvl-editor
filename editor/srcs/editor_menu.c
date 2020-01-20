@@ -24,6 +24,12 @@ void	check_emenu_pole(t_editor *editor)
 		find_and_delete(editor);
 	if (editor->flags.t_f.c_butt == 1 && editor->point)
 		close_room(editor);
+	if (editor->flags.t_f.f_floor == 1)
+		editor->floor = 1;
+	else if (editor->flags.t_f.s_floor == 1)
+		editor->floor = 2;
+	else if (editor->flags.t_f.t_floor == 1)
+		editor->floor = 3;
 }
 
 void	init_emenu_buttons(t_editor *editor)
