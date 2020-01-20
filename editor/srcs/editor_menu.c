@@ -66,6 +66,14 @@ void	init_emenu_buttons(t_editor *editor)
 	editor->menu.third_floor.x1 = editor->menu.third_floor.x + 16;
 	editor->menu.third_floor.y = 320;
 	editor->menu.third_floor.y1 = editor->menu.third_floor.y + 16;
+	editor->menu.return_butt.x = editor->width - MENU_WIDTH + 10;
+	editor->menu.return_butt.x1 = editor->width - 10;
+	editor->menu.return_butt.y = editor->height - 50;
+	editor->menu.return_butt.y1 = editor->menu.return_butt.y + 32;
+	editor->menu.save_butt.x = editor->width - MENU_WIDTH + 10;
+	editor->menu.save_butt.x1 = editor->width - 10;
+	editor->menu.save_butt.y = editor->height - 100;
+	editor->menu.save_butt.y1 = editor->menu.return_butt.y + 32;
 
 }
 
@@ -117,6 +125,16 @@ void	write_button_name(t_editor *editor)
 	message = TTF_RenderText_Solid(editor->font1, "Third floor level", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
+	f.x = editor->menu.return_butt.x + 100;
+	f.y = editor->menu.return_butt.y + 8;
+	message = TTF_RenderText_Solid(editor->font1, "Back to menu", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
+	SDL_FreeSurface(message);
+	f.x = editor->menu.save_butt.x + 100;
+	f.y = editor->menu.save_butt.y + 8;
+	message = TTF_RenderText_Solid(editor->font1, "Save map", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
+	SDL_FreeSurface(message);
 }
 
 void	draw_emenu_check_buttons(t_editor *editor)
@@ -154,6 +172,26 @@ void	draw_emenu_check_buttons(t_editor *editor)
 	rect1.x = editor->menu.third_floor.x;
 	rect1.y = editor->menu.third_floor.y;
 	SDL_BlitScaled(editor->button[editor->flags.t_f.t_floor == 1 ? 4 : 3], NULL, editor->surf, &rect1);
+	rect1.x = editor->menu.return_butt.x;
+	rect1.y = editor->menu.return_butt.y;
+	rect1.w = 280;
+	rect1.h = 32;
+	if (editor->flags.t_f.ret_b == 1)
+		SDL_BlitScaled(editor->button[10], NULL, editor->surf, &rect1);
+	else if (editor->flags.t_f.ret_b == 0 && editor->param_flag == 7)
+		SDL_BlitScaled(editor->button[9], NULL, editor->surf, &rect1);
+	else
+		SDL_BlitScaled(editor->button[8], NULL, editor->surf, &rect1);
+	rect1.x = editor->menu.save_butt.x;
+	rect1.y = editor->menu.save_butt.y;
+	rect1.w = 280;
+	rect1.h = 32;
+	if (editor->flags.t_f.save_b == 1)
+		SDL_BlitScaled(editor->button[10], NULL, editor->surf, &rect1);
+	else if (editor->flags.t_f.save_b == 0 && editor->param_flag == 8)
+		SDL_BlitScaled(editor->button[9], NULL, editor->surf, &rect1);
+	else
+		SDL_BlitScaled(editor->button[8], NULL, editor->surf, &rect1);
 	write_button_name(editor);
 }
 

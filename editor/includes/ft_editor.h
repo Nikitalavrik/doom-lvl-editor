@@ -74,8 +74,8 @@ typedef	union			s_flags
 		unsigned char 	line 	: 1;
 		unsigned char	pole_1	: 1;
 		unsigned char	pole_2	: 1;
-		unsigned char	pole_3	: 1;
-		unsigned char	pole_4	: 1;
+		unsigned char	save_b	: 1;
+		unsigned char	ret_b	: 1;
 		unsigned char	rot_ax	: 1;
 		unsigned char 	m_pole 	: 1;
 		unsigned char	f_butt	: 1;
@@ -168,6 +168,7 @@ typedef struct			s_esprite
 	t_coords				dist;
 	t_coords				origin;
 	int						num_of_textures;
+	int						s_height;
 	struct	s_esprite		*next;
 	struct	s_esprite		*prev;
 }						t_esprite;
@@ -238,6 +239,8 @@ typedef struct		s_emenu
 	t_coord			first_floor;
 	t_coord			second_floor;
 	t_coord			third_floor;
+	t_coord			return_butt;
+	t_coord			save_butt;
 }					t_emenu;
 
 /*
@@ -298,14 +301,12 @@ typedef struct		s_win
 	t_coord			ws_coord3;
 	t_coord			ws_coord4;
 	t_coord			button_coord;
-	char			*wall_angle;
 	char			*height_wall;
 	char			*height_above;
 	char			*transp;
-	char			*f_x_angle;
-	char			*f_y_angle;
 	char			*f_height;
 	void			*param;
+	char			*s_height;
 	int				param_flag;
 	t_sprite		*editor_sprite;
 	t_param			param_par;
@@ -334,7 +335,7 @@ typedef	struct			s_editor
 	t_room				*rooms;
 	t_coords			**coords;
 	SDL_Surface			*textures[9];
-	SDL_Surface			*button[8];
+	SDL_Surface			*button[11];
 	t_coords			center;
 	t_coords			move_map;
 	t_coords			move_save;

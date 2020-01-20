@@ -45,6 +45,7 @@ t_editor	*init_editor(void)
 	editor->height = E_HEIGHT;
 	editor->zoom = 2;
 	editor->floor = 1;
+	editor->flags.t_f.f_floor = 1;
 	init_music_font(editor);
 	coords_init(editor, &editor->size);
 	editor->center.x = editor->size.x / 2 * SQUARE_SIZE * editor->zoom - (editor->width - MENU_WIDTH) / 2;

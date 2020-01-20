@@ -83,6 +83,8 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.s_butt = 0;
 		editor->flags.t_f.t_butt = 0;
 		editor->flags.t_f.d_butt = 0;
+		editor->flags.t_f.ret_b = 0;
+		editor->flags.t_f.save_b = 0;
 	}
 	else if (editor->param_flag == 2 &&\
 		event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
@@ -92,6 +94,8 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.s_butt = 0;
 		editor->flags.t_f.t_butt = 0;
 		editor->flags.t_f.d_butt = 0;
+		editor->flags.t_f.ret_b = 0;
+		editor->flags.t_f.save_b = 0;
 	}
 	else if (editor->param_flag  == 3 &&\
 		event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
@@ -101,6 +105,8 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.s_butt = 1;
 		editor->flags.t_f.t_butt = 0;
 		editor->flags.t_f.d_butt = 0;
+		editor->flags.t_f.ret_b = 0;
+		editor->flags.t_f.save_b = 0;
 	}
 	else if (editor->param_flag == 4 &&\
 		event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
@@ -110,6 +116,8 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.s_butt = 0;
 		editor->flags.t_f.t_butt = 1;
 		editor->flags.t_f.d_butt = 0;
+		editor->flags.t_f.ret_b = 0;
+		editor->flags.t_f.save_b = 0;
 	}
 	else if (editor->param_flag == 5 &&\
 		event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
@@ -119,6 +127,8 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.s_butt = 0;
 		editor->flags.t_f.t_butt = 0;
 		editor->flags.t_f.d_butt = 1;
+		editor->flags.t_f.ret_b = 0;
+		editor->flags.t_f.save_b = 0;
 	}
 	else if (editor->param_flag == 0 &&\
 		event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
@@ -128,6 +138,8 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.s_butt = 0;
 		editor->flags.t_f.t_butt = 0;
 		editor->flags.t_f.d_butt = 0;
+		editor->flags.t_f.ret_b = 0;
+		editor->flags.t_f.save_b = 0;
 	}
 	if (editor->param_flag == 6 &&
 		event.button.button == SDL_BUTTON_LEFT && 
@@ -139,9 +151,41 @@ void		set_emenu_flag(t_editor *editor, SDL_Event event)
 		editor->flags.t_f.t_butt = 0;
 		editor->flags.t_f.d_butt = 0;
 		editor->flags.t_f.c_butt = 1;
+		editor->flags.t_f.ret_b = 0;
+		editor->flags.t_f.save_b = 0;
 	}
-	else if (!set_emenu_sflag(editor, event))
+	if (editor->param_flag == 7 &&
+		event.button.button == SDL_BUTTON_LEFT && 
+		event.button.type == SDL_MOUSEBUTTONDOWN)
+	{
+		editor->flags.t_f.m_pole = 0;
+		editor->flags.t_f.f_butt = 0;
+		editor->flags.t_f.s_butt = 0;
+		editor->flags.t_f.t_butt = 0;
+		editor->flags.t_f.d_butt = 0;
 		editor->flags.t_f.c_butt = 0;
+		editor->flags.t_f.ret_b = 1;
+		editor->flags.t_f.save_b = 0;
+	}
+	if (editor->param_flag == 8 &&
+		event.button.button == SDL_BUTTON_LEFT && 
+		event.button.type == SDL_MOUSEBUTTONDOWN)
+	{
+		editor->flags.t_f.m_pole = 0;
+		editor->flags.t_f.f_butt = 0;
+		editor->flags.t_f.s_butt = 0;
+		editor->flags.t_f.t_butt = 0;
+		editor->flags.t_f.d_butt = 0;
+		editor->flags.t_f.c_butt = 0;
+		editor->flags.t_f.ret_b = 0;
+		editor->flags.t_f.save_b = 1;
+	}
+	else if (!set_emenu_sflag(editor, event) || editor->param_flag == 0)
+	{
+		editor->flags.t_f.c_butt = 0;
+		editor->flags.t_f.ret_b = 0;
+		editor->flags.t_f.save_b = 0;
+	}
 }
 
 void		write_to_emenu_pole(SDL_Event event, char **text)
@@ -205,6 +249,20 @@ void		check_emenu_cursor(t_editor *editor, t_coords mouse_position)
 		mouse_position.y <= editor->menu.clo_cb_coord.y1)
 	{
 		editor->param_flag = 6;
+	}
+	else if (mouse_position.x >= editor->menu.return_butt.x &&
+		mouse_position.x <= editor->menu.return_butt.x1 &&
+		mouse_position.y >= editor->menu.return_butt.y &&
+		mouse_position.y <= editor->menu.return_butt.y1)
+	{
+		editor->param_flag = 7;
+	}
+	else if (mouse_position.x >= editor->menu.save_butt.x &&
+		mouse_position.x <= editor->menu.save_butt.x1 &&
+		mouse_position.y >= editor->menu.save_butt.y &&
+		mouse_position.y <= editor->menu.save_butt.y1)
+	{
+		editor->param_flag = 8;
 	}
 	else if (!check_emenu_scursor(editor, mouse_position))
 		editor->param_flag = 0;

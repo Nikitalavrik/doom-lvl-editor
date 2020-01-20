@@ -12,10 +12,22 @@
 
 #include "ft_editor.h"
 
-void	get_pole_num(t_editor *editor)
+void	set_active_pole(t_editor *editor)
 {
 	Uint32 color;
 
+	draw_white_space(editor->new_win->ws_coord1, editor->new_win->sur,\
+	color = editor->flags.t_f.pole_1 == 1 ? ACT_BACK : BACKGROUND);
+	if (editor->new_win->param_flag == 1)
+	{
+		draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur,\
+		color = editor->flags.t_f.pole_2 == 1 ? ACT_BACK : BACKGROUND);
+	}
+	rewrite_text_to_pole(editor);
+}
+
+void	get_pole_num(t_editor *editor)
+{
 	if (editor->new_win->mouse.x > editor->new_win->ws_coord1.x &&\
 		editor->new_win->mouse.x < editor->new_win->ws_coord1.x1 &&\
 		editor->new_win->mouse.y > editor->new_win->ws_coord1.y &&\
@@ -23,8 +35,6 @@ void	get_pole_num(t_editor *editor)
 	{
 		editor->flags.t_f.pole_1 = 1;
 		editor->flags.t_f.pole_2 = 0;
-		editor->flags.t_f.pole_3 = 0;
-		editor->flags.t_f.pole_4 = 0;
 	}
 	else if (editor->new_win->mouse.x > editor->new_win->ws_coord2.x &&\
 		editor->new_win->mouse.x < editor->new_win->ws_coord2.x1 &&\
@@ -33,37 +43,13 @@ void	get_pole_num(t_editor *editor)
 	{
 		editor->flags.t_f.pole_1 = 0;
 		editor->flags.t_f.pole_2 = 1;
-		editor->flags.t_f.pole_3 = 0;
-		editor->flags.t_f.pole_4 = 0;
-	}
-	else if (editor->new_win->mouse.x > editor->new_win->ws_coord3.x &&\
-		editor->new_win->mouse.x < editor->new_win->ws_coord3.x1 &&\
-		editor->new_win->mouse.y > editor->new_win->ws_coord3.y &&\
-		editor->new_win->mouse.y < editor->new_win->ws_coord3.y1)
-	{
-		editor->flags.t_f.pole_1 = 0;
-		editor->flags.t_f.pole_2 = 0;
-		editor->flags.t_f.pole_3 = 1;
-		editor->flags.t_f.pole_4 = 0;
 	}
 	else
 	{
 		editor->flags.t_f.pole_1 = 0;
 		editor->flags.t_f.pole_2 = 0;
-		editor->flags.t_f.pole_3 = 0;
-		editor->flags.t_f.pole_4 = 0;
 	}
-	draw_white_space(editor->new_win->ws_coord1, editor->new_win->sur,\
-	color = editor->flags.t_f.pole_1 == 1 ? ACT_BACK : BACKGROUND);
-	if (editor->new_win->param_flag == 1 || editor->new_win->param_flag == 2)
-	{
-		draw_white_space(editor->new_win->ws_coord2, editor->new_win->sur,\
-		color = editor->flags.t_f.pole_2 == 1 ? ACT_BACK : BACKGROUND);
-		draw_white_space(editor->new_win->ws_coord3, editor->new_win->sur,\
-		color = editor->flags.t_f.pole_3 == 1 ? ACT_BACK : BACKGROUND);
-		rewrite_text_to_pole(editor);
-	}
-	
+	set_active_pole(editor);
 }
 
 t_coord	get_coord_from_flag(t_editor *editor)
@@ -72,30 +58,27 @@ t_coord	get_coord_from_flag(t_editor *editor)
 		return (editor->new_win->ws_coord1);
 	if (editor->flags.t_f.pole_2 == 1)
 		return (editor->new_win->ws_coord2);
-	if (editor->flags.t_f.pole_3 == 1)
-		return (editor->new_win->ws_coord3);
 	return (editor->new_win->ws_coord1);
 }
 
-void		rewrite_text_to_pole(t_editor *editor)
+void	rewrite_text_to_pole(t_editor *editor)
 {
 	if (editor->new_win->param_flag == 1)
 	{
 		add_text_to_space(editor, editor->new_win->ws_coord1,\
-		editor->new_win->win, editor->new_win->wall_angle);
-		add_text_to_space(editor, editor->new_win->ws_coord2,\
 		editor->new_win->win, editor->new_win->height_wall);
-		add_text_to_space(editor, editor->new_win->ws_coord3,\
+		add_text_to_space(editor, editor->new_win->ws_coord2,\
 		editor->new_win->win, editor->new_win->height_above);
 	}
 	if (editor->new_win->param_flag == 2)
 	{
-		add_text_to_space(editor, editor->new_win->ws_coord3,\
-		editor->new_win->win, editor->new_win->f_height);
-		add_text_to_space(editor, editor->new_win->ws_coord2,\
-		editor->new_win->win, editor->new_win->f_y_angle);
 		add_text_to_space(editor, editor->new_win->ws_coord1,\
-		editor->new_win->win, editor->new_win->f_x_angle);
+		editor->new_win->win, editor->new_win->f_height);
+	}
+	if (editor->new_win->param_flag == 3)
+	{
+		add_text_to_space(editor, editor->new_win->ws_coord1,\
+		editor->new_win->win, editor->new_win->s_height);
 	}
 }
 

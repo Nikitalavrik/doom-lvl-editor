@@ -50,4 +50,7 @@ void	load_textures(t_editor *editor)
 	editor->button[5] = load_texture("./text/green_button07.png", editor);
 	editor->button[6] = load_texture("./text/green_button08.png", editor);
 	editor->button[7] = load_texture("./text/green_button09.png", editor);
+	editor->button[8] = load_texture("./text/green_button02.png", editor);
+	editor->button[9] = load_texture("./text/green_button00.png", editor);
+	editor->button[10] = load_texture("./text/green_button05.png", editor);
 }

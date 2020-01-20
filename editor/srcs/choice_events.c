@@ -16,7 +16,6 @@ void		save_parametrs(t_editor *editor)
 {
 	if (editor->new_win->param_flag == 1)
 	{
-		editor->new_win->param_par.line->rot_angle = ft_atoi(editor->new_win->wall_angle);
 		editor->new_win->param_par.line->height = ft_atoi(editor->new_win->height_wall);
 		editor->new_win->param_par.line->begin_height = ft_atoi(editor->new_win->height_above);
 		editor->new_win->param_par.line->num_of_textures = (editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
@@ -25,19 +24,16 @@ void		save_parametrs(t_editor *editor)
 	}
 	if (editor->new_win->param_flag == 2)
 	{
-		editor->new_win->param_par.room->f_x_angle = ft_atoi(editor->new_win->f_x_angle);
-		editor->new_win->param_par.room->f_y_angle = ft_atoi(editor->new_win->f_y_angle);
 		editor->new_win->param_par.room->f_height = ft_atoi(editor->new_win->f_height);
 		editor->new_win->param_par.room->num_of_textures = (editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
 		if (!editor->new_win->param_par.room->num_of_textures)
 			editor->new_win->param_par.room->num_of_textures++;
-		ft_strdel(&editor->new_win->f_x_angle);
-		ft_strdel(&editor->new_win->f_y_angle);
 		ft_strdel(&editor->new_win->f_height);
 	}
 	if (editor->new_win->param_flag == 3)
 	{
 		editor->new_win->param_par.sprite->num_of_textures = (editor->new_win->active_num.tex_num + 1) % 7 + 9;
+		editor->new_win->param_par.sprite->s_height = ft_atoi(editor->new_win->s_height);
 	}
 }
 
@@ -55,12 +51,9 @@ void		close_choice_win(t_editor *editor)
 {
 	int		i;
 
-	ft_strdel(&editor->new_win->wall_angle);
 	ft_strdel(&editor->new_win->height_wall);
 	ft_strdel(&editor->new_win->height_above);
 	ft_strdel(&editor->new_win->transp);
-	ft_strdel(&editor->new_win->f_x_angle);
-	ft_strdel(&editor->new_win->f_y_angle);
 	ft_strdel(&editor->new_win->f_height);
 	i = 0;
 	if (editor->new_win->param_flag == 3)
@@ -188,23 +181,20 @@ void		new_event(t_editor *editor, SDL_Event event)
 			if (editor->new_win->param_flag == 1)
 			{
 				if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
-					write_to_pole(editor, &editor->new_win->wall_angle, event);
-				else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_2)
 					write_to_pole(editor, &editor->new_win->height_wall, event);
-				else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_3)
+				else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_2)
 					write_to_pole(editor, &editor->new_win->height_above, event);
 			}
 			else if (editor->new_win->param_flag == 2)
 			{
 				if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
-					write_to_pole(editor, &editor->new_win->f_x_angle, event);
-				else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_2)
-					write_to_pole(editor, &editor->new_win->f_y_angle, event);
-				else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_3)
 					write_to_pole(editor, &editor->new_win->f_height, event);
 			}
-			// else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_4)
-			// 	write_to_pole(editor, &editor->new_win->transp, event);
+			else if (editor->new_win->param_flag == 3)
+			{
+				if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
+					write_to_pole(editor, &editor->new_win->s_height, event);
+			}
 			new_event2(editor, event);
 		}
 	}
