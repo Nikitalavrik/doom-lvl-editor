@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:13 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 14:52:08 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 15:37:04 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,25 @@ void	convert_sec_to_line(t_editor *editor, t_doom *doom, int i)
 	push_point(&editor->rooms->point, &editor->coords[coord.y][coord.x]);
 	editor->rooms->point->x = coord.x;
 	editor->rooms->point->y = coord.y;
-	coord.x = (int)doom->toch[i * 4 + 2].x >> CONVERT_ZOOM;
-	coord.y = (int)doom->toch[i * 4 + 2].z >> CONVERT_ZOOM;
+	coord.x = (int)doom->toch[i * 4 + 3].x >> CONVERT_ZOOM;
+	coord.y = (int)doom->toch[i * 4 + 3].z >> CONVERT_ZOOM;
 	push_point(&editor->rooms->point, &editor->coords[coord.y][coord.x]);
 	editor->rooms->point->x = coord.x;
 	editor->rooms->point->y = coord.y;
 	push_line(&editor->lines, editor->rooms->point, editor->rooms->point->next);
 	editor->lines->color = WALL_COLOR;
 	editor->lines->points[2] = ft_memalloc(sizeof(t_epoint));
-	editor->lines->points[2]->x = editor->lines->points[0]->x;
-	editor->lines->points[2]->y = editor->lines->points[0]->y;
+	editor->lines->points[2]->x = (int)doom->toch[i * 4 + 2].x >> CONVERT_ZOOM;
+	editor->lines->points[2]->rot_x = (doom->toch[i * 4 + 2].x - (int)doom->toch[i * 4 + 2].x) * pow(2, CONVERT_ZOOM);
+	editor->lines->points[2]->y = (int)doom->toch[i * 4 + 2].z >> CONVERT_ZOOM;
+	editor->lines->points[2]->rot_y = (doom->toch[i * 4 + 2].z - (int)doom->toch[i * 4 + 2].z) * pow(2, CONVERT_ZOOM);
 	editor->lines->points[3] = ft_memalloc(sizeof(t_epoint));
-	editor->lines->points[3]->x = editor->lines->points[1]->x;
-	editor->lines->points[3]->y = editor->lines->points[1]->y;
+	editor->lines->points[3]->x = (int)doom->toch[i * 4 + 1].x >> CONVERT_ZOOM;
+	editor->lines->points[3]->rot_x = (doom->toch[i * 4 + 1].x - (int)doom->toch[i * 4 + 1].x) * pow(2, CONVERT_ZOOM);
+	editor->lines->points[3]->y = (int)doom->toch[i * 4 + 1].z >> CONVERT_ZOOM;
+	editor->lines->points[3]->rot_y = (doom->toch[i * 4 + 1].z - (int)doom->toch[i * 4 + 1].z) * pow(2, CONVERT_ZOOM);
 	editor->lines->begin_height = (int)doom->toch[i * 4].y;
-	editor->lines->height = (int)doom->toch[i * 4 + 2].y;
+	editor->lines->height = doom->toch[i * 4 + 2].y;
 	editor->lines->num_of_textures = doom->sec[i].t_full;
 }
 

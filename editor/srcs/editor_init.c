@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:20:39 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 15:51:32 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 16:46:49 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_editor	*init_editor(void)
 	editor->width = E_WIDTH;
 	editor->height = E_HEIGHT;
 	editor->zoom = 2;
+	editor->floor = 1;
 	init_music_font(editor);
 	coords_init(editor, &editor->size);
 	editor->center.x = editor->size.x / 2 * SQUARE_SIZE * editor->zoom - (editor->width - MENU_WIDTH) / 2;

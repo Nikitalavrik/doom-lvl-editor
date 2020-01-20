@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:54:16 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 14:44:24 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 16:49:41 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void    close_room(t_editor *editor)
 		editor->max_sectors++;
 		delete_stick_line_room(editor);
 		editor->point_cnt = 0;
+		editor->rooms->floor = editor->floor;
 		sort_rooms(&editor->rooms, editor->num_of_rooms);
 	}
 }
