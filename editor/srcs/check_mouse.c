@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:55:10 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 13:37:41 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 17:12:45 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@ t_eline		*check_line(t_editor *editor, t_coords mouse)
 	while (lines)
 	{
 		lines->color = WALL_COLOR;
-		calc_dist = calc_short_dist(lines, mouse);
-		if (calc_dist < min_dist)
+		if (editor->floor == lines->floor)
 		{
-			min_dist = calc_dist;
-			choosen = lines;
+			calc_dist = calc_short_dist(lines, mouse);
+			if (calc_dist < min_dist)
+			{
+				min_dist = calc_dist;
+				choosen = lines;
+			}
 		}
 		lines = lines->next;
 	}
@@ -109,7 +112,8 @@ t_room		*check_rooms(t_editor *editor, t_coords mouse, int type)
 		min_max_area[0] = editor->coords[iter->min_xy.y][iter->min_xy.x];
 		min_max_area[1] = editor->coords[iter->max_xy.y][iter->max_xy.x];
 		iter->flags.t_f.hover = 0;
-		check_hover_room(editor, mouse, iter, min_max_area);
+		if (editor->floor == iter->floor)
+			check_hover_room(editor, mouse, iter, min_max_area);
 		iter = iter->prev;
 	}
 	iter = editor->selected;

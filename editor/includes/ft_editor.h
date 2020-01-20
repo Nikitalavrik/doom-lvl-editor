@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 16:48:46 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/20 17:16:42 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 # define C_HEIGHT 712
 # define TEXTNUM 9
 # define CONVERT_ZOOM 3
+# define FLOOR_HEIGHT 20
 // # define STANDART_COLOR 0xc38d9e
 // # define WALL_COLOR 0xe27d60
 // # define TEXTURE_COLOR 0x41b3a3
