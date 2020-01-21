@@ -55,6 +55,7 @@ void		close_choice_win(t_editor *editor)
 	ft_strdel(&editor->new_win->height_above);
 	ft_strdel(&editor->new_win->transp);
 	ft_strdel(&editor->new_win->f_height);
+	ft_strdel(&editor->new_win->s_height);
 	i = 0;
 	if (editor->new_win->param_flag == 3)
 	{

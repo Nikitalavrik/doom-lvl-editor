@@ -86,7 +86,9 @@ typedef	union			s_flags
 		unsigned char	f_floor	: 1;
 		unsigned char	s_floor	: 1;
 		unsigned char	t_floor	: 1;
-		unsigned char	any		: 8;
+		unsigned char	load_b	: 1;
+		unsigned char	clear	: 1;
+		unsigned char	any		: 6;
 	}					t_f;
 }						t_flags;
 
@@ -241,6 +243,8 @@ typedef struct		s_emenu
 	t_coord			third_floor;
 	t_coord			return_butt;
 	t_coord			save_butt;
+	t_coord			load_butt;
+	t_coord			clear_lvl;
 }					t_emenu;
 
 /*
@@ -501,6 +505,11 @@ void			rewrite_text_to_pole(t_editor *editor);
 t_text   		convert_tex(SDL_Surface *dst, int w, int h);
 
 /*
+** Buttons function
+*/
+
+void			editor_autosave(t_editor *editor);
+/*
 ** FREE
 */
 
@@ -549,6 +558,8 @@ void			god_rot_move(t_editor *editor, SDL_Event event);
 */
 
 void			null_editing_flags(t_flags *flags);
+void			set_emenu_flag(t_editor *editor, SDL_Event event);
+void			set_to_zero_emenu_flags(t_editor *editor);
 
 /*
 ** rotating map

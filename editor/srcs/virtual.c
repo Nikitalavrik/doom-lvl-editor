@@ -43,12 +43,10 @@ void		editor_autosave(t_editor *editor)
 {
 	char *tmp;
 
-	tmp = editor->filename;
-	editor->filename = ft_strjoin("saves/",tmp);
+	tmp = ft_strjoin("saves/", editor->filename);
+	ft_printf("save to %s\n", tmp);
+	save_map(editor->doom, tmp);
 	ft_memdel((void **)&tmp);
-	ft_printf("save to %s\n", editor->filename);
-	save_map(editor->doom, editor->filename);
-	ft_memdel((void **)&editor->filename);
 }
 
 void		d3_init(t_editor *editor)

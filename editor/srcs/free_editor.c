@@ -75,5 +75,6 @@ void		partly_free_editor(t_editor *editor)
 	free_rooms(&editor->rooms);
 	free_points(&editor->point);
 	free_lines(&editor->lines);
+	ft_memdel((void **)&editor->filename);
 	editor->selected = NULL;
 }

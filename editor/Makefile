@@ -53,6 +53,7 @@ SRC =	editor_main.c		\
 		active_rectangle.c	\
 		new_win_init.c		\
 		editor_menu.c		\
+		set_menu_flags.c	\
 		editor_menu_events.c
 
 SRC_DOOM = ../mkhomich/doom-nukem.a
@@ -94,7 +95,7 @@ $(NAME): $(LIB) $(PRINTF) $(OBJS) $(TEST_MAIN_O)
 		$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(SRC_DOOM) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) #-fsanitize=address
 
 lib: $(OBJS)
-	@echo "$(GREEN)Compile $(NAME)"
+	@echo "$(GREEN)Compile $(NAME).a"
 	@rm -f $(NAME).a
 	@ar rc $(NAME).a $(OBJS)
 	@ranlib $(NAME).a 

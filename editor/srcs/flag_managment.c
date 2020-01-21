@@ -24,3 +24,17 @@ void	null_editing_flags(t_flags *flags)
 	flags->t_f.t_butt = 0;
 	flags->t_f.d_butt = 0;
 }
+
+void	set_to_zero_emenu_flags(t_editor *editor)
+{
+	editor->flags.t_f.m_pole = 0;
+	editor->flags.t_f.f_butt = 0;
+	editor->flags.t_f.s_butt = 0;
+	editor->flags.t_f.t_butt = 0;
+	editor->flags.t_f.d_butt = 0;
+	editor->flags.t_f.ret_b = 0;
+	editor->flags.t_f.save_b = 0;
+	editor->flags.t_f.c_butt = 0;
+	editor->flags.t_f.load_b = 0;
+	editor->flags.t_f.clear = 0;
+}

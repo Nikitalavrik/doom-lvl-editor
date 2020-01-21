@@ -30,6 +30,17 @@ void	check_emenu_pole(t_editor *editor)
 		editor->floor = 2;
 	else if (editor->flags.t_f.t_floor == 1)
 		editor->floor = 3;
+	if (editor->flags.t_f.save_b == 1)
+	{
+		editor_autosave(editor);
+		editor->flags.t_f.save_b = 0;
+	}
+	if (editor->flags.t_f.load_b == 1)
+	{
+		editor->flags.t_f.load_b = 0;
+		// load_map(editor->doom, editor->filename); Не работает дописать
+		// convert_doom_to_editor(editor, editor->doom);
+	}
 }
 
 void	init_emenu_buttons(t_editor *editor)
@@ -54,27 +65,41 @@ void	init_emenu_buttons(t_editor *editor)
 	editor->menu.clo_cb_coord.x1 = editor->menu.clo_cb_coord.x + 16;
 	editor->menu.clo_cb_coord.y = 200;
 	editor->menu.clo_cb_coord.y1 = editor->menu.clo_cb_coord.y + 16;
+
 	editor->menu.first_floor.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.first_floor.x1 = editor->menu.first_floor.x + 16;
 	editor->menu.first_floor.y = 260;
 	editor->menu.first_floor.y1 = editor->menu.first_floor.y + 16;
+
 	editor->menu.second_floor.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.second_floor.x1 = editor->menu.second_floor.x + 16;
 	editor->menu.second_floor.y = 290;
 	editor->menu.second_floor.y1 = editor->menu.second_floor.y + 16;
+
 	editor->menu.third_floor.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.third_floor.x1 = editor->menu.third_floor.x + 16;
 	editor->menu.third_floor.y = 320;
 	editor->menu.third_floor.y1 = editor->menu.third_floor.y + 16;
+
 	editor->menu.return_butt.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.return_butt.x1 = editor->width - 10;
 	editor->menu.return_butt.y = editor->height - 50;
 	editor->menu.return_butt.y1 = editor->menu.return_butt.y + 32;
+
 	editor->menu.save_butt.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.save_butt.x1 = editor->width - 10;
 	editor->menu.save_butt.y = editor->height - 100;
-	editor->menu.save_butt.y1 = editor->menu.return_butt.y + 32;
+	editor->menu.save_butt.y1 = editor->menu.save_butt.y + 32;
 
+	editor->menu.load_butt.x = editor->width - MENU_WIDTH + 10;
+	editor->menu.load_butt.x1 = editor->width - 10;
+	editor->menu.load_butt.y = editor->height - 150;
+	editor->menu.load_butt.y1 = editor->menu.load_butt.y + 32;
+
+	editor->menu.clear_lvl.x = editor->width - MENU_WIDTH + 10;
+	editor->menu.clear_lvl.x1 = editor->menu.clear_lvl.x + 16;
+	editor->menu.clear_lvl.y = 350;
+	editor->menu.clear_lvl.y1 = editor->menu.clear_lvl.y + 32;
 }
 
 void	write_button_name(t_editor *editor)
@@ -125,6 +150,10 @@ void	write_button_name(t_editor *editor)
 	message = TTF_RenderText_Solid(editor->font1, "Third floor level", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
+	f.y = editor->menu.clear_lvl.y + 2;
+	message = TTF_RenderText_Solid(editor->font1, "Clear lvl", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
+	SDL_FreeSurface(message);
 	f.x = editor->menu.return_butt.x + 100;
 	f.y = editor->menu.return_butt.y + 8;
 	message = TTF_RenderText_Solid(editor->font1, "Back to menu", color);
@@ -135,6 +164,67 @@ void	write_button_name(t_editor *editor)
 	message = TTF_RenderText_Solid(editor->font1, "Save map", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
+	f.x = editor->menu.load_butt.x + 100;
+	f.y = editor->menu.load_butt.y + 8;
+	message = TTF_RenderText_Solid(editor->font1, "Load map", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
+	SDL_FreeSurface(message);
+}
+
+void	draw_emenu_big_buttons(t_editor *editor)
+{
+	SDL_Rect	rect1;
+
+	rect1.x = editor->menu.return_butt.x;
+	rect1.y = editor->menu.return_butt.y;
+	rect1.w = 280;
+	rect1.h = 32;
+	if (editor->flags.t_f.ret_b == 1)
+		SDL_BlitScaled(editor->button[10], NULL, editor->surf, &rect1);
+	else if (editor->flags.t_f.ret_b == 0 && editor->param_flag == 7)
+		SDL_BlitScaled(editor->button[9], NULL, editor->surf, &rect1);
+	else
+		SDL_BlitScaled(editor->button[8], NULL, editor->surf, &rect1);
+	rect1.x = editor->menu.save_butt.x;
+	rect1.y = editor->menu.save_butt.y;
+	if (editor->flags.t_f.save_b == 1)
+		SDL_BlitScaled(editor->button[10], NULL, editor->surf, &rect1);
+	else if (editor->flags.t_f.save_b == 0 && editor->param_flag == 8)
+		SDL_BlitScaled(editor->button[9], NULL, editor->surf, &rect1);
+	else
+		SDL_BlitScaled(editor->button[8], NULL, editor->surf, &rect1);
+	rect1.x = editor->menu.load_butt.x;
+	rect1.y = editor->menu.load_butt.y;
+	if (editor->flags.t_f.load_b == 1)
+		SDL_BlitScaled(editor->button[10], NULL, editor->surf, &rect1);
+	else if (editor->flags.t_f.load_b == 0 && editor->param_flag == 9)
+		SDL_BlitScaled(editor->button[9], NULL, editor->surf, &rect1);
+	else
+		SDL_BlitScaled(editor->button[8], NULL, editor->surf, &rect1);
+}
+
+void	draw_emenu_help_buttons(t_editor *editor)
+{
+	SDL_Rect	rect1;
+
+	rect1.w = 16;
+	rect1.h = 16;
+	rect1.x = editor->menu.clo_cb_coord.x;
+	rect1.y = editor->menu.clo_cb_coord.y;
+	if (editor->flags.t_f.c_butt == 1)
+		SDL_BlitScaled(editor->button[6], NULL, editor->surf, &rect1);
+	else if (editor->flags.t_f.c_butt == 0 && editor->param_flag == 6)
+		SDL_BlitScaled(editor->button[5], NULL, editor->surf, &rect1);
+	else
+		SDL_BlitScaled(editor->button[7], NULL, editor->surf, &rect1);
+	rect1.x = editor->menu.clear_lvl.x;
+	rect1.y = editor->menu.clear_lvl.y;
+	if (editor->flags.t_f.clear == 1)
+		SDL_BlitScaled(editor->button[6], NULL, editor->surf, &rect1);
+	else if (editor->flags.t_f.clear == 0 && editor->param_flag == 10)
+		SDL_BlitScaled(editor->button[5], NULL, editor->surf, &rect1);
+	else
+		SDL_BlitScaled(editor->button[7], NULL, editor->surf, &rect1);
 }
 
 void	draw_emenu_check_buttons(t_editor *editor)
@@ -155,14 +245,6 @@ void	draw_emenu_check_buttons(t_editor *editor)
 	rect1.x = editor->menu.del_cb_coord.x;
 	rect1.y = editor->menu.del_cb_coord.y;
 	SDL_BlitScaled(editor->button[editor->flags.t_f.d_butt == 1 ? 4 : 3], NULL, editor->surf, &rect1);
-	rect1.x = editor->menu.clo_cb_coord.x;
-	rect1.y = editor->menu.clo_cb_coord.y;
-	if (editor->flags.t_f.c_butt == 1)
-		SDL_BlitScaled(editor->button[6], NULL, editor->surf, &rect1);
-	else if (editor->flags.t_f.c_butt == 0 && editor->param_flag == 6)
-		SDL_BlitScaled(editor->button[5], NULL, editor->surf, &rect1);
-	else
-		SDL_BlitScaled(editor->button[7], NULL, editor->surf, &rect1);
 	rect1.x = editor->menu.first_floor.x;
 	rect1.y = editor->menu.first_floor.y;
 	SDL_BlitScaled(editor->button[editor->flags.t_f.f_floor == 1 ? 4 : 3], NULL, editor->surf, &rect1);
@@ -172,27 +254,6 @@ void	draw_emenu_check_buttons(t_editor *editor)
 	rect1.x = editor->menu.third_floor.x;
 	rect1.y = editor->menu.third_floor.y;
 	SDL_BlitScaled(editor->button[editor->flags.t_f.t_floor == 1 ? 4 : 3], NULL, editor->surf, &rect1);
-	rect1.x = editor->menu.return_butt.x;
-	rect1.y = editor->menu.return_butt.y;
-	rect1.w = 280;
-	rect1.h = 32;
-	if (editor->flags.t_f.ret_b == 1)
-		SDL_BlitScaled(editor->button[10], NULL, editor->surf, &rect1);
-	else if (editor->flags.t_f.ret_b == 0 && editor->param_flag == 7)
-		SDL_BlitScaled(editor->button[9], NULL, editor->surf, &rect1);
-	else
-		SDL_BlitScaled(editor->button[8], NULL, editor->surf, &rect1);
-	rect1.x = editor->menu.save_butt.x;
-	rect1.y = editor->menu.save_butt.y;
-	rect1.w = 280;
-	rect1.h = 32;
-	if (editor->flags.t_f.save_b == 1)
-		SDL_BlitScaled(editor->button[10], NULL, editor->surf, &rect1);
-	else if (editor->flags.t_f.save_b == 0 && editor->param_flag == 8)
-		SDL_BlitScaled(editor->button[9], NULL, editor->surf, &rect1);
-	else
-		SDL_BlitScaled(editor->button[8], NULL, editor->surf, &rect1);
-	write_button_name(editor);
 }
 
 void	create_pole_to_save_name(t_editor *editor)
@@ -205,7 +266,8 @@ void	create_pole_to_save_name(t_editor *editor)
 	editor->menu.coord.y1 = editor->menu.coord.y + 20;
 	editor->menu.caption.caption = "Map name :";
 	editor->menu.caption.delim = 90;
-	draw_white_space(editor->menu.coord, editor->surf, editor->flags.t_f.m_pole == 1 ? ACT_BACK : BACKGROUND);
+	draw_white_space(editor->menu.coord, editor->surf,\
+		editor->flags.t_f.m_pole == 1 ? ACT_BACK : BACKGROUND);
 	draw_caption(editor, editor->menu.coord, editor->win, editor->menu.caption);
 	if (editor->filename == NULL)
 	{
@@ -229,7 +291,8 @@ void	draw_menu_background(t_editor *editor)
 		while(y < editor->height)
 		{
 			if (x >= 0 && y >= 0 && y < editor->height)
-				((int *)editor->surf->pixels)[(y * editor->surf->w) + x] = 0xcccccc;
+				((int *)editor->surf->pixels)\
+			[(y * editor->surf->w) + x] = 0xcccccc;
 			y++;
 		}
 		x++;
@@ -241,7 +304,8 @@ void	draw_editor_menu(t_editor *editor)
 	draw_menu_background(editor);
 	create_pole_to_save_name(editor);
 	draw_emenu_check_buttons(editor);
+	draw_emenu_help_buttons(editor);
+	draw_emenu_big_buttons(editor);
+	write_button_name(editor);
 	check_emenu_pole(editor);
-
-
 }
