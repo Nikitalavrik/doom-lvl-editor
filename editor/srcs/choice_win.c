@@ -12,27 +12,6 @@
 
 #include "ft_editor.h"
 
-void	draw_button(t_editor *editor, int button_num)
-{
-	SDL_Rect	rect1;
-	SDL_Color	color;
-	SDL_Surface	*message;
-	SDL_Rect	f;
-
-	rect1.x = editor->new_win->button_coord.x;
-	rect1.y = editor->new_win->button_coord.y;
-	rect1.w = editor->new_win->button_coord.x1 - editor->new_win->button_coord.x;
-	rect1.h = editor->new_win->button_coord.y1 - editor->new_win->button_coord.y;
-	SDL_BlitScaled(editor->button[button_num], NULL, editor->new_win->sur, &rect1);
-	f.x = rect1.x + 95;
-	f.y = rect1.y + 10;
-	color = (SDL_Color){200, 200, 100, 0};
-	message = TTF_RenderText_Solid(editor->font1, "SAVE AND EXIT", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->new_win->win), &f);
-	SDL_FreeSurface(message);
-	SDL_UpdateWindowSurface(editor->new_win->win);
-}
-
 Uint32	get_pix_from_text(SDL_Surface *text, int x, int y)
 {
 	Uint32	*tmp;
@@ -66,7 +45,8 @@ void	draw_list_text(t_editor *editor)
 		x = 0;
 		while (x < C_WIDTH)
 		{
-			pic = editor->new_win->sur->pixels + y * editor->new_win->sur->pitch +
+			pic = editor->new_win->sur->pixels +\
+			y * editor->new_win->sur->pitch +
 			x * editor->new_win->sur->format->BytesPerPixel;
 			*pic = editor->new_win->screen[y + editor->new_win->cam_y][x];
 			x++;
@@ -75,126 +55,12 @@ void	draw_list_text(t_editor *editor)
 	}
 }
 
-void	put_text_to_screen(t_editor *editor, int y, int x, int *k)
-{
-	int		x1;
-	int		y1;
-	int		old_x;
-
-	y1 = 0;
-	old_x = x;
-	while (y1 < 128)
-	{
-		x1 = 0;
-		x = old_x;
-		while (x1 < 128)
-		{
-			if (editor->new_win->param_flag == 1 || editor->new_win->param_flag == 2)
-				editor->new_win->screen[y][x] = editor->doom->text[*k].tex[y1 * 128 + x1];
-			else if (editor->new_win->param_flag == 3)
-			{
-				editor->new_win->screen[y][x] = (Uint32)editor->new_win->editor_sprite[*k].text[0].tex[y1 * 128 + x1];
-			}
-			x++;
-			x1++;
-		}
-		y1++;
-		y++;
-	}
-	(*k)++;
-}
-
 void	put_to_screen(t_editor *editor, int x, int y, Uint32 collor)
 {
 	editor->new_win->screen[y][x] = collor;
 }
 
-void	add_textures_to_screen(t_editor *editor)
-{
-	int		x;
-	int		y;
-	int		k;
-
-	x = 20;
-	y = 20;
-	k = 1;
-	while (y + 128 < 148 * editor->doom->count_text / 4 + 20)
-	{
-		x = 20;
-		while (x + 128 < C_WIDTH)
-		{
-			k %= editor->doom->count_text;
-			if (k == 0)
-				k++;
-			put_text_to_screen(editor, y, x, &k);
-			x += editor->new_win->delim_x;
-		}
-		y += editor->new_win->delim_y;
-	}
-}
-
-void	load_correct_scale_sprite(t_editor *editor)
-{
-	int i;
-
-	i = 0;
-	editor->new_win->editor_sprite = (t_sprite*)malloc(sizeof(t_sprite) * 7);
-	while (i < 7)
-	{
-		editor->new_win->editor_sprite[i].text = (t_text*)malloc(sizeof(t_text));
-		i++;
-	}
-	editor->new_win->editor_sprite[0].text[0] = convert_tex(IMG_Load("sprite/monsters/people/walk/A1.png"), 128, 128);
-	editor->new_win->editor_sprite[1].text[0] = convert_tex(IMG_Load("sprite/monsters/chargingdemon/walk/A1.bmp"), 128, 128);			
-	editor->new_win->editor_sprite[2].text[0] = convert_tex(IMG_Load("sprite/monsters/motherdemon/walk/A1.bmp"), 128, 128);
-	editor->new_win->editor_sprite[3].text[0] = convert_tex(IMG_Load("sprite/BAR1B0.png"), 128, 128);
-	editor->new_win->editor_sprite[4].text[0] = convert_tex(IMG_Load("sprite/armor.png"), 128, 128);
-	editor->new_win->editor_sprite[5].text[0] = convert_tex(IMG_Load("sprite/medkit.png"), 128, 128);
-	editor->new_win->editor_sprite[6].text[0] = convert_tex(IMG_Load("sprite/ammo.png"), 128, 128);
-}
-
-void	add_sprites_to_screen(t_editor *editor)
-{
-	int		x;
-	int		y;
-	int		k;
-
-	load_correct_scale_sprite(editor);
-	x = 20;
-	y = 20;
-	k = 1;
-	while (y + 128 < editor->new_win->mem_space)
-	{
-		x = 20;
-		while (x + 128 < C_WIDTH)
-		{
-			k %= 7;
-			put_text_to_screen(editor, y, x, &k);
-			x += editor->new_win->delim_x;
-		}
-		y += editor->new_win->delim_y;
-	}
-}
-
-void	ft_clear_new_screen(t_editor *editor)
-{
-	int		x;
-	int		y;
-
-	x = 0;
-	while (x < C_WIDTH)
-	{
-		y = 0;
-		while (y < 3000)
-		{
-			editor->new_win->screen[y][x] = 0xcccccc;
-			y++;
-		}
-		x++;
-	}
-}
-
-void		choice_win(t_editor *editor, SDL_Event event, int flag, void *param)
+void	choice_win(t_editor *editor, SDL_Event event, int flag, void *param)
 {
 	new_win_init(editor, param, flag);
 	if (flag == 1 || flag == 2)

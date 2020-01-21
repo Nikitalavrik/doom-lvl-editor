@@ -12,75 +12,6 @@
 
 #include "ft_editor.h"
 
-void		save_parametrs(t_editor *editor)
-{
-	if (editor->new_win->param_flag == 1)
-	{
-		editor->new_win->param_par.line->height = ft_atoi(editor->new_win->height_wall);
-		editor->new_win->param_par.line->begin_height = ft_atoi(editor->new_win->height_above);
-		editor->new_win->param_par.line->num_of_textures = (editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
-		if (!editor->new_win->param_par.line->num_of_textures)
-			editor->new_win->param_par.line->num_of_textures++;
-	}
-	if (editor->new_win->param_flag == 2)
-	{
-		editor->new_win->param_par.room->f_height = ft_atoi(editor->new_win->f_height);
-		editor->new_win->param_par.room->num_of_textures = (editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
-		if (!editor->new_win->param_par.room->num_of_textures)
-			editor->new_win->param_par.room->num_of_textures++;
-		ft_strdel(&editor->new_win->f_height);
-	}
-	if (editor->new_win->param_flag == 3)
-	{
-		editor->new_win->param_par.sprite->num_of_textures = (editor->new_win->active_num.tex_num + 1) % 7 + 9;
-		editor->new_win->param_par.sprite->s_height = ft_atoi(editor->new_win->s_height);
-	}
-}
-
-int			check_currsor(t_editor *editor)
-{
-	if (editor->new_win->mouse.x > editor->new_win->button_coord.x &&\
-		editor->new_win->mouse.x < editor->new_win->button_coord.x1 &&\
-		editor->new_win->mouse.y > editor->new_win->button_coord.y &&\
-		editor->new_win->mouse.y < editor->new_win->button_coord.y1)
-		return (1);
-	return (0);
-}
-
-void		close_choice_win(t_editor *editor)
-{
-	int		i;
-
-	ft_strdel(&editor->new_win->height_wall);
-	ft_strdel(&editor->new_win->height_above);
-	ft_strdel(&editor->new_win->transp);
-	ft_strdel(&editor->new_win->f_height);
-	ft_strdel(&editor->new_win->s_height);
-	i = 0;
-	if (editor->new_win->param_flag == 3)
-	{
-		while (i < 7)
-		{
-			free(editor->new_win->editor_sprite[i].text[0].tex);
-			free(editor->new_win->editor_sprite[i].text);
-			i++;
-		}
-		free(editor->new_win->editor_sprite);	
-	}
-	i = 0;
-	while (i < editor->new_win->mem_space)
-	{
-		free(editor->new_win->screen[i]);
-		i++;
-	}
-	free(editor->new_win->screen);
-	free(editor->new_win->events);
-	SDL_FreeSurface(editor->new_win->sur);
-	SDL_DestroyWindow(SDL_GetWindowFromID(editor->new_win->win_id));
-	free(editor->new_win);
-	editor->new_win = NULL;
-}
-
 void		new_event4(t_editor *editor, SDL_Event event)
 {
 	if (editor->new_win->events->up)
@@ -93,14 +24,14 @@ void		new_event4(t_editor *editor, SDL_Event event)
 		SDL_UpdateWindowSurface(editor->new_win->win);
 		editor->new_win->events->down = 0;
 	}
-	event.button.clicks = event.button.clicks + 1 - 1; 
+	event.button.clicks = event.button.clicks + 1 - 1;
 }
 
 void		new_event3(t_editor *editor, SDL_Event event)
 {
 	if ((event.key.keysym.sym == SDLK_w ||\
 			event.key.keysym.sym == SDLK_UP))
-			editor->new_win->events->up = event.key.type == SDL_KEYDOWN;
+		editor->new_win->events->up = event.key.type == SDL_KEYDOWN;
 	if ((event.key.keysym.sym == SDLK_s ||\
 		event.key.keysym.sym == SDLK_DOWN))
 		editor->new_win->events->down = event.key.type == SDL_KEYDOWN;
@@ -119,11 +50,12 @@ void		new_event3(t_editor *editor, SDL_Event event)
 
 void		new_event2(t_editor *editor, SDL_Event event)
 {
-	if(event.type == SDL_MOUSEWHEEL)
+	if (event.type == SDL_MOUSEWHEEL)
 	{
 		if (event.wheel.y > 0)
 		{
-			if (editor->new_win->cam_y < editor->new_win->mem_space - C_HEIGHT - 35)
+			if (editor->new_win->cam_y <\
+				editor->new_win->mem_space - C_HEIGHT - 35)
 				editor->new_win->cam_y += 35;
 			else
 				editor->new_win->cam_y = editor->new_win->mem_space - C_HEIGHT;
@@ -137,7 +69,6 @@ void		new_event2(t_editor *editor, SDL_Event event)
 				editor->new_win->cam_y = 0;
 			draw_list_text(editor);
 		}
-
 	}
 	if (event.key.type == SDL_KEYDOWN ||\
 		event.key.type == SDL_KEYUP)
@@ -151,52 +82,20 @@ void		new_event(t_editor *editor, SDL_Event event)
 		close_choice_win(editor);
 		return ;
 	}
-	else
+	else if (editor->new_win)
 	{
-		if(editor->new_win)
+		SDL_GetMouseState(&editor->new_win->mouse.x, &editor->new_win->mouse.y);
+		set_new_win_button_texture(editor, event);
+		if (check_currsor(editor) == 1 &&\
+			event.button.type == SDL_MOUSEBUTTONUP)
 		{
-			SDL_GetMouseState(&editor->new_win->mouse.x, &editor->new_win->mouse.y);
-		
-			if (check_currsor(editor) == 1 && event.button.type != SDL_MOUSEBUTTONDOWN)
-				draw_button(editor, 0);
-			else if (check_currsor(editor) == 1 && event.button.type == SDL_MOUSEBUTTONDOWN)
-				draw_button(editor, 2);
-			else
-				draw_button(editor, 1);
-			if (check_currsor(editor) == 1 && event.button.type == SDL_MOUSEBUTTONUP)
-			{
-				save_parametrs(editor);
-				close_choice_win(editor);
-				return ;
-			}
-			if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
-			{
-				if ((editor->new_win->mouse.x % editor->new_win->delim_x) > 20 &&\
-					editor->new_win->mouse.x < C_WIDTH - 20 &&\
-					((editor->new_win->mouse.y + editor->new_win->cam_y) %\
-					editor->new_win->delim_y) > 20 && (editor->new_win->mouse.y +\
-					editor->new_win->cam_y) < editor->new_win->mem_space)
-					draw_rectangle(editor);
-				get_pole_num(editor);
-			}
-			if (editor->new_win->param_flag == 1)
-			{
-				if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
-					write_to_pole(editor, &editor->new_win->height_wall, event);
-				else if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_2)
-					write_to_pole(editor, &editor->new_win->height_above, event);
-			}
-			else if (editor->new_win->param_flag == 2)
-			{
-				if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
-					write_to_pole(editor, &editor->new_win->f_height, event);
-			}
-			else if (editor->new_win->param_flag == 3)
-			{
-				if ((event.type == SDL_TEXTINPUT || event.key.type == SDL_KEYDOWN) && editor->flags.t_f.pole_1)
-					write_to_pole(editor, &editor->new_win->s_height, event);
-			}
-			new_event2(editor, event);
+			save_parametrs(editor);
+			close_choice_win(editor);
+			return ;
 		}
+		if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
+			get_nw_act_pole(editor);
+		set_nw_param(editor, event);
+		new_event2(editor, event);
 	}
 }

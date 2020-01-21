@@ -54,6 +54,12 @@ SRC =	editor_main.c		\
 		new_win_init.c		\
 		editor_menu.c		\
 		set_menu_flags.c	\
+		save_new_win_param.c\
+		set_nw_param.c		\
+		free_nw.c			\
+		button_nw.c			\
+		rect_event.c		\
+		screen_nw.c			\
 		editor_menu_events.c
 
 SRC_DOOM = ../mkhomich/doom-nukem.a

@@ -479,6 +479,15 @@ void			convert_rooms(t_editor *editor);
 void			load_to_editor(t_editor *editor, char *filename);
 
 /*
+** screen new win functions
+*/
+
+void			put_text_to_screen(t_editor *editor, int y, int x, int *k);
+void			ft_clear_new_screen(t_editor *editor);
+void			add_sprites_to_screen(t_editor *editor);
+void			add_textures_to_screen(t_editor *editor);
+
+/*
 ** choice textures functions
 */
 
@@ -503,6 +512,13 @@ void			write_to_second_pole(t_editor *editor);
 void			write_to_third_pole(t_editor *editor);
 void			rewrite_text_to_pole(t_editor *editor);
 t_text   		convert_tex(SDL_Surface *dst, int w, int h);
+void			save_parametrs(t_editor *editor);
+void			set_nw_param(t_editor *editor, SDL_Event event);
+void			close_choice_win(t_editor *editor);
+void			set_new_win_button_texture(t_editor *editor, SDL_Event event);
+int				check_currsor(t_editor *editor);
+void			get_nw_act_pole(t_editor *editor);
+void			load_correct_scale_sprite(t_editor *editor);
 
 /*
 ** Buttons function
