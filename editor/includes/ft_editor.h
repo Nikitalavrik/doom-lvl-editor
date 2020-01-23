@@ -88,7 +88,8 @@ typedef	union			s_flags
 		unsigned char	t_floor	: 1;
 		unsigned char	load_b	: 1;
 		unsigned char	clear	: 1;
-		unsigned char	any		: 6;
+		unsigned char 	bselect	: 1;
+		unsigned char	any		: 5;
 	}					t_f;
 }						t_flags;
 
@@ -245,6 +246,7 @@ typedef struct		s_emenu
 	t_coord			save_butt;
 	t_coord			load_butt;
 	t_coord			clear_lvl;
+	t_coord			select_b;
 }					t_emenu;
 
 /*
@@ -521,9 +523,19 @@ void			get_nw_act_pole(t_editor *editor);
 void			load_correct_scale_sprite(t_editor *editor);
 
 /*
+** menu flags
+*/
+
+void			check_emenu_cursor(t_editor *editor, t_coords mouse_position);
+int				check_emenu_scursor(t_editor *editor, t_coords mouse_position);
+void			null_buttons(t_editor *editor);
+int				check_position(t_coords mouse_position, t_coord coord);
+
+/*
 ** Buttons function
 */
 
+void			write_button_name(t_editor *editor);
 void			editor_autosave(t_editor *editor);
 /*
 ** FREE

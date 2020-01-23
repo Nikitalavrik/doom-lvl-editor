@@ -33,14 +33,15 @@ void	check_emenu_pole(t_editor *editor)
 	if (editor->flags.t_f.save_b == 1)
 	{
 		editor_autosave(editor);
-		editor->flags.t_f.save_b = 0;
 	}
 	if (editor->flags.t_f.load_b == 1)
 	{
-		editor->flags.t_f.load_b = 0;
 		// load_map(editor->doom, editor->filename); Не работает дописать
 		// convert_doom_to_editor(editor, editor->doom);
 	}
+	if (editor->flags.t_f.bselect == 1)
+		editor->flags.t_f.select = 1;
+	null_buttons(editor);
 }
 
 void	init_emenu_buttons(t_editor *editor)
@@ -49,36 +50,45 @@ void	init_emenu_buttons(t_editor *editor)
 	editor->menu.f_cb_coord.x1 = editor->menu.f_cb_coord.x + 16;
 	editor->menu.f_cb_coord.y = 80;
 	editor->menu.f_cb_coord.y1 = editor->menu.f_cb_coord.y + 16;
+	
 	editor->menu.s_cb_coord.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.s_cb_coord.x1 = editor->menu.s_cb_coord.x + 16;
 	editor->menu.s_cb_coord.y = 110;
 	editor->menu.s_cb_coord.y1 = editor->menu.s_cb_coord.y + 16;
+
 	editor->menu.t_cb_coord.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.t_cb_coord.x1 = editor->menu.t_cb_coord.x + 16;
 	editor->menu.t_cb_coord.y = 140;
 	editor->menu.t_cb_coord.y1 = editor->menu.t_cb_coord.y + 16;
+
 	editor->menu.del_cb_coord.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.del_cb_coord.x1 = editor->menu.del_cb_coord.x + 16;
 	editor->menu.del_cb_coord.y = 170;
 	editor->menu.del_cb_coord.y1 = editor->menu.del_cb_coord.y + 16;
+
 	editor->menu.clo_cb_coord.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.clo_cb_coord.x1 = editor->menu.clo_cb_coord.x + 16;
 	editor->menu.clo_cb_coord.y = 200;
 	editor->menu.clo_cb_coord.y1 = editor->menu.clo_cb_coord.y + 16;
 
+	editor->menu.select_b.x = editor->width - MENU_WIDTH + 10;
+	editor->menu.select_b.x1 = editor->menu.select_b.x + 16;
+	editor->menu.select_b.y = 230;
+	editor->menu.select_b.y1 = editor->menu.select_b.y + 16;
+
 	editor->menu.first_floor.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.first_floor.x1 = editor->menu.first_floor.x + 16;
-	editor->menu.first_floor.y = 260;
+	editor->menu.first_floor.y = 290;
 	editor->menu.first_floor.y1 = editor->menu.first_floor.y + 16;
 
 	editor->menu.second_floor.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.second_floor.x1 = editor->menu.second_floor.x + 16;
-	editor->menu.second_floor.y = 290;
+	editor->menu.second_floor.y = 320;
 	editor->menu.second_floor.y1 = editor->menu.second_floor.y + 16;
 
 	editor->menu.third_floor.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.third_floor.x1 = editor->menu.third_floor.x + 16;
-	editor->menu.third_floor.y = 320;
+	editor->menu.third_floor.y = 350;
 	editor->menu.third_floor.y1 = editor->menu.third_floor.y + 16;
 
 	editor->menu.return_butt.x = editor->width - MENU_WIDTH + 10;
@@ -98,77 +108,8 @@ void	init_emenu_buttons(t_editor *editor)
 
 	editor->menu.clear_lvl.x = editor->width - MENU_WIDTH + 10;
 	editor->menu.clear_lvl.x1 = editor->menu.clear_lvl.x + 16;
-	editor->menu.clear_lvl.y = 350;
+	editor->menu.clear_lvl.y = 380;
 	editor->menu.clear_lvl.y1 = editor->menu.clear_lvl.y + 32;
-}
-
-void	write_button_name(t_editor *editor)
-{
-	SDL_Color	color;
-	SDL_Surface	*message;
-	SDL_Rect	f;
-
-	color = (SDL_Color){0, 0, 0, 0};
-	f.x = editor->menu.f_cb_coord.x + 30;
-	f.y = 50 + 2;
-	message = TTF_RenderText_Solid(editor->font1, "----------------------------- Draw ------------------------------", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.y = editor->menu.f_cb_coord.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Draw wall", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.y = editor->menu.s_cb_coord.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Draw floor", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.y = editor->menu.t_cb_coord.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Draw sprite", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.y = editor->menu.del_cb_coord.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Delete", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.y = editor->menu.clo_cb_coord.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Close room", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.y = 230 + 2;
-	message = TTF_RenderText_Solid(editor->font1, "------------------- Select floor lvl --------------------", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.y = editor->menu.first_floor.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "First floor level", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.y = editor->menu.second_floor.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Second floor level", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.y = editor->menu.third_floor.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Third floor level", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.y = editor->menu.clear_lvl.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Clear lvl", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.x = editor->menu.return_butt.x + 100;
-	f.y = editor->menu.return_butt.y + 8;
-	message = TTF_RenderText_Solid(editor->font1, "Back to menu", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.x = editor->menu.save_butt.x + 100;
-	f.y = editor->menu.save_butt.y + 8;
-	message = TTF_RenderText_Solid(editor->font1, "Save map", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
-	f.x = editor->menu.load_butt.x + 100;
-	f.y = editor->menu.load_butt.y + 8;
-	message = TTF_RenderText_Solid(editor->font1, "Load map", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
 }
 
 void	draw_emenu_big_buttons(t_editor *editor)
@@ -222,6 +163,14 @@ void	draw_emenu_help_buttons(t_editor *editor)
 	if (editor->flags.t_f.clear == 1)
 		SDL_BlitScaled(editor->button[6], NULL, editor->surf, &rect1);
 	else if (editor->flags.t_f.clear == 0 && editor->param_flag == 10)
+		SDL_BlitScaled(editor->button[5], NULL, editor->surf, &rect1);
+	else
+		SDL_BlitScaled(editor->button[7], NULL, editor->surf, &rect1);
+	rect1.x = editor->menu.select_b.x;
+	rect1.y = editor->menu.select_b.y;
+	if (editor->flags.t_f.bselect == 1)
+		SDL_BlitScaled(editor->button[6], NULL, editor->surf, &rect1);
+	else if (editor->flags.t_f.bselect == 0 && editor->param_flag == 11)
 		SDL_BlitScaled(editor->button[5], NULL, editor->surf, &rect1);
 	else
 		SDL_BlitScaled(editor->button[7], NULL, editor->surf, &rect1);

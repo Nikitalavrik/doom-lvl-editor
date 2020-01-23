@@ -60,6 +60,8 @@ SRC =	editor_main.c		\
 		button_nw.c			\
 		rect_event.c		\
 		screen_nw.c			\
+		check_emenu_cursor.c\
+		button_names.c		\
 		editor_menu_events.c
 
 SRC_DOOM = ../mkhomich/doom-nukem.a
