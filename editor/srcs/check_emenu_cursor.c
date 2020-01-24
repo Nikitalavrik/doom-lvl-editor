@@ -36,10 +36,7 @@ void	check_emenu_cursor3(t_editor *editor, t_coords mouse_position)
 	{
 		editor->param_flag = 8;
 	}
-	else if (mouse_position.x >= editor->menu.load_butt.x &&
-		mouse_position.x <= editor->menu.load_butt.x1 &&
-		mouse_position.y >= editor->menu.load_butt.y &&
-		mouse_position.y <= editor->menu.load_butt.y1)
+	else if (check_position(mouse_position, editor->menu.load_butt))
 	{
 		editor->param_flag = 9;
 	}

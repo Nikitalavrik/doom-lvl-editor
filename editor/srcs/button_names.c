@@ -15,7 +15,7 @@
 void	write_button_name4(t_editor *editor, SDL_Rect f,\
 	SDL_Surface *message, SDL_Color color)
 {
-	f.x = editor->menu.load_butt.x + 100;
+	f.x = editor->menu.load_butt.x + 112;
 	f.y = editor->menu.load_butt.y + 8;
 	message = TTF_RenderText_Solid(editor->font1, "Load map", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
@@ -42,7 +42,7 @@ void	write_button_name3(t_editor *editor, SDL_Rect f,\
 	message = TTF_RenderText_Solid(editor->font1, "Back to menu", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
-	f.x = editor->menu.save_butt.x + 100;
+	f.x = editor->menu.save_butt.x + 112;
 	f.y = editor->menu.save_butt.y + 8;
 	message = TTF_RenderText_Solid(editor->font1, "Save map", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
@@ -57,6 +57,7 @@ void	write_button_name2(t_editor *editor, SDL_Rect f,\
 	message = TTF_RenderText_Solid(editor->font1, "Delete", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
+	f.x = editor->menu.clo_cb_coord.x + 30;
 	f.y = editor->menu.clo_cb_coord.y + 2;
 	message = TTF_RenderText_Solid(editor->font1, "Close room", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
@@ -65,13 +66,14 @@ void	write_button_name2(t_editor *editor, SDL_Rect f,\
 	message = TTF_RenderText_Solid(editor->font1, "Select", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
-	f.y = 260 + 2;
-	message = TTF_RenderText_Solid(editor->font1,\
-	"------------------- Select floor lvl --------------------", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
-	SDL_FreeSurface(message);
+	f.x = editor->menu.first_floor.x + 30;
 	f.y = editor->menu.first_floor.y + 2;
 	message = TTF_RenderText_Solid(editor->font1, "First floor level", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
+	SDL_FreeSurface(message);
+	f.y = 200 + 2;
+	message = TTF_RenderText_Solid(editor->font1,\
+	"------------------- Select floor lvl --------------------", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
 	write_button_name3(editor, f, message, color);

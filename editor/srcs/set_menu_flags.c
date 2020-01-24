@@ -48,9 +48,9 @@ void		set_emenu_flag4(t_editor *editor, SDL_Event event)
 		event.button.type == SDL_MOUSEBUTTONDOWN)
 	{
 		set_to_zero_emenu_flags(editor);
-		editor->flags.t_f.clear = 1;
+		editor->flags.t_f.clear_b = 1;
 	}
-	if (editor->param_flag == 11 &&
+	else if (editor->param_flag == 11 &&
 		event.button.button == SDL_BUTTON_LEFT &&
 		event.button.type == SDL_MOUSEBUTTONDOWN)
 	{

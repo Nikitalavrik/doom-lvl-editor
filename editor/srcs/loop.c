@@ -51,6 +51,7 @@ int		main_loop(t_editor *editor)
 	}
 	free_doom(editor->doom);
 	partly_free_editor(editor);
+	ft_memdel((void **)&editor->filename);
 	ft_memdel((void **)&editor);
 	SDL_StopTextInput();
 	// SDL_FreeSurface(editor->surf);

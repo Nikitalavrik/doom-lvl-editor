@@ -36,7 +36,7 @@ void	set_to_zero_emenu_flags(t_editor *editor)
 	editor->flags.t_f.save_b = 0;
 	editor->flags.t_f.c_butt = 0;
 	editor->flags.t_f.load_b = 0;
-	editor->flags.t_f.clear = 0;
+	editor->flags.t_f.clear_b = 0;
 }
 
 void	null_buttons(t_editor *editor)
@@ -46,5 +46,5 @@ void	null_buttons(t_editor *editor)
 	editor->flags.t_f.ret_b = 0;
 	editor->flags.t_f.save_b = 0;
 	editor->flags.t_f.load_b = 0;
-	editor->flags.t_f.clear = 0;
+	editor->flags.t_f.clear_b = 0;
 }

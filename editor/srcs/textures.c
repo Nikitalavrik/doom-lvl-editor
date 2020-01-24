@@ -26,12 +26,12 @@ SDL_Surface		*load_texture(char *path, t_editor *editor)
 		ft_putendl(")");
 		exit(1);
 	}
-	text = SDL_ConvertSurface(tmp, editor->surf->format, 0 );
+	text = SDL_ConvertSurface(tmp, editor->surf->format, 0);
 	SDL_FreeSurface(tmp);
 	return (text);
 }
 
-void	load_textures(t_editor *editor)
+void			load_textures(t_editor *editor)
 {
 	editor->textures[0] = load_texture("textures/Bookshell.png", editor);
 	editor->textures[1] = load_texture("textures/MultibrickD.png", editor);

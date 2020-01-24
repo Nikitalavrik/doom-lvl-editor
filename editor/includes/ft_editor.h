@@ -87,7 +87,7 @@ typedef	union			s_flags
 		unsigned char	s_floor	: 1;
 		unsigned char	t_floor	: 1;
 		unsigned char	load_b	: 1;
-		unsigned char	clear	: 1;
+		unsigned char	clear_b	: 1;
 		unsigned char 	bselect	: 1;
 		unsigned char	any		: 5;
 	}					t_f;
@@ -537,6 +537,7 @@ int				check_position(t_coords mouse_position, t_coord coord);
 
 void			write_button_name(t_editor *editor);
 void			editor_autosave(t_editor *editor);
+void			init_emenu_buttons(t_editor *editor);
 /*
 ** FREE
 */
@@ -546,6 +547,7 @@ void			partly_free_editor(t_editor *editor);
 void			free_lines(t_eline **line);
 void			free_sprites(t_esprite **sprites);
 void			free_rooms(t_room **room);
+void			free_points(t_epoint **point);
 
 
 /*
