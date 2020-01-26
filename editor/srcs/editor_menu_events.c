@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 16:38:00 by tbratsla          #+#    #+#             */
-/*   Updated: 2020/01/26 14:26:06 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 15:04:43 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ int		editor_menu_events(t_editor *editor, \
 	set_emenu_flag(editor, event);
 	if (editor->flags.t_f.m_pole == 1)
 		write_to_emenu_pole(event, &editor->filename);
-	return (0);
+	return (editor->flags.t_f.ret_b);
 }
