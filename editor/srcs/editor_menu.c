@@ -32,17 +32,13 @@ void	check_emenu_pole(t_editor *editor)
 		editor->floor = 3;
 	if (editor->flags.t_f.save_b == 1)
 	{
-		// d3_init(editor);
+		d3_init(editor);
 		// free_doom(editor->doom);
-		// editor->flags.t_f.visual = 0;
+		editor->flags.t_f.visual = 0;
 	}
 	if (editor->flags.t_f.load_b == 1)
 	{
-		// free_rooms(&editor->rooms);
-		// free_points(&editor->point);
-		// free_lines(&editor->lines);
-		// load_map(editor->doom, editor->filename);
-		// convert_doom_to_editor(editor, editor->doom);
+		load_to_editor(editor, editor->filename);
 	}
 	if (editor->flags.t_f.bselect == 1)
 		editor->flags.t_f.select = 1;
