@@ -30,3 +30,17 @@ void		print_error(char *manage, char *message)
 	error_message(message);
 	exit(0);
 }
+
+void	draw_error_mess(t_editor *editor)
+{
+	SDL_Color	color;
+	SDL_Surface	*message;
+	SDL_Rect	f;
+
+	color = (SDL_Color){255, 0, 0, 0};
+	f.x = editor->width - MENU_WIDTH + 100;
+	f.y = editor->height - 130;
+	message = TTF_RenderText_Solid(editor->font1, "Error: empty feild!", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
+	SDL_FreeSurface(message);
+}

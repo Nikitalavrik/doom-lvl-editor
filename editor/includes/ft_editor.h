@@ -89,7 +89,8 @@ typedef	union			s_flags
 		unsigned char	load_b	: 1;
 		unsigned char	clear_b	: 1;
 		unsigned char 	bselect	: 1;
-		unsigned char	any		: 5;
+		unsigned char	error	: 1;
+		unsigned char	any		: 4;
 	}					t_f;
 }						t_flags;
 
@@ -471,6 +472,7 @@ void			switch_to_sprite_put(t_editor *editor);
 
 void			print_room(t_room *begin);
 void			print_error(char *manage, char *message);
+void			draw_error_mess(t_editor *editor);
 
 /*
 ** doom init for editor

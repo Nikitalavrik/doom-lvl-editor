@@ -32,9 +32,13 @@ void	check_emenu_pole(t_editor *editor)
 		editor->floor = 3;
 	if (editor->flags.t_f.save_b == 1)
 	{
-		d3_init(editor);
-		// free_doom(editor->doom);
-		editor->flags.t_f.visual = 0;
+		if (!editor->filename[0])
+			editor->flags.t_f.error = 1;
+		else
+		{
+			d3_init(editor);
+			editor->flags.t_f.visual = 0;
+		}
 	}
 	if (editor->flags.t_f.load_b == 1)
 	{
@@ -43,6 +47,10 @@ void	check_emenu_pole(t_editor *editor)
 	}
 	if (editor->flags.t_f.bselect == 1)
 		editor->flags.t_f.select = 1;
+	if (editor->filename[0])
+		editor->flags.t_f.error = 0;
+	if (editor->flags.t_f.error == 1)
+		draw_error_mess(editor);
 	null_buttons(editor);
 }
 
