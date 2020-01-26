@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:13 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 15:37:04 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 15:24:06 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 void	load_to_editor(t_editor *editor, char *filename)
 {
+	char *tmp;
+
+	tmp = ft_strjoin("saves/", filename);
 	partly_free_editor(editor);
 	free_doom(editor->doom);
-	load_map(editor->doom, filename);
+	load_map(editor->doom, tmp);
 	convert_doom_to_editor(editor, editor->doom);
+	ft_printf("load %s\n", tmp);
+	ft_memdel((void **)&tmp);
 }
 
 void	convert_sec_to_line(t_editor *editor, t_doom *doom, int i)
@@ -49,6 +54,7 @@ void	convert_sec_to_line(t_editor *editor, t_doom *doom, int i)
 	editor->lines->begin_height = (int)doom->toch[i * 4].y;
 	editor->lines->height = doom->toch[i * 4 + 2].y;
 	editor->lines->num_of_textures = doom->sec[i].t_full;
+	editor->lines->floor = doom->sec[i].level;
 }
 
 void	convert_floor_to_room(t_editor *editor, t_doom *doom, int i)
@@ -67,6 +73,7 @@ void	convert_floor_to_room(t_editor *editor, t_doom *doom, int i)
 	pow(editor->rooms->max_xy.y - editor->rooms->min_xy.y, 2);
 	editor->num_of_rooms++;
 	editor->rooms->num_of_textures = doom->sec[i].t_full;
+	editor->rooms->floor = doom->sec[i].level;
 	s = 0;
 	while (s < doom->sec[i].max_sp)
 	{
@@ -80,6 +87,7 @@ void	convert_floor_to_room(t_editor *editor, t_doom *doom, int i)
 		editor->rooms->sprites->alpha = 140;
 		editor->rooms->sprites->x = origin.x;
 		editor->rooms->sprites->y = origin.y;
+		editor->rooms->sprites->floor = editor->rooms->floor;
 		editor->rooms->max_sprites++;
 		s++;
 	}

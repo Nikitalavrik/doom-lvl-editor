@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 14:37:14 by tbratsla          #+#    #+#             */
-/*   Updated: 2020/01/26 13:19:39 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 15:20:45 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	check_emenu_pole(t_editor *editor)
 	if (editor->flags.t_f.load_b == 1)
 	{
 		load_to_editor(editor, editor->filename);
+		ft_printf("editor->max_sectors = %i\n", editor->max_sectors);
 	}
 	if (editor->flags.t_f.bselect == 1)
 		editor->flags.t_f.select = 1;

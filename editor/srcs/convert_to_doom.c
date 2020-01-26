@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 13:54:10 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 15:06:45 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void		parse_walls(t_editor *editor, t_eline *lines, int *i, int *r)
 		editor->doom->toch[*i].z = iter->points[1]->y << CONVERT_ZOOM;
 		editor->doom->toch[*i].y = iter->begin_height;
 		editor->doom->sec[*r].pts[3] = *i;
+		editor->doom->sec[*r].level = iter->floor;
 		editor->doom->sec[*r].t_full = iter->num_of_textures;
 		editor->doom->sec[*r].t_win = 0;
 		editor->doom->sec[*r].tape = 1;
@@ -85,6 +86,7 @@ void		init_floor(t_editor *editor, t_room *room, int *i, int *r)
 	editor->doom->toch[*i].z = room->max_xy.y << CONVERT_ZOOM;
 	editor->doom->toch[*i].y = room->height;
 	editor->doom->sec[*r].pts[3] = *i;
+	editor->doom->sec[*r].level = room->floor;
 	editor->doom->sec[*r].t_full = room->num_of_textures;
 	editor->doom->sec[*r].t_win = 0;
 	editor->doom->sec[*r].tape = 0;
