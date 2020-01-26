@@ -73,5 +73,5 @@ int		editor_menu_events(t_editor *editor, \
 	set_emenu_flag(editor, event);
 	if (editor->flags.t_f.m_pole == 1)
 		write_to_emenu_pole(event, &editor->filename);
-	return (0);
+	return (editor->flags.t_f.ret_b);
 }
