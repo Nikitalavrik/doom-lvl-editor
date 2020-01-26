@@ -31,7 +31,7 @@ void		print_error(char *manage, char *message)
 	exit(0);
 }
 
-void	draw_error_mess(t_editor *editor)
+void		draw_error_mess(t_editor *editor)
 {
 	SDL_Color	color;
 	SDL_Surface	*message;

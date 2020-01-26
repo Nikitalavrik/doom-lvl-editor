@@ -25,19 +25,19 @@ void	load_correct_scale_sprite(t_editor *editor)
 		i++;
 	}
 	editor->new_win->editor_sprite[0].text[0] =\
-	convert_tex(IMG_Load("sprite/monsters/people/walk/A1.png"), 128, 128);
+	convert_tex(IMG_Load("../sprite/monsters/people/walk/A1.png"), 128, 128);
 	editor->new_win->editor_sprite[1].text[0] = convert_tex(\
-	IMG_Load("sprite/monsters/chargingdemon/walk/A1.bmp"), 128, 128);
+	IMG_Load("../sprite/monsters/chargingdemon/walk/A1.bmp"), 128, 128);
 	editor->new_win->editor_sprite[2].text[0] =\
-	convert_tex(IMG_Load("sprite/monsters/motherdemon/walk/A1.bmp"), 128, 128);
+	convert_tex(IMG_Load("../sprite/monsters/motherdemon/walk/A1.bmp"), 128, 128);
 	editor->new_win->editor_sprite[3].text[0] =\
-	convert_tex(IMG_Load("sprite/BAR1B0.png"), 128, 128);
+	convert_tex(IMG_Load("../sprite/BAR1B0.png"), 128, 128);
 	editor->new_win->editor_sprite[4].text[0] =\
-	convert_tex(IMG_Load("sprite/armor.png"), 128, 128);
+	convert_tex(IMG_Load("../sprite/armor.png"), 128, 128);
 	editor->new_win->editor_sprite[5].text[0] =\
-	convert_tex(IMG_Load("sprite/medkit.png"), 128, 128);
+	convert_tex(IMG_Load("../sprite/medkit.png"), 128, 128);
 	editor->new_win->editor_sprite[6].text[0] =\
-	convert_tex(IMG_Load("sprite/ammo.png"), 128, 128);
+	convert_tex(IMG_Load("../sprite/ammo.png"), 128, 128);
 }
 
 void	set_up_text(t_editor *editor, t_coord *coord)
