@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:48 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 18:16:01 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 12:50:39 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ void	mouse_motion(t_editor *editor)
 	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
 	check_point(editor, mouse_position);
 	if (editor->point_cnt == 1)
+	{
 		editor->flags.t_f.floor ? stick_room(editor) : stick_line(editor);
+	}
+
 	else if (editor->flags.t_f.select)
 	{
 		if (editor->rooms)

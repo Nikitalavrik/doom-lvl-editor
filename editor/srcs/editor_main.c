@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:01:36 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 16:47:02 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 13:25:56 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		start_editor(SDL_Window *win)
 	editor->doom->min_z = 0.5;
 	editor->floor = 1;
 	load_texture_wall(editor->doom);
+	init_emenu_buttons(editor);
 	init_skybox(editor->doom);
 	editor->doom->z_buffer = (int*)ft_memalloc(sizeof(int) * editor->width * editor->height);
 	editor->doom->window = editor->win;
@@ -44,6 +45,7 @@ int		start_editor(SDL_Window *win)
 	editor->absolute_center.x = (editor->width - MENU_WIDTH) / 2;
 	editor->absolute_center.y = (editor->height) / 2;
 	// ft_printf("w = %i h = %i\n", editor->width, editor->height);
+	load_textures(editor);
 	main_loop(editor);
 	return (0);
 }

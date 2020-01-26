@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:06:32 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 16:06:35 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 13:09:39 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ void	stick_line(t_editor *editor)
 
 void	stick_room(t_editor *editor)
 {
-	t_coords 	*mouse;
+	t_coords 		*mouse;
 	t_epoint		*tmp;
 
 	mouse = ft_memalloc(sizeof(t_coords));
 	SDL_GetMouseState(&mouse->x, &mouse->y);
+	// ft_printf("11\n");
 	if (editor->room_point)
 	{
 		delete_stick_line_room(editor);

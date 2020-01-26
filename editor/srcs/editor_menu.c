@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor_menu.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbratsla <tbratsla@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 14:37:14 by tbratsla          #+#    #+#             */
-/*   Updated: 2020/01/12 14:37:16 by tbratsla         ###   ########.fr       */
+/*   Updated: 2020/01/26 13:19:39 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	check_emenu_pole(t_editor *editor)
 {
 	if (editor->flags.t_f.f_butt == 1)
 		switch_to_line_build(editor);
-	if (editor->flags.t_f.s_butt == 1)
+	if (editor->flags.t_f.s_butt == 1 && !editor->flags.t_f.floor)
 		switch_to_floor_build(editor);
 	if (editor->flags.t_f.t_butt == 1 && editor->selected)
 		switch_to_sprite_put(editor);
@@ -38,11 +38,11 @@ void	check_emenu_pole(t_editor *editor)
 	}
 	if (editor->flags.t_f.load_b == 1)
 	{
-		free_rooms(&editor->rooms);
-		free_points(&editor->point);
-		free_lines(&editor->lines);
-		load_map(editor->doom, editor->filename);
-		convert_doom_to_editor(editor, editor->doom);
+		// free_rooms(&editor->rooms);
+		// free_points(&editor->point);
+		// free_lines(&editor->lines);
+		// load_map(editor->doom, editor->filename);
+		// convert_doom_to_editor(editor, editor->doom);
 	}
 	if (editor->flags.t_f.bselect == 1)
 		editor->flags.t_f.select = 1;
@@ -203,4 +203,5 @@ void	draw_editor_menu(t_editor *editor)
 	draw_emenu_big_buttons(editor);
 	write_button_name(editor);
 	check_emenu_pole(editor);
+	// ft_printf("draw me\n");
 }

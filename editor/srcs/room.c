@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:55:01 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 17:17:03 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 13:50:16 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	add_room(t_editor *editor)
 				editor->point_cnt++;
 				if (editor->room_point && editor->room_point->next)
 				{
+					ft_printf("room\n");
 					editor->point_cnt = 0;
 					delete_stick_line_room(editor);
 					push_room(&editor->rooms, editor->room_point);

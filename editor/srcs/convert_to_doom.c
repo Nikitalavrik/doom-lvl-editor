@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 15:30:21 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 13:54:10 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void		parse_sprites(t_editor *editor, t_esprite *sprites, int sec, int s)
 	(sprites->origin.x + sprites->move.x) / 4;
 	editor->doom->sec[sec].sp[s].sp.z = (sprites->y << CONVERT_ZOOM) +\
 	(sprites->origin.y + sprites->move.y) / 4;
-	editor->doom->sec[sec].sp[s].sp.y = 1;
+	editor->doom->sec[sec].sp[s].sp.y = sprites->floor * FLOOR_HEIGHT;
 	editor->doom->sec[sec].sp[s].viem = 1;
 	editor->doom->sec[sec].sp[s].take = 0;
 }

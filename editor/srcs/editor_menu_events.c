@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor_menu_events.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbratsla <tbratsla@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 16:38:00 by tbratsla          #+#    #+#             */
-/*   Updated: 2020/01/12 16:38:01 by tbratsla         ###   ########.fr       */
+/*   Updated: 2020/01/26 14:26:06 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,12 @@ void	write_to_emenu_pole(SDL_Event event, char **text)
 	}
 }
 
-void	editor_menu_events(t_editor *editor, \
+int		editor_menu_events(t_editor *editor, \
 	t_coords mouse_position, SDL_Event event)
 {
 	check_emenu_cursor(editor, mouse_position);
 	set_emenu_flag(editor, event);
 	if (editor->flags.t_f.m_pole == 1)
 		write_to_emenu_pole(event, &editor->filename);
+	return (0);
 }

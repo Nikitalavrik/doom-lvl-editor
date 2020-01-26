@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/12 17:32:05 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 14:27:03 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,41 @@ void	right_click_event(t_editor *editor, SDL_Event event)
 		choice_win(editor, event, 2, param);
 }
 
-void	mouse_events(t_editor *editor, SDL_Event event)
+int		mouse_events(t_editor *editor, SDL_Event event)
 {
 	t_coords 	mouse_position;
 
 	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+	// ft_printf("2__point_cnt = %i\n", editor->point_cnt);
 	if (mouse_position.x < editor->width - MENU_WIDTH)
 	{
 		if (event.type == SDL_MOUSEWHEEL)
 			mouse_zoom(editor, event);
-		if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_LEFT)
+		if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
+		{
 			mouse_button_down(editor);
-		if (event.button.clicks == 1 && event.button.button == SDL_BUTTON_RIGHT)
+			// ft_printf("1_point_cnt = %i\n", editor->point_cnt);
+		}
+			
+		if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_RIGHT)
 			right_click_event(editor, event);
 		if (event.type == SDL_MOUSEBUTTONUP && editor->flags.t_f.move)
 			editor->flags.t_f.move = 0;
 		if (editor->flags.t_f.move)
+		{
 			mouse_move(editor);
+
+		}
+		// ft_printf("2__point_cnt = %i\n", editor->point_cnt);
 		if (event.type == SDL_MOUSEMOTION)
+		{
+			// ft_printf("3point_cnt = %i\n", editor->point_cnt);
 			mouse_motion(editor);
+		}
 	}
 	else
-		editor_menu_events(editor, mouse_position, event);
+		return (editor_menu_events(editor, mouse_position, event));
+	return (0);
 }
 
 int		detect_event(t_editor *editor)
@@ -59,7 +72,10 @@ int		detect_event(t_editor *editor)
 		if (event.type == SDL_QUIT)
 			return (1);
 		if (!editor->flags.t_f.visual)
-			mouse_events(editor, event);
+		{
+			if (mouse_events(editor, event))
+				return (1);
+		}
 		else
 			god_rot_move(editor, event);
 		if (event.type == SDL_KEYDOWN)

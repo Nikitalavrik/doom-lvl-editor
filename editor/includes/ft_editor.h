@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 17:16:42 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 14:26:13 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ typedef struct			s_esprite
 	int						x;
 	int						y;
 	int						size;
+	int						floor;
 	unsigned char			alpha;
 	t_dcoords				move;
 	int						flag_a;
@@ -334,7 +335,6 @@ typedef	struct			s_editor
 	int					width;
 	int					height;
 	int					mouse;
-	char				point_cnt;
 	t_coords			size;
 	double				zoom;
 	t_flags				flags;
@@ -367,6 +367,7 @@ typedef	struct			s_editor
 	t_emenu				menu;
 	int					param_flag;
 	int					param_sflag;
+	char				point_cnt;
 }						t_editor;
 
 /*
@@ -445,7 +446,7 @@ void			mouse_motion(t_editor *editor);
 t_coords		get_coords(t_editor *editor, t_coords mouse);
 void			delete_line(t_editor *editor, t_eline *line);
 double			calc_short_dist(t_eline *line, t_coords mouse);
-void			editor_menu_events(t_editor *editor,\
+int				editor_menu_events(t_editor *editor,\
 				t_coords mouse_position, SDL_Event event);
 
 /*

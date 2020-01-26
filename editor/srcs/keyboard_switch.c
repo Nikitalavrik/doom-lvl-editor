@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:25:50 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 14:55:13 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 13:11:10 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,21 @@ void	switch_to_select(t_editor *editor)
 
 void	switch_to_line_build(t_editor *editor)
 {
+	if (editor->flags.t_f.floor)
+		delete_stick_point(editor);
 	null_editing_flags(&editor->flags);
 	editor->flags.t_f.line = 1;
 	editor->flags.t_f.f_butt = 1;
+
 }
 
 void	switch_to_floor_build(t_editor *editor)
 {
+	if (editor->flags.t_f.line)
+		delete_stick_point(editor);
 	null_editing_flags(&editor->flags);
 	editor->flags.t_f.floor = 1;
 	editor->flags.t_f.s_butt = 1;
-	delete_stick_point(editor);
 }
 
 void	switch_to_visual_3d(t_editor *editor)

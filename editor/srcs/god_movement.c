@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:12:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 15:34:57 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 14:19:32 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ void	calc_movement(t_doom *doom)
 		doom->play[0].t.z += step.y * doom->play[0].speed;
 		doom->play[0].t.x += step.x * doom->play[0].speed;
 	}
+	if (doom->move.wsad[4])
+		doom->play[0].t.y -= doom->play[0].speed;
+	if (doom->move.wsad[5])
+		doom->play[0].t.y += doom->play[0].speed;
 }
 
 void	move_player(t_doom *doom)
@@ -54,6 +58,10 @@ void	move_player(t_doom *doom)
 			doom->move.wsad[2] = doom->event.type == SDL_KEYDOWN;
 		else if (doom->event.key.keysym.sym == 'd')
 			doom->move.wsad[3] = doom->event.type == SDL_KEYDOWN;
+		else if (doom->event.key.keysym.sym == SDLK_LSHIFT)
+			doom->move.wsad[4] = doom->event.type == SDL_KEYDOWN;
+		else if (doom->event.key.keysym.sym == SDLK_SPACE)
+			doom->move.wsad[5] = doom->event.type == SDL_KEYDOWN;
 		calc_movement(doom);
 	}
 }

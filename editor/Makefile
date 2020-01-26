@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2020/01/12 11:54:24 by nlavrine         ###   ########.fr        #
+#    Updated: 2020/01/26 12:31:07 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(PRINTF) $(OBJS) $(TEST_MAIN_O)
 		@echo "$(GREEN)Compile $(NAME)"
-		$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(SRC_DOOM) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) #-fsanitize=address
+		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(SRC_DOOM) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) #-fsanitize=address
 
 lib: $(OBJS)
 	@echo "$(GREEN)Compile $(NAME).a"
