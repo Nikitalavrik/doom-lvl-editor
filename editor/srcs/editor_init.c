@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:20:39 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 16:46:49 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 16:18:13 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void		init_music_font(t_editor *editor)
 {
 	TTF_Init();
 	SDL_StartTextInput();
-	editor->font = TTF_OpenFont("fonts/Aller_b.ttf", 24);
-	editor->font1 = TTF_OpenFont("fonts/font1.ttf", 14);
+	editor->font = TTF_OpenFont("../fonts/Aller_b.ttf", 24);
+	editor->font1 = TTF_OpenFont("../fonts/font1.ttf", 14);
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 		print_error("SDL : ", " mixer didn`t init\n");
-	editor->music = Mix_LoadMUS("music/Majestic.mp3");
+	editor->music = Mix_LoadMUS("../music/Majestic.mp3");
 	if (!editor->music)
 		print_error("SDL : ", "cant`t find music\n");
 	// Mix_PlayMusic(editor->music, -1);

@@ -6,11 +6,9 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/13 13:28:00 by yganzha           #+#    #+#              #
-#    Updated: 2019/12/28 17:37:26 by nlavrine         ###   ########.fr        #
+#    Updated: 2020/01/26 16:37:43 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-NAME    = doom
 
 SRC     = main.c \
 		level_edit.c \
@@ -50,7 +48,7 @@ INCLUDES = 	-I ../frameworks/SDL2.framework/Headers/ 			\
 			-F ../frameworks
 
 
-FRAMEWORKS =  	-F ../frameworks 								\
+FRAMEWORKS =  	-F../frameworks 								\
     			-rpath ../frameworks 						\
     			-framework AppKit -framework OpenGL 		\
     			-framework SDL2 -framework SDL2_image 		\
@@ -63,7 +61,7 @@ OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
 all: $(NAME) 
 
-$(NAME): $(LIB) $(PRINTF) $(OBJS)
+$(NAME): $(LIB) $(PRINTF) $(OBJS) $(LIB_DOOM) $(LIB_EDITOR)
 		@echo "$(GREEN)Compile $(NAME)"
 		$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(LIB_DOOM) $(LIB_EDITOR) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) $(H_DOOM) $(H_EDITOR)
 
@@ -78,6 +76,12 @@ $(LIB):
 $(PRINTF):
 	@echo "$(GREEN)Compile ft_printf"
 	@make -C ../libft/ft_printf/
+
+$(LIB_DOOM):
+	@make -C ../mkhomich/
+
+$(LIB_EDITOR):
+	@make -C ../editor/ lib
 
 clean:
 	@echo "$(GREEN)Clear objs"

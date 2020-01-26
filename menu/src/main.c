@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 18:06:40 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/12/28 16:31:00 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 16:39:27 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	rewrite_font(t_l *l)
 {
 	TTF_CloseFont(l->ttf);
 	get_font_size(l);
-	l->ttf = TTF_OpenFont("font/AmazDooMRight.ttf", l->font_size);
+	l->ttf = TTF_OpenFont("../fonts/AmazDooMRight.ttf", l->font_size);
 }
 
 void	load_text_font(t_l *l)
@@ -29,7 +29,7 @@ void	load_text_font(t_l *l)
 	l->texture[7] = IMG_Load("img/55.png");
 	l->texture[2] = IMG_Load("img/photoeditorsdk-export.bmp");
 	l->texture[4] = IMG_Load("img/11.jpeg");
-	l->ttf = TTF_OpenFont("font/AmazDooMRight.ttf", l->font_size);
+	l->ttf = TTF_OpenFont("../fonts/AmazDooMRight.ttf", l->font_size);
 }
 
 int		main(void)

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 14:26:13 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 16:30:09 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # define FT_EDITOR_H
 
 # include "../../libft/libft.h"
+# include "../../libft/ft_printf/include/ft_printf.h"
 # include <fcntl.h>
 # include <pthread.h>
-# include "../../libft/ft_printf/include/ft_printf.h"
 # include <math.h>
 # include <time.h>
 # include "SDL_mixer.h"

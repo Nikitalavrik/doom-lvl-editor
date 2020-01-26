@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2020/01/26 12:31:07 by nlavrine         ###   ########.fr        #
+#    Updated: 2020/01/26 16:33:53 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,15 +100,15 @@ OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
 all: $(NAME) 
 
-$(NAME): $(LIB) $(PRINTF) $(OBJS) $(TEST_MAIN_O)
+$(NAME): $(LIB) $(PRINTF) $(OBJS) $(TEST_MAIN_O) $(SRC_DOOM)
 		@echo "$(GREEN)Compile $(NAME)"
 		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(SRC_DOOM) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) #-fsanitize=address
 
-lib: $(OBJS)
+lib: $(LIB) $(PRINTF) $(OBJS) $(SRC_DOOM)
 	@echo "$(GREEN)Compile $(NAME).a"
 	@rm -f $(NAME).a
 	@ar rc $(NAME).a $(OBJS)
-	@ranlib $(NAME).a 
+	@ranlib $(NAME).a
 
 $(TEST_MAIN_O): $(TEST_MAIN)
 		@mkdir -p $(OBJ_DIR)
@@ -121,6 +121,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(LIB):
 	@echo "$(GREEN)Compile libft"
 	@make -C ../libft/
+
+$(SRC_DOOM):
+	@make -C ../mkhomich/
 
 $(PRINTF):
 	@echo "$(GREEN)Compile ft_printf"
@@ -136,7 +139,10 @@ clean:
 fclean: clean
 	@echo "$(GREEN)Clear $(NAME)"
 	@rm -f $(NAME)
+	@rm -f $(NAME).a
 	@make -C ../libft/ fclean
 	@make -C ../libft/ft_printf/ fclean
 
 re: fclean all
+
+.PHONY:     re all clean fclean lib
