@@ -28,8 +28,8 @@ void	load_correct_scale_sprite(t_editor *editor)
 	convert_tex(IMG_Load("../sprite/monsters/people/walk/A1.png"), 128, 128);
 	editor->new_win->editor_sprite[1].text[0] = convert_tex(\
 	IMG_Load("../sprite/monsters/chargingdemon/walk/A1.bmp"), 128, 128);
-	editor->new_win->editor_sprite[2].text[0] =\
-	convert_tex(IMG_Load("../sprite/monsters/motherdemon/walk/A1.bmp"), 128, 128);
+	editor->new_win->editor_sprite[2].text[0] = convert_tex(\
+	IMG_Load("../sprite/monsters/motherdemon/walk/A1.bmp"), 128, 128);
 	editor->new_win->editor_sprite[3].text[0] =\
 	convert_tex(IMG_Load("../sprite/BAR1B0.png"), 128, 128);
 	editor->new_win->editor_sprite[4].text[0] =\

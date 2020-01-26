@@ -64,6 +64,8 @@ SRC =	editor_main.c		\
 		button_names.c		\
 		init_buttons.c		\
 		pole_functions.c	\
+		flag_checker.c		\
+		green_buttons.c		\
 		editor_menu_events.c
 
 SRC_DOOM = ../mkhomich/doom-nukem.a
