@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:58:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 17:26:39 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 18:50:11 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ void	add_line(t_editor *editor)
 					editor->lines->floor = editor->floor;
 					editor->lines->num_of_textures = 14;
 					editor->max_sectors++;
-					system("leaks editor");
 				}
 
 			}
