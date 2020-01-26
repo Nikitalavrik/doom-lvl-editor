@@ -541,6 +541,8 @@ int				check_position(t_coords mouse_position, t_coord coord);
 void			write_button_name(t_editor *editor);
 void			editor_autosave(t_editor *editor);
 void			init_emenu_buttons(t_editor *editor);
+void			draw_emenu_big_buttons(t_editor *editor);
+void			draw_emenu_help_buttons(t_editor *editor);
 /*
 ** FREE
 */
@@ -593,6 +595,7 @@ void			god_rot_move(t_editor *editor, SDL_Event event);
 void			null_editing_flags(t_flags *flags);
 void			set_emenu_flag(t_editor *editor, SDL_Event event);
 void			set_to_zero_emenu_flags(t_editor *editor);
+void			check_emenu_pole(t_editor *editor);
 
 /*
 ** rotating map
