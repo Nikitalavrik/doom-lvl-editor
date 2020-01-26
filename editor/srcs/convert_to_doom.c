@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 15:06:45 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 17:55:07 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,13 @@ void		init_floor(t_editor *editor, t_room *room, int *i, int *r)
 	editor->doom->sec[*r].t_win = 0;
 	editor->doom->sec[*r].tape = 0;
 	editor->doom->sec[*r].max_sp = room->max_sprites;
-	editor->doom->sec[*r].sp = ft_memalloc(sizeof(t_tochsp) *\
-	editor->doom->sec[*r].max_sp);
+	ft_printf("spr = %i\n", editor->doom->sec[*r].max_sp);
+	if (editor->doom->sec[*r].max_sp)
+	{
+		editor->doom->sec[*r].sp = ft_memalloc(sizeof(t_tochsp) *\
+		editor->doom->sec[*r].max_sp);		
+	}
+
 	while (sprites)
 	{
 		parse_sprites(editor, sprites, *r, s);

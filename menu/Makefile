@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/13 13:28:00 by yganzha           #+#    #+#              #
-#    Updated: 2020/01/26 16:37:43 by nlavrine         ###   ########.fr        #
+#    Updated: 2020/01/26 17:08:51 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC     = main.c \
 		screens.c \
 		events.c
 
-NAME = menu
+NAME = doom
 
 
 LIB_DOOM = ../mkhomich/doom-nukem.a
@@ -63,7 +63,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(PRINTF) $(OBJS) $(LIB_DOOM) $(LIB_EDITOR)
 		@echo "$(GREEN)Compile $(NAME)"
-		$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(LIB_DOOM) $(LIB_EDITOR) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) $(H_DOOM) $(H_EDITOR)
+		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(LIB_DOOM) $(LIB_EDITOR) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) $(H_DOOM) $(H_EDITOR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:58:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 17:16:49 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 17:26:39 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ void		pop_line(t_eline **begin)
 	t_eline *iterator;
 
 	iterator = *begin;
+	if (iterator->points[2])
+		ft_memdel((void **)&iterator->points[2]);
+	if (iterator->points[3])
+		ft_memdel((void **)&iterator->points[3]);
 	if (iterator && iterator->next)
 	{
 		next_begin = iterator->next;
@@ -117,7 +121,9 @@ void	add_line(t_editor *editor)
 					editor->lines->floor = editor->floor;
 					editor->lines->num_of_textures = 14;
 					editor->max_sectors++;
+					system("leaks editor");
 				}
+
 			}
 	}
 }

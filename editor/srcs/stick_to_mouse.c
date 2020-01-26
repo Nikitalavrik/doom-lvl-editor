@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:06:32 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 13:09:39 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/26 17:26:20 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	stick_line(t_editor *editor)
 	if (editor->point)
 	{
 		delete_stick_line_room(editor);
+		
 		push_point(&editor->stick_point, mouse);
 		push_line(&editor->stick_line, editor->point, editor->stick_point);
 		editor->stick_line->color = WALL_COLOR;
