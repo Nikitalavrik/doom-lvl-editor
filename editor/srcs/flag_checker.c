@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 17:41:51 by tbratsla          #+#    #+#             */
-/*   Updated: 2020/01/30 15:58:34 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:07:45 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,8 @@
 
 void	check_emenu_pole2(t_editor *editor)
 {
-	if (editor->flags.t_f.save_b == 1)
-	{
-		if (!editor->filename[0])
-			editor->flags.t_f.error = 1;
-		else
-		{
-			if (check_file_in_dir(editor->filename))
-			{
-				d3_init(editor);
-				editor_autosave(editor);
-			}
-			editor->flags.t_f.visual = 0;
-		}
-	}
+	if (editor->flags.t_f.clear_b == 1)
+		clear_level(editor);
 	if (editor->flags.t_f.load_b == 1)
 	{
 		if (!check_file_in_dir(editor->filename))
