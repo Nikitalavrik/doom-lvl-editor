@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 12:54:31 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/12/28 18:18:12 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 13:42:24 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	choose_screen(t_l *l)
 	if (l->screen == 5)
 	{
 		start_editor(l->win);
-		l->screen = 3;
-	
+		l->event.type = 0;
+		l->screen = 1;		
 	}
 }

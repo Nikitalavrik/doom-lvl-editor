@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:13 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 15:24:06 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:10:35 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	convert_sec_to_line(t_editor *editor, t_doom *doom, int i)
 	editor->lines->points[3]->y = (int)doom->toch[i * 4 + 1].z >> CONVERT_ZOOM;
 	editor->lines->points[3]->rot_y = (doom->toch[i * 4 + 1].z - (int)doom->toch[i * 4 + 1].z) * pow(2, CONVERT_ZOOM);
 	editor->lines->begin_height = (int)doom->toch[i * 4].y;
-	editor->lines->height = doom->toch[i * 4 + 2].y;
+	editor->lines->height = (int)doom->toch[i * 4 + 2].y - (int)doom->toch[i * 4].y;
 	editor->lines->num_of_textures = doom->sec[i].t_full;
 	editor->lines->floor = doom->sec[i].level;
 }
@@ -68,6 +68,7 @@ void	convert_floor_to_room(t_editor *editor, t_doom *doom, int i)
 	editor->rooms->max_xy.y = (int)doom->toch[i * 4].z >> CONVERT_ZOOM;
 	editor->rooms->min_xy.y = (int)doom->toch[i * 4 + 1].z >> CONVERT_ZOOM;
 	editor->rooms->max_xy.x = (int)doom->toch[i * 4 + 2].x >> CONVERT_ZOOM;
+	editor->rooms->height = doom->toch[i * 4].y;
 	editor->rooms->alpha = 80;
 	editor->rooms->area = pow(editor->rooms->max_xy.x - editor->rooms->min_xy.x, 2) +\
 	pow(editor->rooms->max_xy.y - editor->rooms->min_xy.y, 2);
@@ -87,6 +88,7 @@ void	convert_floor_to_room(t_editor *editor, t_doom *doom, int i)
 		editor->rooms->sprites->alpha = 140;
 		editor->rooms->sprites->x = origin.x;
 		editor->rooms->sprites->y = origin.y;
+		editor->rooms->sprites->num_of_textures = doom->sec[i].sp[s].nb_sp;
 		editor->rooms->sprites->floor = editor->rooms->floor;
 		editor->rooms->max_sprites++;
 		s++;

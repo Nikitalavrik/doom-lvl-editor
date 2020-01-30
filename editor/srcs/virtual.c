@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:35:30 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/20 17:18:56 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 15:58:07 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,20 @@ void		editor_autosave(t_editor *editor)
 {
 	char *tmp;
 
-	tmp = ft_strjoin("saves/", editor->filename);
-	ft_printf("save to %s\n", tmp);
-	save_map(editor->doom, tmp);
-	ft_memdel((void **)&tmp);
+	if (check_file_in_dir(editor->filename))
+	{
+		tmp = ft_strjoin("saves/", editor->filename);
+		ft_printf("save to %s\n", tmp);
+		save_map(editor->doom, tmp);
+		ft_memdel((void **)&tmp);
+	}
 }
 
 void		d3_init(t_editor *editor)
 {
-	free_doom(editor->doom);
+	// free_doom(editor->doom);
 	editor->doom->max_t = editor->max_sectors * 4;
 	editor->doom->max_s = editor->max_sectors;
-	ft_printf("max_s = %i max_t = %i\n", editor->doom->max_s, editor->doom->max_t);
 	if (editor->doom->max_s)
 	{
 		editor->doom->sec = ft_memalloc(sizeof(t_sec) * editor->doom->max_s);
@@ -64,6 +66,5 @@ void		d3_init(t_editor *editor)
 		grid_all_sec(editor);
 		put_player(editor);
 		editor->flags.t_f.visual = 1;
-		editor_autosave(editor);
 	}
 }

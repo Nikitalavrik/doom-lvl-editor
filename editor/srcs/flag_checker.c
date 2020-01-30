@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbratsla <tbratsla@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 17:41:51 by tbratsla          #+#    #+#             */
-/*   Updated: 2020/01/26 17:41:52 by tbratsla         ###   ########.fr       */
+/*   Updated: 2020/01/30 15:58:34 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@ void	check_emenu_pole2(t_editor *editor)
 			editor->flags.t_f.error = 1;
 		else
 		{
-			d3_init(editor);
+			if (check_file_in_dir(editor->filename))
+			{
+				d3_init(editor);
+				editor_autosave(editor);
+			}
 			editor->flags.t_f.visual = 0;
 		}
 	}
 	if (editor->flags.t_f.load_b == 1)
 	{
-		load_to_editor(editor, editor->filename);
-		ft_printf("editor->max_sectors = %i\n", editor->max_sectors);
+		if (!check_file_in_dir(editor->filename))
+			load_to_editor(editor, editor->filename);
 	}
 	if (editor->flags.t_f.bselect == 1)
 		editor->flags.t_f.select = 1;

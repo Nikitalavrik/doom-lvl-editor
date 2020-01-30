@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 12:29:50 by tbahlai           #+#    #+#             */
-/*   Updated: 2019/12/28 16:31:34 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 13:42:34 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	start_btn(t_l *l, int fl)
 		&& l->event.button.x <= btn.x + btn.w
 		&& l->event.button.y >= btn.y
 		&& l->event.button.y <= btn.y + btn.h)
-		select_screen(fl, l);
+			select_screen(fl, l);	
 	start_txt(l, btn.x + (btn.w / 4), btn.y + 6, fl);
 	if (l->m.f_ser)
 	{
