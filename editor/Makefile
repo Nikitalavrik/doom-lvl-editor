@@ -6,11 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-<<<<<<< HEAD
 #    Updated: 2020/01/26 16:33:53 by nlavrine         ###   ########.fr        #
-=======
-#    Updated: 2020/01/30 15:28:03 by nlavrine         ###   ########.fr        #
->>>>>>> 1dd0d950b9bb4a0dcb8372b0560dd10486ef666f
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,13 +66,9 @@ SRC =	editor_main.c		\
 		pole_functions.c	\
 		flag_checker.c		\
 		green_buttons.c		\
-<<<<<<< HEAD
 		ques_win.c			\
-		editor_menu_events.c
-=======
 		editor_menu_events.c \
 		os_check.c
->>>>>>> 1dd0d950b9bb4a0dcb8372b0560dd10486ef666f
 
 SRC_DOOM = ../mkhomich/doom-nukem.a
 CC = gcc
