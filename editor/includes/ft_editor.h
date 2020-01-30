@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 16:30:09 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 15:53:17 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <pthread.h>
 # include <math.h>
 # include <time.h>
+# include <sys/stat.h>
+# include <dirent.h>
 # include "SDL_mixer.h"
 # include "SDL.h"
 # include "SDL_image.h"
@@ -612,5 +614,11 @@ void			check_emenu_pole(t_editor *editor);
 */
 
 void			change_view(t_editor *editor);
+
+/*
+**	os check
+*/
+
+int				check_file_in_dir(char *filename);
 
 #endif
