@@ -29,6 +29,35 @@ void	set_ques_flag(t_editor *editor, t_coords mouse_position)
 		editor->ques_flag = 0;
 }
 
+void	ques_button_names(t_editor *editor)
+{
+	SDL_Color	color;
+	SDL_Surface	*message;
+	SDL_Rect	f;
+
+	color = (SDL_Color){0, 0, 0, 0};
+	f.x = editor->menu.yes_button.x + 40;
+	f.y = editor->menu.yes_button.y + 10;
+	message = TTF_RenderText_Solid(editor->font1, "Yes", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->ques_win), &f);
+	SDL_FreeSurface(message);
+	f.x = editor->menu.no_button.x + 40;
+	f.y = editor->menu.no_button.y + 10;
+	message = TTF_RenderText_Solid(editor->font1, "NO", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->ques_win), &f);
+	SDL_FreeSurface(message);
+	f.x = 30;
+	f.y = 15;
+	message = TTF_RenderText_Solid(editor->font1, "This filename already exist.", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->ques_win), &f);
+	SDL_FreeSurface(message);
+	f.x = 18;
+	f.y = 30;
+	message = TTF_RenderText_Solid(editor->font1, "Do you want to rewrite this file?", color);
+	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->ques_win), &f);
+	SDL_FreeSurface(message);
+}
+
 void	ques_event(t_editor *editor, SDL_Event event, t_coords mouse_position)
 {
 	set_ques_flag(editor, mouse_position);
@@ -39,20 +68,15 @@ void	ques_event(t_editor *editor, SDL_Event event, t_coords mouse_position)
 	}
 
 	if (editor->ques_flag == 1)
-	{
 		SDL_BlitScaled(editor->button[9], NULL, editor->ques_surf, &editor->menu.rect1);
-		SDL_BlitScaled(editor->button[8], NULL, editor->ques_surf, &editor->menu.rect2);
-	}
 	else if (editor->ques_flag == 2)
-	{
 		SDL_BlitScaled(editor->button[9], NULL, editor->ques_surf, &editor->menu.rect2);
-		SDL_BlitScaled(editor->button[8], NULL, editor->ques_surf, &editor->menu.rect1);
-	}
 	else
 	{
 		SDL_BlitScaled(editor->button[8], NULL, editor->ques_surf, &editor->menu.rect2);
 		SDL_BlitScaled(editor->button[8], NULL, editor->ques_surf, &editor->menu.rect1);
 	}
+	ques_button_names(editor);
 	if (editor->ques_flag == 1 &&
 		event.button.button == SDL_BUTTON_LEFT &&
 		event.button.type == SDL_MOUSEBUTTONDOWN)
@@ -73,23 +97,32 @@ void	ques_event(t_editor *editor, SDL_Event event, t_coords mouse_position)
 	}
 }
 
-void	ques_win_init(t_editor *editor)
+void	draw_ques_background(t_editor *editor)
 {
-	SDL_Color	color;
-	SDL_Surface	*message;
-	SDL_Rect	f;
+	int x;
+	int y;
 
-	color = (SDL_Color){0, 0, 0, 0};
-	f.x = editor->menu.yes_button.x + 20;
-	f.y = editor->menu.yes_button.y + 10;
-	message = TTF_RenderText_Solid(editor->font1, "Yes", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->ques_win), &f);
-	SDL_FreeSurface(message);
-	f.x = editor->menu.no_button.x + 20;
-	f.y = editor->menu.no_button.y + 10;
-	message = TTF_RenderText_Solid(editor->font1, "NO", color);
-	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->ques_win), &f);
-	SDL_FreeSurface(message);
+	x = 0;
+	while (x < 240)
+	{
+		y = 0;
+		while (y < 100)
+		{
+			if (x >= 0 && y >= 0 && y < 100)
+				((int *)editor->ques_surf->pixels)\
+			[(y * editor->ques_surf->w) + x] = 0xcccccc;
+			y++;
+		}
+		x++;
+	}
+}
+
+void	ques_init(t_editor *editor)
+{
+	editor->ques_win = SDL_CreateWindow("Save map",\
+	SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 240, 100, 0);
+	editor->ques_surf = SDL_GetWindowSurface(editor->ques_win);
+	draw_ques_background(editor);
 	editor->menu.rect1.x = editor->menu.yes_button.x;
 	editor->menu.rect1.y = editor->menu.yes_button.y;
 	editor->menu.rect1.w = 96;
@@ -104,13 +137,10 @@ int		ques_win(t_editor *editor, SDL_Event event)
 {
 	t_coords 	mouse_position;
 
-	editor->ques_win = SDL_CreateWindow("Save map",\
-	SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 240, 100, 0);
-	editor->ques_surf = SDL_GetWindowSurface(editor->ques_win);
+	ques_init(editor);
 	while (1)
 	{
 		SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-		ques_win_init(editor);
 		while (SDL_PollEvent(&event))
 			ques_event(editor, event, mouse_position);
 		if (!editor->ques_win)
