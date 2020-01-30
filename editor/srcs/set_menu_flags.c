@@ -111,7 +111,6 @@ void		set_emenu_flag2(t_editor *editor, SDL_Event event)
 		event.button.button == SDL_BUTTON_LEFT &&
 		event.button.type == SDL_MOUSEBUTTONDOWN)
 	{
-		set_to_zero_emenu_flags(editor);
 		editor->flags.t_f.c_butt = 1;
 	}
 	else
