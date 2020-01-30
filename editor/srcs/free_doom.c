@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:47:48 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/30 13:57:04 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:19:44 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		free_doom(t_doom *doom)
 				ft_memdel((void **)&doom->sec[i].sp);
 			// while ((int)doom->sec[i].tex_y > 0 && (++j < doom->sec[i].tex_y + 1))
 			// 	ft_memdel((void **)&doom->sec[i].toch[j]);
-			ft_memdel((void **)&doom->sec[i].toch);
+			// ft_memdel((void **)&doom->sec[i].toch);
 		}
 		ft_memdel((void **)&doom->sec);
 		// system("leaks editor")

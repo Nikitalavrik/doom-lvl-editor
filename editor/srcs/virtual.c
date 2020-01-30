@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:35:30 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/30 16:53:46 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:23:59 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		put_player(t_editor *editor)
 	editor->doom->max_p = 1;
 	editor->doom->play = ft_memalloc(sizeof(t_play));
 	editor->doom->play[0].t.x = (editor->doom->toch[0].x + editor->doom->toch[3].x) / 2;
-	editor->doom->play[0].t.y = FLOOR_HEIGHT;
+	editor->doom->play[0].t.y = editor->doom->toch[0].y;
 	editor->doom->play[0].t.z = (editor->doom->toch[0].z + editor->doom->toch[1].z) / 2;;
 	editor->doom->play[0].angle_x = 0;
 	editor->doom->play[0].angle_y = 270;
@@ -51,7 +51,7 @@ void		editor_autosave(t_editor *editor)
 
 void		d3_init(t_editor *editor)
 {
-	// free_doom(editor->doom);
+	free_doom(editor->doom);
 	editor->doom->max_t = editor->max_sectors * 4;
 	editor->doom->max_s = editor->max_sectors;
 	if (editor->doom->max_s)
