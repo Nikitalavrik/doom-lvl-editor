@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/30 15:53:17 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:42:52 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -467,6 +467,7 @@ void			delete_prev(t_editor *editor);
 void			find_and_delete(t_editor *editor);
 void			delete_sprite(t_editor *editor, t_esprite *sprite);
 void			switch_to_sprite_put(t_editor *editor);
+void			clear_level(t_editor *editor);
 
 /*
 ** debug function 

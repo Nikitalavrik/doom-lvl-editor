@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:16:36 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/29 17:53:09 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:42:06 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	find_and_delete(t_editor *editor)
 void	delete_prev(t_editor *editor)
 {
 	if (editor->stick_line)
-			delete_stick_line_room(editor);
+		delete_stick_line_room(editor);
 	else
 	{
 		if (editor->lines)
@@ -51,4 +51,29 @@ void	delete_prev(t_editor *editor)
 			pop_point(&editor->point);
 	}
 	editor->point_cnt = 0;
+}
+
+void	clear_level(t_editor *editor)
+{
+	t_room *room;
+	t_room *next_room;
+	t_eline *line;
+	t_eline *next_line;
+
+	room = editor->rooms;
+	while (room)
+	{
+		next_room = room->next;
+		if (room->floor == editor->floor)
+			delete_room(editor, room);
+		room = next_room;
+	}
+	line = editor->lines;
+	while (line)
+	{
+		next_line = line->next;
+		if (line->floor == editor->floor)
+			delete_line(editor, line);
+		line = next_line;
+	}
 }

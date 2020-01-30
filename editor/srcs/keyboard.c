@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:15 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/12/01 19:23:34 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:19:02 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	keyboard_for_editor(t_editor *editor, SDL_Event event)
 			switch_to_floor_build(editor);
 		else if (check_rotation(editor, event))
 			ft_printf("up_down = %f left_right = %f\n", editor->up_down, editor->left_right);
+		else if (event.key.keysym.sym == SDLK_p)
+			clear_level(editor);
 	}
 }
 
