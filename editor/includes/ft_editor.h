@@ -92,7 +92,9 @@ typedef	union			s_flags
 		unsigned char	clear_b	: 1;
 		unsigned char 	bselect	: 1;
 		unsigned char	error	: 1;
-		unsigned char	any		: 4;
+		unsigned char	rewrite	: 1;
+		unsigned char	quest	: 1;
+		unsigned char	any		: 2;
 	}					t_f;
 }						t_flags;
 
@@ -251,6 +253,10 @@ typedef struct		s_emenu
 	t_coord			load_butt;
 	t_coord			clear_lvl;
 	t_coord			select_b;
+	t_coord			yes_button;
+	t_coord			no_button;
+	SDL_Rect		rect1;
+	SDL_Rect		rect2;
 }					t_emenu;
 
 /*
@@ -333,7 +339,9 @@ typedef	struct			s_editor
 	TTF_Font			*font1;
 	SDL_Color			fg;
 	SDL_Window			*win;
+	SDL_Window			*ques_win;
 	SDL_Surface			*surf;
+	SDL_Surface			*ques_surf;
 	Mix_Music			*music;
 	int					width;
 	int					height;
@@ -371,6 +379,7 @@ typedef	struct			s_editor
 	int					param_flag;
 	int					param_sflag;
 	char				point_cnt;
+	int					ques_flag;
 }						t_editor;
 
 /*
@@ -536,6 +545,7 @@ void			check_emenu_cursor(t_editor *editor, t_coords mouse_position);
 int				check_emenu_scursor(t_editor *editor, t_coords mouse_position);
 void			null_buttons(t_editor *editor);
 int				check_position(t_coords mouse_position, t_coord coord);
+int				ques_win(t_editor *editor, SDL_Event event);
 
 /*
 ** Buttons function

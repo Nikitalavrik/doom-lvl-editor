@@ -18,6 +18,15 @@ void	init_emenu_buttons3(t_editor *editor)
 	editor->menu.clear_lvl.x1 = editor->menu.clear_lvl.x + 16;
 	editor->menu.clear_lvl.y = 320;
 	editor->menu.clear_lvl.y1 = editor->menu.clear_lvl.y + 16;
+	editor->menu.yes_button.x = 10;
+	editor->menu.yes_button.x1 = editor->menu.yes_button.x + 96;
+	editor->menu.yes_button.y = 40;
+	editor->menu.yes_button.y1 = editor->menu.yes_button.y + 32;
+	editor->menu.no_button.x = 130;
+	editor->menu.no_button.x1 = editor->menu.no_button.x + 94;
+	editor->menu.no_button.y = 40;
+	editor->menu.no_button.y1 = editor->menu.no_button.y + 32;
+
 }
 
 void	init_emenu_buttons2(t_editor *editor)
