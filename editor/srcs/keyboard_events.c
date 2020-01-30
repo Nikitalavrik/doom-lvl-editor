@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:16:36 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/30 16:42:06 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:21:35 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ void	clear_level(t_editor *editor)
 	{
 		next_room = room->next;
 		if (room->floor == editor->floor)
+		{
+			editor->max_sectors--;
 			delete_room(editor, room);
+		}
 		room = next_room;
 	}
 	line = editor->lines;
@@ -73,7 +76,11 @@ void	clear_level(t_editor *editor)
 	{
 		next_line = line->next;
 		if (line->floor == editor->floor)
+		{
+			editor->max_sectors--;
 			delete_line(editor, line);
+		}
+
 		line = next_line;
 	}
 }
