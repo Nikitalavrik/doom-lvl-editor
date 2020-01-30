@@ -67,6 +67,7 @@ SRC =	editor_main.c		\
 		flag_checker.c		\
 		green_buttons.c		\
 		ques_win.c			\
+		ques_event.c		\
 		editor_menu_events.c \
 		os_check.c
 
