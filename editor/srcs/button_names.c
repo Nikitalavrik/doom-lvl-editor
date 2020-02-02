@@ -54,16 +54,16 @@ void	write_button_name2(t_editor *editor, SDL_Rect f,\
 	SDL_Surface *message, SDL_Color color)
 {
 	f.y = editor->menu.del_cb_coord.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Delete", color);
+	message = TTF_RenderText_Solid(editor->font1, "Delete(d)", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
-	f.x = editor->menu.clo_cb_coord.x + 30;
+	f.x = editor->menu.clo_cb_coord.x + 20;
 	f.y = editor->menu.clo_cb_coord.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Close room", color);
+	message = TTF_RenderText_Solid(editor->font1, "Close room(spase)", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
 	f.y = editor->menu.select_b.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Select", color);
+	message = TTF_RenderText_Solid(editor->font1, "Select(s)", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
 	f.x = editor->menu.first_floor.x + 30;
@@ -94,15 +94,15 @@ void	write_button_name(t_editor *editor)
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
 	f.y = editor->menu.f_cb_coord.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Draw wall", color);
+	message = TTF_RenderText_Solid(editor->font1, "Draw wall(l)", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
 	f.y = editor->menu.s_cb_coord.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Draw floor", color);
+	message = TTF_RenderText_Solid(editor->font1, "Draw floor(f)", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
 	f.y = editor->menu.t_cb_coord.y + 2;
-	message = TTF_RenderText_Solid(editor->font1, "Draw sprite", color);
+	message = TTF_RenderText_Solid(editor->font1, "Draw sprite(c)", color);
 	SDL_BlitSurface(message, NULL, SDL_GetWindowSurface(editor->win), &f);
 	SDL_FreeSurface(message);
 	write_button_name2(editor, f, message, color);
