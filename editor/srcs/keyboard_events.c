@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:16:36 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/30 17:21:35 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/09 15:00:07 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	find_and_delete(t_editor *editor)
 	{
 		delete_line(editor, line);
 		editor->max_sectors--;
+		if (!editor->lines)
+			free_points(&editor->point);
 	}
 	else if ((sprite = check_sprite(editor->selected,
 									mouse_position, editor->zoom)))
@@ -33,6 +35,8 @@ void	find_and_delete(t_editor *editor)
 		delete_room(editor, room);
 		editor->selected = NULL;
 		editor->max_sectors--;
+		if (!editor->rooms)
+			free_points(&editor->room_point);
 	}
 }
 

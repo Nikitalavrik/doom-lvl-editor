@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 12:40:42 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/25 17:35:41 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/09 14:54:39 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,8 @@
 
 void		free_points(t_epoint **point)
 {
-	t_epoint *iter;
-
-	iter = *point;
-	while (iter)
-	{
-		*point = (*point)->next;
-		ft_memdel((void **)&iter);
-		iter = *point;
-	}
-	point = NULL;
+	while (*point)
+		pop_point(point);
 }
 
 void		free_lines(t_eline **line)

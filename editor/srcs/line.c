@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:58:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 18:50:11 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/09 14:08:42 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ void	delete_line(t_editor *editor, t_eline *line)
 		next->prev = prev;
 	if (line == editor->lines)
 		editor->lines = next;
+	if (line->points[2])
+		ft_memdel((void **)&line->points[2]);
+	if (line->points[3])
+		ft_memdel((void **)&line->points[3]);
 	ft_memdel((void **)&line);
 }
 
