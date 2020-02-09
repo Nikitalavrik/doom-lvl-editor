@@ -545,7 +545,15 @@ void			check_emenu_cursor(t_editor *editor, t_coords mouse_position);
 int				check_emenu_scursor(t_editor *editor, t_coords mouse_position);
 void			null_buttons(t_editor *editor);
 int				check_position(t_coords mouse_position, t_coord coord);
+
+/*
+** ques functions
+*/
+
 int				ques_win(t_editor *editor, SDL_Event event);
+void			ques_event(t_editor *editor, SDL_Event event,\
+				t_coords mouse_position);
+void			ques_button_names(t_editor *editor);
 
 /*
 ** Buttons function

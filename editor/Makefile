@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2020/01/26 16:33:53 by nlavrine         ###   ########.fr        #
+#    Updated: 2020/01/26 17:38:24 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRC =	editor_main.c		\
 		flag_checker.c		\
 		green_buttons.c		\
 		ques_win.c			\
+		ques_event.c		\
 		editor_menu_events.c \
 		os_check.c
 
