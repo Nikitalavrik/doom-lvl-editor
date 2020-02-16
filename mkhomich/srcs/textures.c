@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:35:19 by mkhomich          #+#    #+#             */
-/*   Updated: 2020/01/26 16:24:37 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/16 16:28:59 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void    read_text(t_doom *doom, char *file)
 
 void    load_texture_wall(t_doom *doom)
 {
-	//	read_text(doom, "texture.data");
+//		read_text(doom, "texture.data");
 	doom->count_text = 32;
 	doom->text = (t_text*)malloc(sizeof(t_text) * (doom->count_text + 1));
 	doom->text[1] = convert_tex(IMG_Load("../text/1.bmp"), 128, 128);
@@ -172,19 +172,19 @@ void    load_texture_wall(t_doom *doom)
 	doom->text[27] = convert_tex(IMG_Load("../text/Arsenic.png"), 128, 128);
 	doom->text[28] = convert_tex(IMG_Load("../text/Asbestos.png"), 128, 128);
 	doom->text[29] = convert_tex(IMG_Load("../text/AuriferousQuartz.png"), 128, 128);
-	doom->text[30] = convert_tex(IMG_Load("../text/blue_stained_glass.png"), 128, 128);
+	doom->text[30] = convert_tex(IMG_Load("../text/red_stained_glass.png"), 128, 128);
 	doom->text[31] = convert_tex(IMG_Load("../text/0002.png"), 128, 128);
-	doom->count_sp = 19;
+	doom->count_sp = 20;
 	doom->sp = (t_sprite*)malloc(sizeof(t_sprite) * (doom->count_sp + 1));
 	doom->sp[0].count = 0;
 	doom->sp[0].frame = 1;
-	doom->sp[0].zoom = 0.1;
+	doom->sp[0].zoom = ((float)doom->w / 11000);
 	doom->sp[0].f_hud = 1;
 	doom->sp[0].text = (t_text*)malloc(sizeof(t_text) * (doom->sp[0].frame + 1));
 	doom->sp[0].text[0] = convert_tex(IMG_Load("../sprite/heart.png"), 0, 0);
 	doom->sp[1].count = 0;
 	doom->sp[1].frame = 20;
-	doom->sp[1].zoom = 0.3;
+	doom->sp[1].zoom = ((float)doom->w / 3000);
 	doom->sp[1].f_hud = 1;
 	doom->sp[1].text = (t_text*)malloc(sizeof(t_text) * (doom->sp[1].frame + 1));
 	doom->sp[1].text[0] = convert_tex(IMG_Load("../sprite/pulse/00.gif"), 0, 0);
@@ -209,7 +209,7 @@ void    load_texture_wall(t_doom *doom)
 	doom->sp[1].text[19] = convert_tex(IMG_Load("../sprite/pulse/19.gif"), 0, 0);
 	doom->sp[2].count = 34;
 	doom->sp[2].frame = 35;
-	doom->sp[2].zoom = 0.5;
+	doom->sp[2].zoom = ((float)doom->w / 2000.0);
 	doom->sp[2].f_hud = 1;
 	doom->sp[2].text = (t_text*)malloc(sizeof(t_text) * (doom->sp[2].frame + 1));
 	doom->sp[2].text[0] = convert_tex(IMG_Load("../sprite/procent_heart/00.gif"), 0, 0);
@@ -249,13 +249,13 @@ void    load_texture_wall(t_doom *doom)
 	doom->sp[2].text[34] = convert_tex(IMG_Load("../sprite/procent_heart/34.gif"), 0, 0);
 	doom->sp[3].count = 0;
 	doom->sp[3].frame = 1;
-	doom->sp[3].zoom = 0.15;
+	doom->sp[3].zoom = ((float)doom->w / 7000);
 	doom->sp[3].f_hud = 1;
 	doom->sp[3].text = (t_text*)malloc(sizeof(t_text) * (doom->sp[3].frame + 1));
 	doom->sp[3].text[0] = convert_tex(IMG_Load("../sprite/armor.png"), 0, 0);
 	doom->sp[4].count = 34;
 	doom->sp[4].frame = 35;
-	doom->sp[4].zoom = 1;
+	doom->sp[4].zoom = ((float)doom->w / 1000.0);;
 	doom->sp[4].f_hud = 1;
 	doom->sp[4].text = (t_text*)malloc(sizeof(t_text) * (doom->sp[4].frame + 1));
 	doom->sp[4].text[0] = convert_tex(IMG_Load("../sprite/procent_armor/00.gif"), 0, 0);
@@ -295,7 +295,7 @@ void    load_texture_wall(t_doom *doom)
 	doom->sp[4].text[34] = convert_tex(IMG_Load("../sprite/procent_armor/34.gif"), 0, 0);
 	doom->sp[5].count = 7;
 	doom->sp[5].frame = 8;
-	doom->sp[5].zoom = 0.3;
+	doom->sp[5].zoom = ((float)doom->w / 3000);
 	doom->sp[5].f_hud = 1;
 	doom->sp[5].text = (t_text*)malloc(sizeof(t_text) * (doom->sp[5].frame + 1));
 	doom->sp[5].text[0] = convert_tex(IMG_Load("../sprite/procent_shot/00.gif"), 0, 0);
@@ -308,7 +308,7 @@ void    load_texture_wall(t_doom *doom)
 	doom->sp[5].text[7] = convert_tex(IMG_Load("../sprite/procent_shot/07.gif"), 0, 0);
 	doom->sp[6].count = 0;
 	doom->sp[6].frame = 7;
-	doom->sp[6].zoom = 2.2;
+	doom->sp[6].zoom = ((float)doom->w / 450);
 	doom->sp[6].f_hud = 1;
 	doom->sp[6].text = (t_text*)malloc(sizeof(t_text) * (doom->sp[6].frame + 1));
 	doom->sp[6].text[0] = convert_tex(IMG_Load("../sprite/weapons/pistol_1/1.png"), 0, 0);
@@ -320,7 +320,7 @@ void    load_texture_wall(t_doom *doom)
 	doom->sp[6].text[6] = convert_tex(IMG_Load("../sprite/weapons/pistol_1/7.png"), 0, 0);
 	doom->sp[7].count = 0;
 	doom->sp[7].frame = 27;
-	doom->sp[7].zoom = 2.2;
+	doom->sp[7].zoom = ((float)doom->w / 450);
 	doom->sp[7].f_hud = 1;
 	doom->sp[7].text = (t_text*)malloc(sizeof(t_text) * (doom->sp[4].frame + 1));
 	doom->sp[7].text[0] = convert_tex(IMG_Load("../sprite/weapons/grenade/0.png"), 0, 0);
@@ -352,7 +352,7 @@ void    load_texture_wall(t_doom *doom)
 	doom->sp[7].text[26] = convert_tex(IMG_Load("../sprite/weapons/grenade/26.png"), 0, 0);
 	doom->sp[8].count = 0;
 	doom->sp[8].frame = 15;
-	doom->sp[8].zoom = 2;
+	doom->sp[8].zoom = ((float)doom->w / 500);
 	doom->sp[8].f_hud = 1;
 	doom->sp[8].text = (t_text*)malloc(sizeof(t_text) * (doom->sp[8].frame + 1));
 	doom->sp[8].text[0] = convert_tex(IMG_Load("../sprite/weapons/blaster/A.bmp"), 0, 0);
@@ -569,5 +569,13 @@ void    load_texture_wall(t_doom *doom)
 	doom->sp[18].text[4] = convert_tex(IMG_Load("../sprite/weapons/blaster/BFGbe0.png"), 0, 0);
 	doom->sp[18].text[5] = convert_tex(IMG_Load("../sprite/weapons/blaster/BFGbf0.png"), 0, 0);
 	doom->sp[18].text[6] = convert_tex(IMG_Load("../sprite/weapons/blaster/BFGbg0.png"), 0, 0);
-	//save_text(doom);
+    doom->sp[19].count = 0;
+    doom->sp[19].frame = 4;
+    doom->sp[19].f_hud = 0;
+    doom->sp[19].text = (t_text*)malloc(sizeof(t_text) * (doom->sp[19].frame + 1));
+    doom->sp[19].text[0] = convert_tex(IMG_Load("../sprite/TLMPA0.png"), 0, 0);
+    doom->sp[19].text[1] = convert_tex(IMG_Load("../sprite/TLMPB0.png"), 0, 0);
+    doom->sp[19].text[2] = convert_tex(IMG_Load("../sprite/TLMPC0.png"), 0, 0);
+    doom->sp[19].text[3] = convert_tex(IMG_Load("../sprite/TLMPD0.png"), 0, 0);
+//	save_text(doom);
 }

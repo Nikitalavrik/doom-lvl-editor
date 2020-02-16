@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhomich <mkhomich@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/28 13:28:07 by mkhomich          #+#    #+#             */
-/*   Updated: 2019/12/28 19:14:36 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/07/28 13:28:22 by mkhomich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void put_pixel(t_doom *doom, int x, int y, int color)
 {
     int *pic;
 
-    if (x >= 0 && x < doom->surface->w && y >= 0 && y < doom->surface->h && color)
+    if (x >= 0 && x < doom->w && y >= 0 && y < doom->h && color)
     {
         pic = doom->surface->pixels + y * doom->surface->pitch + x * doom->surface->format->BytesPerPixel;
         *pic = color;
@@ -84,7 +84,7 @@ int	vec_play(t_doom *doom, int pl)
 void    raycasting(t_doom *doom)
 {
     int nb;
-	int	save_sec_pixel;
+    int	save_sec_pixel;
     int c;
 
     nb = 0;
@@ -106,19 +106,16 @@ void    raycasting(t_doom *doom)
 	}
 
 	nb = 0;
-	doom->aim_sec = -1;
-	doom->aim_sp = -1;
+    doom->aim_sec = -1;
     while (nb < doom->max_s)
     {
-		save_sec_pixel = doom->z_buffer[doom->y_aim * doom->surface->w + doom->x_aim];
+        save_sec_pixel = doom->z_buffer[doom->y_aim * doom->surface->w + doom->x_aim];
         doom->sec[doom->rend[nb].sec].viem = viem_sec(doom, &doom->sec[doom->rend[nb].sec]);
         if (doom->sec[doom->rend[nb].sec].viem)
         {
-        	if (doom->sec[doom->rend[nb].sec].f_move == 0 ||\
-			(doom->sec[doom->rend[nb].sec].f_move == 1 &&\
-			doom->sec[doom->rend[nb].sec].p_move >= 0 && doom->sec[doom->rend[nb].sec].p_move < 1))
+        	if (doom->sec[doom->rend[nb].sec].f_move == 0 || (doom->sec[doom->rend[nb].sec].f_move == 1 && doom->sec[doom->rend[nb].sec].p_move >= 0 && doom->sec[doom->rend[nb].sec].p_move < 1))
 			{
-				rotate_sec(doom, &doom->sec[doom->rend[nb].sec]);	
+				rotate_sec(doom, &doom->sec[doom->rend[nb].sec]);
 				viem_sec_toch(doom, &doom->sec[doom->rend[nb].sec]);
 				c = 0;
 				while (c < doom->sec[doom->rend[nb].sec].max_sp)
@@ -127,13 +124,11 @@ void    raycasting(t_doom *doom)
 					core_deg(doom, &doom->sec[doom->rend[nb].sec].sp[c].sp);
 					c++;
 				}
-				if (doom->z_buffer[doom->y_aim * doom->surface->w + doom->x_aim] > save_sec_pixel)
-					doom->aim_sec = doom->rend[nb].sec;
+                if (doom->z_buffer[doom->y_aim * doom->surface->w + doom->x_aim] > save_sec_pixel)
+                    doom->aim_sec = doom->rend[nb].sec;
 			}
         }
         gen_map(doom, doom->rend[nb].sec);
-//		SDL_UpdateWindowSurface(doom->window);
-//		SDL_Delay(10);
         nb++;
     }
 	if (doom->move.mmap)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_tr.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhomich <mkhomich@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 11:27:31 by mkhomich          #+#    #+#             */
-/*   Updated: 2019/12/28 19:08:04 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/09/23 11:27:33 by mkhomich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		clip_y(t_inter *l, t_inter *r, t_drtr *i, int y)
 	return (y);
 }
 
-void	draw_top_tri(t_triangl *tr, t_doom *doom, int text, int tape)
+void	draw_top_tri(t_triangl *tr, t_doom *doom, int *text, int tape)
 {
 	t_drtr	i;
 	t_inter	l;
@@ -44,7 +44,7 @@ void	draw_top_tri(t_triangl *tr, t_doom *doom, int text, int tape)
 	l = interpol(tr->t1, tr->t3, tape);
 	r = interpol(tr->t2, tr->t3, tape);
 	i.temp_y = tr->t1.y;
-	while (i.temp_y <= tr->t3.y && i.temp_y < doom->surface->h)
+	while (i.temp_y <= tr->t3.y && i.temp_y < doom->h)
 	{
 		dx(&l, &r, &i);
 		draw_line(doom, &i, text, tape);
@@ -54,7 +54,7 @@ void	draw_top_tri(t_triangl *tr, t_doom *doom, int text, int tape)
 	}
 }
 
-void	draw_bottom_tri(t_triangl *tr, t_doom *doom, int text, int tape)
+void	draw_bottom_tri(t_triangl *tr, t_doom *doom, int *text, int tape)
 {
 	t_drtr	i;
 	t_inter	l;
@@ -65,7 +65,7 @@ void	draw_bottom_tri(t_triangl *tr, t_doom *doom, int text, int tape)
 	l = interpol(tr->t1, tr->t2, tape);
 	r = interpol(tr->t1, tr->t3, tape);
 	i.temp_y = tr->t1.y;
-	while (i.temp_y <= tr->t3.y && i.temp_y < doom->surface->h)
+	while (i.temp_y <= tr->t3.y && i.temp_y < doom->h)
 	{
 		dx(&l, &r, &i);
 		draw_line(doom, &i, text, tape);
@@ -75,7 +75,7 @@ void	draw_bottom_tri(t_triangl *tr, t_doom *doom, int text, int tape)
 	}
 }
 
-void	draw_triangl_all(t_triangl *tr, t_doom *doom, int text, int tape)
+void	draw_triangl_all(t_triangl *tr, t_doom *doom, int *text, int tape)
 {
 	t_drtr	i;
 	t_inter	l;
@@ -90,7 +90,7 @@ void	draw_triangl_all(t_triangl *tr, t_doom *doom, int text, int tape)
 	l = interpol(tr->t1, tr->t2, tape);
 	r = interpol(tr->t1, tr->t3, tape);
 	i.temp_y = tr->t1.y;
-	while (i.temp_y <= height && i.temp_y < doom->surface->h)
+	while (i.temp_y <= height && i.temp_y < doom->h)
 	{
 		dx(&l, &r, &i);
 		draw_line(doom, &i, text, tape);
@@ -104,7 +104,7 @@ void	draw_triangl_all(t_triangl *tr, t_doom *doom, int text, int tape)
 	}
 }
 
-void	draw_triangl(t_doom *doom, t_triangl *tr, int text, int tape)
+void	draw_triangl(t_doom *doom, t_triangl *tr, int *text, int tape)
 {
 	if ((tr->t1.x == tr->t2.x && tr->t2.x == tr->t3.x)
 		|| (tr->t1.y == tr->t2.y && tr->t2.y == tr->t3.y))

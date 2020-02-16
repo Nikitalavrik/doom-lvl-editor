@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhomich <mkhomich@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 11:54:12 by mkhomich          #+#    #+#             */
-/*   Updated: 2019/12/28 19:06:29 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/09/23 11:54:14 by mkhomich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,51 +38,46 @@ void		iter(t_inter *i)
 	i->z += i->dzdy;
 }
 
-int color_grad(int color, int grad, int *col)
+void color_grad(t_doom *doom, int color, int *col)
 {
-    unsigned char r;
-    unsigned char g;
-    unsigned char b;
 	unsigned char a;
+	unsigned char b;
     int res;
 
-    if (grad > 100)
-        grad = 100;
-    else if (grad < 5)
-        grad = 5;
     a = (color >> 24);
     if (a < 255)
 	{
-		r = ((unsigned char)(color >> 16) * a) / 255 + ((unsigned char)(*col >> 16) * (255 - a)) / 255;
-		g = ((unsigned char)(color >> 8) * a) / 255 + ((unsigned char)(*col >> 8) * (255 - a)) / 255;
-		b = ((unsigned char)(color) * a) / 255 + ((unsigned char)(*col) * (255 - a)) / 255;
+        res = a;
+        b = 255 - a;
+        res = ((res << 8) | ((doom->alpha_tab[(unsigned char)(color >> 16)][a] + doom->alpha_tab[(unsigned char)(*col >> 16)][b])));
+        res = ((res << 8) | ((doom->alpha_tab[(unsigned char)(color >> 8)][a] + doom->alpha_tab[(unsigned char)(*col >> 8)][b])));
+        res = ((res << 8) | ((doom->alpha_tab[(unsigned char)(color)][a] + doom->alpha_tab[(unsigned char)(*col)][b])));
+        *col = res;
 	}
 	else
-	{
-		r = (color >> 16);
-		g = (color >> 8);
-		b = color;
-	}
-	res = a;
-    res = ((res << 8) | ((r * grad) / 100));
-    res = ((res << 8) | ((g * grad) / 100));
-    res = ((res << 8) | ((b * grad) / 100));
-    return (res);
+        *col = color;
 }
 
-void		draw_line(t_doom *doom, t_drtr *i, int text, int tape)
+void put_pixel_cor(int *cor, int color)
+{
+        *cor = color;
+}
+
+void		draw_line(t_doom *doom, t_drtr *i, int *text, int tape)
 {
 	int		color;
 	int		nb;
 	t_drtr	ib;
 	int		z_buff;
-	int		*tex;
 	int 	w;
 	int		h;
+	int     *cor;
+	int     count;
+	int     z_b;
 
 	ib = *i;
-	if (!(ib.temp_y >= 0 && ib.temp_y < doom->surface->h && !((ib.xs_t < 0 &&
-	ib.xe_t < 0) || (ib.xs_t > doom->surface->w && ib.xe_t > doom->surface->w))))
+	if (!(ib.temp_y >= 0 && ib.temp_y < doom->h && !((ib.xs_t < 0 &&
+	ib.xe_t < 0) || (ib.xs_t > doom->w && ib.xe_t > doom->w))))
 		return ;
 	if (ib.xs_t < 0)
 	{
@@ -92,12 +87,14 @@ void		draw_line(t_doom *doom, t_drtr *i, int text, int tape)
 		ib.ui += (ib.du * nb);
 		ib.vi += (ib.dv * nb);
 	}
-	if (ib.xe_t > doom->surface->w - 1)
-		ib.xe_t = doom->surface->w - 1;
-	tex = doom->text[text].tex;
+	if (ib.xe_t > doom->w - 1)
+		ib.xe_t = doom->w - 1;
+    cor = (doom->surface->pixels + ib.temp_y * doom->surface->pitch + ib.xs_t * doom->surface->format->BytesPerPixel);
+    count = 0;
+    z_b = ib.temp_y * doom->w;
 	while (ib.xs_t <= ib.xe_t)
 	{
-		z_buff = doom->z_buffer[ib.xs_t + ib.temp_y * doom->surface->w];
+		z_buff = doom->z_buffer[ib.xs_t + z_b];
 		if ((z_buff == 0 || z_buff < ib.zi))
 		{
 			if (tape)
@@ -107,29 +104,29 @@ void		draw_line(t_doom *doom, t_drtr *i, int text, int tape)
 			}
 			else if ((ib.zi >> 5))
 			{
-				w = ((ib.ui << 1) / (ib.zi >> 5));
-				h = ((ib.vi << 1) / (ib.zi >> 5));
+				w = (ib.ui / (ib.zi >> 6));
+				h = (ib.vi / (ib.zi >> 6));
 			}
-			else
-			{
-				w = 0;
-				h = 0;
-			}
-			if (w >= 0 && w < doom->text[text].w && h >= 0 && h < doom->text[text].h)
-				color = tex[w + (h << 7)];
-			else
-				color = 0;
+//			else
+//			{
+//				w = 0;
+//				h = 0;
+//			}
+//			if (w >= 0 && w < doom->text[text].w && h >= 0 && h < doom->text[text].h)
+				color = text[w + (h << 7)];
+//			else
+//				color = 0;
 			if (color)
 			{
-				color = color_grad(color, 100, (doom->surface->pixels + ib.temp_y * doom->surface->pitch + ib.xs_t * doom->surface->format->BytesPerPixel));
-				put_pixel(doom, ib.xs_t, ib.temp_y, color);
-				doom->z_buffer[ib.xs_t + ib.temp_y * doom->surface->w] = ib.zi;
+				color_grad(doom, color, cor + count);
+				doom->z_buffer[ib.xs_t + z_b] = ib.zi;
 			}
 		}
 		ib.zi += ib.dz;
 		ib.ui += ib.du;
 		ib.vi += ib.dv;
 		ib.xs_t++;
+		count++;
 	}
 	*i = ib;
 }

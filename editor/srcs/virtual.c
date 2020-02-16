@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:35:30 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/30 17:23:59 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/16 17:31:48 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		grid_all_sec(t_editor *editor)
 	i = 0;
 	while (i < editor->max_sectors)
 	{
-		grid_sec(editor->doom, &editor->doom->sec[i]);
+		grid_sec(editor->doom, &editor->doom->sec[i], 0);
 		i++;
 	}
 }
@@ -51,15 +51,18 @@ void		editor_autosave(t_editor *editor)
 
 void		d3_init(t_editor *editor)
 {
-	free_doom(editor->doom);
+	// free_doom(editor->doom);
 	editor->doom->max_t = editor->max_sectors * 4;
 	editor->doom->max_s = editor->max_sectors;
+	ft_printf("max_s = %i\n", editor->doom->max_s);
 	if (editor->doom->max_s)
 	{
+		// init_pull(editor->doom);
 		editor->doom->sec = ft_memalloc(sizeof(t_sec) * editor->doom->max_s);
 		editor->doom->toch = ft_memalloc(sizeof(t_toch) * editor->doom->max_t);
 		convert_rooms(editor);
 		editor->doom->rend = ft_memalloc(sizeof(t_render) * editor->doom->max_s);
+		generate_alpha_tab(editor->doom);
 		grid_all_sec(editor);
 		put_player(editor);
 		editor->flags.t_f.visual = 1;

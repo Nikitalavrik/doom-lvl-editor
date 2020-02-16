@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:38:31 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 12:59:55 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/16 17:18:19 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	editor_loop(t_editor *editor)
 
 void	doom_loop(t_editor *editor)
 {
-	bzero(editor->doom->z_buffer, sizeof(int) * editor->width * editor->height);
 	check_render(editor->doom);
+	bzero(editor->doom->z_buffer, sizeof(int) * editor->width * editor->height);
 	skybox(editor->doom);
 	raycasting(editor->doom);
 	print_sp_sec(editor->doom);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   toch.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhomich <mkhomich@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:36:59 by mkhomich          #+#    #+#             */
-/*   Updated: 2019/11/24 13:58:04 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/09/01 17:37:00 by mkhomich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ void	viem_sec_toch(t_doom *doom, t_sec *sec)
 		pth[0].sq.y = 0;
 		pth[0].sq.w = sec->tex_x + 1;
 		pth[0].sq.h = sec->tex_y + 1;
-		// threading(&pth[0]);
-		pthread_create(&thread[0], NULL, threading, &pth[0]);
-		pthread_join(thread[0], NULL);
+		threading(&pth[0]);
 	}
 }

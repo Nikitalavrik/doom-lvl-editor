@@ -6,35 +6,35 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 16:48:28 by mkhomich          #+#    #+#             */
-/*   Updated: 2020/01/26 16:29:23 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/16 16:47:32 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_H
 # define DOOM_H
 
-# define WIDTH 1024
-# define HEIGHT 768
+//# define WIDTH 1024
+//# define HEIGHT 768
 # define FPS 200
 # define PI 3.141592
 # define DELTA 0.5
-# define IGRX WIDTH / 2
-# define IGRY HEIGHT / 2
+//# define IGRX WIDTH / 2
+//# define IGRY HEIGHT / 2
 # define FOV 60
 # define THREADS 6
+
 # define FIXP16_ROUND_UP 0x00008000
 # define FIXP16_SHIFT 16
 # define FIXP28_SHIFT 28
 # define FIXP22_SHIFT 22
 # define STEP_AN 22.5
 # define MAX_PULL 15
-# define PATH
 # include <SDL2/SDL.h>
 # include "SDL_image.h"
 # include "SDL_mixer.h"
 # include "SDL_ttf.h"
-# include "../../libft/libft.h"
-# include "../../libft/ft_printf/include/ft_printf.h"
+# include "../libft/libft.h"
+# include "../libft/get_next_line.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
@@ -89,6 +89,7 @@ typedef struct	s_skybox
 	SDL_Rect	size;
 	float		kof_y;
 	int			indent;
+	int			count;
 }				t_skybox;
 
 typedef struct	s_point
@@ -156,7 +157,6 @@ typedef struct	s_sec
 	int			tex_h;
 	int			tex_w;
 	int			viem;
-	int			level;
 	int			t_full;
 	int			t_win;
 	SDL_Rect	win;
@@ -169,6 +169,9 @@ typedef struct	s_sec
 	t_vec		move;
 	int			tape;
 	int			max_sp;
+	int         **tex;
+	int			level;
+	char **l_map;
 }				t_sec;
 
 typedef struct	s_aim
@@ -317,7 +320,13 @@ typedef struct	s_doom
 	int			x_aim;
 	int			y_aim;
 	float		gravity;
-	int			aim_sec;
+	unsigned char **alpha_tab;
+	int         w;
+	int         h;
+	int         igr_x;
+	int         igr_y;
+	int			level;
+    int			aim_sec;
 	int			aim_sp;
 }				t_doom;
 
@@ -339,9 +348,18 @@ typedef struct	s_coliz
 	int 		pl;
 }				t_coliz;
 
+typedef struct	s_light
+{
+    int x;
+    int y;
+    int r;
+    char l;
+}               t_light;
+
 void			raycasting(t_doom *doom);
 void			load_texture_wall (t_doom *doom);
-void			grid_sec(t_doom *doom, t_sec *sec);
+int     		generate_alpha_tab(t_doom *doom);
+void			grid_sec(t_doom *doom, t_sec *sec, char ligh);
 void			rotate_y(t_doom *doom, t_toch *toch);
 void			rotate_sec(t_doom *doom, t_sec *sec);
 void			viem_sec_toch(t_doom *doom, t_sec *sec);
@@ -349,17 +367,17 @@ void			vector(t_toch start, t_toch end, t_vec *res);
 void			put_pixel(t_doom *doom, int x, int y, int color);
 int				move(t_doom *doom);
 void			gen_map(t_doom *doom, int sec);
-void			draw_triangl(t_doom *doom, t_triangl *tr, int text, int tape);
-void			draw_triangl_all(t_triangl *tr, t_doom *doom, int text, int tape);
-void			draw_bottom_tri(t_triangl *tr, t_doom *doom, int text, int tape);
-void			draw_top_tri(t_triangl *tr, t_doom *doom, int text, int tape);
+void			draw_triangl(t_doom *doom, t_triangl *tr, int *text, int tape);
+void			draw_triangl_all(t_triangl *tr, t_doom *doom, int *text, int tape);
+void			draw_bottom_tri(t_triangl *tr, t_doom *doom, int *text, int tape);
+void			draw_top_tri(t_triangl *tr, t_doom *doom, int *text, int tape);
 t_inter			interpol(t_point t1, t_point t2, int tape);
 void			dx(t_inter *l, t_inter *r, t_drtr *i);
-void			draw_line(t_doom *doom, t_drtr *i, int text, int tape);
+void			draw_line(t_doom *doom, t_drtr *i, int *text, int tape);
 void			iter(t_inter *i);
 void			render_tr2(t_doom *doom, t_sec *sec, int x, int y);
 void			render_tr1(t_doom *doom, t_sec *sec, int x, int y);
-int				check_viem_tr(t_triangl *tr, t_doom *doom);
+int				check_viem_tr(t_doom *doom, t_triangl *tr);
 int				init_full(t_doom *doom, char *str);
 void			core_deg(t_doom *doom, t_toch *toch);
 void			print_mmap(t_doom *doom);
@@ -389,13 +407,25 @@ void			print_sp_sec(t_doom *doom);
 void			save_map(t_doom *doom, char *filename);
 void			load_map(t_doom *doom, char *filename);
 float			size_line(float x, float z);
-int				color_grad(int color, int grad, int *col);
+void			color_grad(t_doom *doom, int color, int *col);
 float			move_up(t_doom *doom, int pl);
 t_vec			rot_vec(t_vec vec, float angle);
 void			print_sp(t_doom *doom, int p_x, int p_y, int sp, int z, int pl);
 t_coliz			coliz_pull(t_doom *doom, float x_p, float z_p, float y);
 void			calc_uron_pl(t_doom *doom, int pl, int zone, int weap);
 int				min_line_sec(t_doom *doom, float x, float z, t_coliz *col);
+unsigned char   **burn_tab(size_t x, size_t y);
+
+/*
+** Main func
+*/
+
+void    		jump_pl(t_doom *doom, int pl, int jump);
+void			game(t_doom *doom);
+int     		you_win(t_doom *doom);
+void			draw_text(t_doom *doom, int x, int y, char *s);
+void			bzero_all(t_doom *doom);
+void			vec_pull(t_doom *doom);
 void			check_render(t_doom *doom);
 
 #endif

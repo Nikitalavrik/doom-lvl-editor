@@ -30,19 +30,22 @@ void	pr_s(t_doom *doom, int c, int nb)
 {
 	if (doom->sec[nb].sp[c].nb_sp == 12)
 		doom->sp[doom->sec[nb].sp[c].nb_sp].zoom =
-		(1 / doom->sec[nb].sp[c].sp.tz2) * 4;
+		(1 / doom->sec[nb].sp[c].sp.tz2) * ((float)doom->w / 256);
 	if (doom->sec[nb].sp[c].nb_sp == 13)
 		doom->sp[doom->sec[nb].sp[c].nb_sp].zoom =
-		(1 / doom->sec[nb].sp[c].sp.tz2) * 1.5;
+		(1 / doom->sec[nb].sp[c].sp.tz2) * ((float)doom->w / 500);
 	if (doom->sec[nb].sp[c].nb_sp == 14)
 		doom->sp[doom->sec[nb].sp[c].nb_sp].zoom =
-		(1 / doom->sec[nb].sp[c].sp.tz2) * 10;
+		(1 / doom->sec[nb].sp[c].sp.tz2) * ((float)doom->w / 90);
 	if (doom->sec[nb].sp[c].nb_sp == 15)
 		doom->sp[doom->sec[nb].sp[c].nb_sp].zoom =
-		(1 / doom->sec[nb].sp[c].sp.tz2) * 10;
+		(1 / doom->sec[nb].sp[c].sp.tz2) * ((float)doom->w / 80);
 	if (doom->sec[nb].sp[c].nb_sp == 17)
 		doom->sp[doom->sec[nb].sp[c].nb_sp].zoom =
-				(1 / doom->sec[nb].sp[c].sp.tz2);
+				(1 / doom->sec[nb].sp[c].sp.tz2) * ((float)doom->w / 1000);
+    if (doom->sec[nb].sp[c].nb_sp == 19)
+        doom->sp[doom->sec[nb].sp[c].nb_sp].zoom =
+                (1 / doom->sec[nb].sp[c].sp.tz2) * ((float)doom->w / 300);
 	print_sp(doom, doom->sec[nb].sp[c].sp.tx1, doom->sec[nb].sp[c].sp.ty1,
 	doom->sec[nb].sp[c].nb_sp,
 	((1 << FIXP28_SHIFT) / doom->sec[nb].sp[c].sp.tz2), nb);

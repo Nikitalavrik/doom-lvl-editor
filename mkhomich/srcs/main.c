@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 13:42:17 by mkhomich          #+#    #+#             */
-/*   Updated: 2019/12/28 17:59:55 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/16 17:17:21 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	bzero_all(t_doom *doom)
 {
-	bzero(doom->z_buffer, sizeof(int) * doom->surface->w * doom->surface->h);
+	bzero(doom->z_buffer, sizeof(int) * doom->w * doom->h);
 	bzero(doom->mmap.mmap->pixels, sizeof(int) * doom->mmap.w * doom->mmap.h);
 }
 
@@ -27,6 +27,8 @@ void	z_buffsprite(SDL_Rect win, t_text *text, t_doom *doom, int z, int pl)
 	int step_y;
 
 	y = 0;
+	if (!win.w || !win.h)
+		return ;
 	step_x = (text->w << FIXP16_SHIFT) / win.w;
 	step_y = ((text->h << FIXP16_SHIFT) / win.h);
 	while (y < win.h)
@@ -34,21 +36,21 @@ void	z_buffsprite(SDL_Rect win, t_text *text, t_doom *doom, int z, int pl)
 		x = 0;
 		while (x < win.w)
 		{
-			if (x + win.x >= 0 && x + win.x < doom->surface->w && y + win.y >= 0 && y + win.y < doom->surface->h)
+			if (x + win.x >= 0 && x + win.x < doom->w && y + win.y >= 0 && y + win.y < doom->h)
 			{
 				buf = text->tex[((y * step_y) >> FIXP16_SHIFT) * text->w + ((x * step_x) >> FIXP16_SHIFT)];
 				if (buf)
 				{
 					if (z > 0)
 					{
-						if (doom->z_buffer[x + win.x + (y + win.y) * doom->surface->w] < z || doom->z_buffer[x + win.x + (y + win.y) * doom->surface->w] == 0)
+						if (doom->z_buffer[x + win.x + (y + win.y) * doom->w] < z || doom->z_buffer[x + win.x + (y + win.y) * doom->w] == 0)
 						{
 							if (x + win.x == doom->x_aim && y + win.y == doom->y_aim && pl - 1 != doom->n_play && pl)
 							{
 								doom->play[doom->n_play].aim.pl = pl - 1;
 								doom->play[doom->n_play].aim.zone = ((y * 4) / win.h) + 1;
 							}
-							doom->z_buffer[x + win.x + (y + win.y) * doom->surface->w] = z;
+							doom->z_buffer[x + win.x + (y + win.y) * doom->w] = z;
 							put_pixel(doom, x + win.x, y + win.y, buf);
 						}
 					}
@@ -242,7 +244,7 @@ void	new_pull(t_doom *doom, int pl, int nb)
 	doom->pull[nb].t.x = doom->play[pl].t.x;
 	doom->pull[nb].t.y = doom->play[pl].t.y + 6;
 	doom->pull[nb].t.z = doom->play[pl].t.z;
-	doom->pull[nb].vec = rot_vec((t_vec){0, -((float)(doom->play[pl].angle_x) / (float)doom->skybox.indent) - 0.2, 1, 0}, 360 - doom->play[pl].angle_y);
+	doom->pull[nb].vec = rot_vec((t_vec){0, -((float)(doom->play[pl].angle_x * 2) / (float)doom->skybox.indent) - 0.2, 1, 0}, 360 - doom->play[pl].angle_y);
 	doom->pull[nb].t.x += doom->pull[nb].vec.x * 2;
 	doom->pull[nb].t.y += doom->pull[nb].vec.y * 2;
 	doom->pull[nb].t.z += doom->pull[nb].vec.z * 2;
@@ -276,7 +278,7 @@ void	vec_pull(t_doom *doom)
 			core_deg(doom, &doom->pull[nb].t);
 			if (doom->pull[nb].t.tz2 > 0.2)
 			{
-				doom->sp[17].zoom = (1 / doom->pull[nb].t.tz2) * 2;
+				doom->sp[17].zoom = (1 / doom->pull[nb].t.tz2) * 3;
 				print_sp(doom, doom->pull[nb].t.tx1, doom->pull[nb].t.ty1, 17, ((int) (doom->pull[nb].t.tz2 * 100.0) << FIXP16_SHIFT), 0);
 			}
 		}
@@ -286,7 +288,7 @@ void	vec_pull(t_doom *doom)
 			core_deg(doom, &doom->pull[nb].t);
 			if (doom->pull[nb].t.tz2 > 0.2)
 			{
-				doom->sp[18].zoom = (1 / doom->pull[nb].t.tz2) * 2;
+				doom->sp[18].zoom = (1 / doom->pull[nb].t.tz2) * 3;
 				doom->sp[18].count = doom->pull[nb].status - 1;
 				print_sp(doom, doom->pull[nb].t.tx1, doom->pull[nb].t.ty1, 18, ((int) (doom->pull[nb].t.tz2 * 100.0) << FIXP16_SHIFT), 0);
 			}
@@ -373,81 +375,6 @@ void	check_render(t_doom *doom)
 		col.i++;
 	}
 	sorting_sec(doom);
-	//print_rend(doom);
+//	print_rend(doom);
 }
 
-int doom_main(int argc, char **argv)
-{
-	int running;
-	Uint32 startclock;
-	Uint32 deltaclock;
-	t_doom doom;
-	char *fps;
-
-	if (argc == 2)
-		running = init_full(&doom, argv[argc - 1]);
-	else
-		running = init_full(&doom, NULL);
-	if (NULL == doom.window || running == -1)
-		exit (1);
-	deltaclock = 1;
-	while (running)
-	{
-		startclock = SDL_GetTicks();
-		check_render(&doom);
-		bzero_all(&doom);
-		skybox(&doom);
-		raycasting(&doom);
-		print_mob(&doom);
-		print_sp_sec(&doom);
-		if (you_win(&doom) == 0)
-			draw_text(&doom, doom.surface->w * 0.43, doom.surface->h * 0.2, "YOU WIN!!!");
-		if (doom.play[doom.n_play].heart)
-		{
-			vec_pull(&doom);
-			print_weapons(&doom);
-			if (doom.play[doom.n_play].weapons == 6)
-			{
-				print_aim(&doom);
-				calc_uron(&doom);
-			}
-			print_hud(&doom);
-		}
-		else
-			draw_text(&doom, doom.surface->w * 0.46, doom.surface->h * 0.2, "DEAD");
-		if (doom.nb % 4 == 0)
-			doom.sp[1].count++;
-		if (doom.nb % 1 == 0)
-			doom.sp[17].count++;
-		rec_net(&doom);
-		running = move(&doom);
-		game(&doom);
-		jump_pl(&doom, doom.n_play, 0);
-		doom.play[doom.n_play].shot = 8;
-//        lava(&doom.text[9], &doom);
-		if (doom.nb > 10 && doom.nb < 20)
-			doom.sp[0].zoom = 0.12;
-		if (doom.nb > 20 && doom.nb < 30)
-			doom.sp[0].zoom = 0.1;
-		if (doom.nb > 30 && doom.nb < 40)
-			doom.sp[0].zoom = 0.12;
-		if (doom.nb > 40 && doom.nb < 80)
-			doom.sp[0].zoom = 0.1;
-		if (doom.nb >= 80)
-			doom.nb = 0;
-		if (doom.nb % 10 == 0)
-			doom.sp[12].count++;
-		doom.nb++;
-		deltaclock = SDL_GetTicks() - startclock;
-		if (deltaclock < 1000 / FPS)
-			SDL_Delay(1000 / FPS - deltaclock);
-		deltaclock = SDL_GetTicks() - startclock;
-		fps = ft_itoa(1000 / deltaclock);
-		draw_text(&doom, 10, 10, fps);
-		free(fps);
-		SDL_UpdateWindowSurface(doom.window);
-	}
-	SDL_DestroyWindow(doom.window);
-	SDL_Quit();
-	return (0);
-}

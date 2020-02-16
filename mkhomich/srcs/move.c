@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 17:47:16 by mkhomich          #+#    #+#             */
-/*   Updated: 2019/12/28 17:54:54 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/16 17:29:32 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void    print_mmap(t_doom *doom)
 {
 	SDL_Rect windowquad;
 
-	windowquad.x = doom->surface->w - 1 - doom->mmap.w;
+	windowquad.x = doom->w - 1 - doom->mmap.w;
 	windowquad.y = 0;
 	windowquad.w = doom->mmap.w;
 	windowquad.h = doom->mmap.h;
@@ -378,7 +378,7 @@ int    move(t_doom *doom)
 		doom->play[doom->n_play].angle_y += 360.0;
 	if (doom->play[doom->n_play].angle_x > doom->skybox.indent)
 		doom->play[doom->n_play].angle_x = doom->skybox.indent;
-	else if (doom->play[doom->n_play].angle_x < -doom->skybox.indent)
-		doom->play[doom->n_play].angle_x = -doom->skybox.indent;
+	else if (doom->play[doom->n_play].angle_x < -doom->skybox.indent / 2)
+		doom->play[doom->n_play].angle_x = -doom->skybox.indent / 2;
 	return (1);
 }

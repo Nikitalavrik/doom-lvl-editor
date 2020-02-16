@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:20:39 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 16:18:13 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/16 17:33:49 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,20 @@ t_editor	*init_editor(void)
 	editor->center.y = editor->size.y / 2 * SQUARE_SIZE * editor->zoom - (editor->height) / 2;
 	editor->flags.t_f.select = 1;
 	editor->doom = ft_memalloc(sizeof(t_doom));
+	editor->doom->w = editor->width;
+	editor->doom->h = editor->height;
 	num = ft_itoa((unsigned short int)&editor->doom);
 	editor->filename = ft_strdup(num);
 	ft_memdel((void **)&num);
+	editor->doom->igr_x = editor->doom->w / 2;
+    editor->doom->igr_y = editor->doom->h / 2;
 	editor->doom->x_aim = editor->width / 2;
 	editor->doom->y_aim = editor->height * 0.62;
 	editor->doom->gravity = 0.015;
 	editor->doom->min_z = 0.5;
 	load_texture_wall(editor->doom);
-	init_emenu_buttons(editor);
 	init_skybox(editor->doom);
+	init_emenu_buttons(editor);
 	editor->doom->z_buffer = (int*)malloc(sizeof(int) * editor->height * editor->width);
 	editor->doom->window = editor->win;
 	editor->doom->surface = editor->surf;

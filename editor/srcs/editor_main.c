@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:01:36 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 13:25:56 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/16 16:42:28 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int		start_editor(SDL_Window *win)
 	editor->doom->y_aim = editor->height * 0.62;
 	editor->doom->gravity = 0.015;
 	editor->doom->min_z = 0.5;
+	editor->doom->w = editor->width;
+	editor->doom->h = editor->height;
 	editor->floor = 1;
 	load_texture_wall(editor->doom);
 	init_emenu_buttons(editor);

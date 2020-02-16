@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhomich <mkhomich@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 12:08:32 by mkhomich          #+#    #+#             */
-/*   Updated: 2019/12/01 16:58:34 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/09/23 12:08:34 by mkhomich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	rotate_y(t_doom *doom, t_toch *toch)
 
 void	core_deg(t_doom *doom, t_toch *toch)
 {
-	toch->tx1 = IGRX + toch->tx2 / toch->tz2 * IGRX;
-	toch->ty1 = IGRY - toch->ty2 / toch->tz2 * IGRY - doom->play[doom->n_play].angle_x * 3;
+	toch->tx1 = doom->igr_x + toch->tx2 / toch->tz2 * doom->igr_x;
+	toch->ty1 = doom->igr_y - toch->ty2 / toch->tz2 * doom->igr_y - doom->play[doom->n_play].angle_x * 2;
 }
 
 void	rotate_sec(t_doom *doom, t_sec *sec)
