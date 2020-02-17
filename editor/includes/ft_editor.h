@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/30 16:42:52 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/17 10:39:23 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,7 +360,6 @@ typedef	struct			s_editor
 	t_epoint			*point;
 	t_eline				*lines;
 	t_room				*selected;
-	t_doom				*doom;
 	int					floor;
 	t_epoint			*room_point;
 	int					num_of_rooms;
@@ -380,6 +379,7 @@ typedef	struct			s_editor
 	int					param_sflag;
 	char				point_cnt;
 	int					ques_flag;
+	t_doom				*doom;
 }						t_editor;
 
 /*

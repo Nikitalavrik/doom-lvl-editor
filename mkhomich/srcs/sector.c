@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:34:14 by mkhomich          #+#    #+#             */
-/*   Updated: 2020/02/16 17:30:50 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:42:18 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ void    grid_sec(t_doom *doom, t_sec *sec, char ligh)
     int   y;
 
     y = 0;
+    (void)ligh;
     vector(doom->toch[sec->pts[0]], doom->toch[sec->pts[1]], &sec->v1);
     vector(doom->toch[sec->pts[1]], doom->toch[sec->pts[2]], &sec->v2);
     sec->tex_x = (sec->v2.len * 20) / 128.0;
@@ -224,16 +225,17 @@ void    grid_sec(t_doom *doom, t_sec *sec, char ligh)
                 sec->toch[y][x].y = (doom->toch[sec->pts[0]].y - sec->v2.y + -sec->v1.y);
                 sec->toch[y][x].z = (doom->toch[sec->pts[0]].z - sec->v2.z + -sec->v1.z);
             }
-            sec->l_map[y * sec->tex_w + x] = (char*)ft_memalloc(sizeof(char) * 128 * 128);
-            sec->tex[y * sec->tex_w + x] = (int*)ft_memalloc(sizeof(int) * 128 * 128);
-            sec->l_map[y * sec->tex_w + x] = ft_memset(sec->l_map[y * sec->tex_w + x], ligh, sizeof(char) * 128 * 128);
+            if (!sec->tex[y * sec->tex_w + x])
+            {
+                sec->l_map[y * sec->tex_w + x] = (char*)ft_memalloc(sizeof(char) * 128 * 128);
+                sec->tex[y * sec->tex_w + x] = (int*)ft_memalloc(sizeof(int) * 128 * 128);
+                sec->l_map[y * sec->tex_w + x] = ft_memset(sec->l_map[y * sec->tex_w + x], ligh, sizeof(char) * 128 * 128); 
+            }
             x++;
         }
         y++;
     }
-    // printf("1\n");
     lamp(sec);
     caching_tex_sec(doom, sec);
-    // printf("2\n");
 }
 

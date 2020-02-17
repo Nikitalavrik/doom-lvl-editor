@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 16:48:28 by mkhomich          #+#    #+#             */
-/*   Updated: 2020/02/16 16:47:32 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/17 12:57:34 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,8 @@ typedef struct	s_sec
 	t_vec		move;
 	int			tape;
 	int			max_sp;
-	int         **tex;
 	int			level;
+	int         **tex;
 	char **l_map;
 }				t_sec;
 
@@ -325,9 +325,7 @@ typedef struct	s_doom
 	int         h;
 	int         igr_x;
 	int         igr_y;
-	int			level;
     int			aim_sec;
-	int			aim_sp;
 }				t_doom;
 
 typedef struct	s_pth

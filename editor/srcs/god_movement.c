@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:12:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/16 16:48:02 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/17 12:58:58 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,16 +147,13 @@ void	rot_sector_by_wheel(t_editor *editor, SDL_Event event)
 	t_dcoords	coord;
 	int			points[4];
 
-	aim = editor->doom->aim_sp != -1 ? editor->doom->aim_sp : editor->doom->aim_sec;
+	aim = editor->doom->aim_sec;
 	if (aim == -1)
 		return ;
-	if (editor->doom->aim_sp == -1)
-	{
-		points[0] = editor->doom->sec[aim].pts[0];
-		points[1] = editor->doom->sec[aim].pts[1];
-		points[2] = editor->doom->sec[aim].pts[2];
-		points[3] = editor->doom->sec[aim].pts[3];
-	}
+	points[0] = editor->doom->sec[aim].pts[0];
+	points[1] = editor->doom->sec[aim].pts[1];
+	points[2] = editor->doom->sec[aim].pts[2];
+	points[3] = editor->doom->sec[aim].pts[3];
 	coord.rot = ((event.wheel.y > 0) ? 3 : -3) * PI / 180;
 	coord.x = (float)editor->doom->sec[aim].v1.x;
 	coord.y = (float)editor->doom->sec[aim].v1.y;

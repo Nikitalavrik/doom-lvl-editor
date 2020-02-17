@@ -6,13 +6,13 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/23 15:23:46 by mkhomich          #+#    #+#              #
-#    Updated: 2020/02/09 17:59:34 by nlavrine         ###   ########.fr        #
+#    Updated: 2020/02/17 10:29:39 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = doom-nukem
 
-SRC     = main.c \
+SRC =	main.c \
         raycasting.c \
         sector.c \
         textures.c \
@@ -68,7 +68,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(OBJS) $(TEST_MAIN_O)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(LIB) -o $(NAME) $(INCLUDES) -fsanitize=address
+		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(LIB) -o $(NAME) $(INCLUDES) #-fsanitize=address
 
 $(TEST_MAIN_O): $(TEST_MAIN)
 		@mkdir -p $(OBJ_DIR)
@@ -87,7 +87,7 @@ $(LIB):
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)
 		@$(CC) $(FLAGS) -o $@ -c $< $(H_DIR) $(INCLUDES)
-
+		
 clean:
 	@echo "$(GREEN)Clear objs"
 	@rm -rf $(OBJ_DIR)
