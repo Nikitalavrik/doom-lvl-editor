@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/23 16:56:25 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/23 18:17:28 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -575,6 +575,7 @@ void			free_lines(t_eline **line);
 void			free_sprites(t_esprite **sprites);
 void			free_rooms(t_room **room);
 void			free_points(t_epoint **point);
+void			free_sec(t_sec *sec);
 
 
 /*
