@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pole_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbratsla <tbratsla@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:46:31 by tbratsla          #+#    #+#             */
-/*   Updated: 2020/01/24 19:46:33 by tbratsla         ###   ########.fr       */
+/*   Updated: 2020/02/23 17:32:30 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		write_to_first_pole(t_editor *editor)
 	{
 		ft_strdel(&editor->new_win->f_height);
 		editor->new_win->f_height =\
-		ft_itoa(editor->new_win->param_par.room->f_height);
+		ft_itoa(editor->new_win->param_par.room->height);
 		add_text_to_space(editor, editor->new_win->ws_coord1,\
 		editor->new_win->win, editor->new_win->f_height);
 	}

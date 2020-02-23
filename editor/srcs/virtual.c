@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:35:30 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/23 16:36:35 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/23 17:39:37 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		grid_all_sec(t_editor *editor)
 	i = 0;
 	while (i < editor->max_sectors)
 	{
-		grid_sec(editor->doom, &editor->doom->sec[i], 0);
+		grid_sec(editor->doom, &editor->doom->sec[i], -50);
 		i++;
 	}
 }
