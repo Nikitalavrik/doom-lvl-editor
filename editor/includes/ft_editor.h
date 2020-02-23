@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/17 10:39:23 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/23 16:56:25 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ typedef struct			s_room
 	int					f_height;
 	int					floor;
 	int					num_of_textures;
+	int					del_me;
 	struct	s_room		*next;
 	struct	s_room		*prev;	
 }						t_room;

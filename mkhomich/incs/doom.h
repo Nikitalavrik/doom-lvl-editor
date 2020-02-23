@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 16:48:28 by mkhomich          #+#    #+#             */
-/*   Updated: 2020/02/17 12:57:34 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/23 17:05:09 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ typedef struct	s_sec
 	int			max_sp;
 	int			level;
 	int         **tex;
-	char **l_map;
+	char		**l_map;
 }				t_sec;
 
 typedef struct	s_aim

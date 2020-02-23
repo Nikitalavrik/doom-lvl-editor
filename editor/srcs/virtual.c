@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:35:30 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/17 15:42:19 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/23 16:36:35 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ void		editor_autosave(t_editor *editor)
 void		d3_init(t_editor *editor)
 {
 	// ft_printf("max_s = %i max_t = %i\n", editor->doom->max_s, editor->doom->max_t);
-	free_doom(editor->doom);
-	system("leaks editor");
+	free_doom(editor->doom);	
 	editor->doom->max_t = editor->max_sectors * 4;
 	editor->doom->max_s = editor->max_sectors;
 	ft_printf("max_s = %i\n", editor->doom->max_s);
@@ -63,7 +62,6 @@ void		d3_init(t_editor *editor)
 		editor->doom->toch = (t_toch*)ft_memalloc(sizeof(t_toch) * editor->doom->max_t);
 		convert_rooms(editor);
 		editor->doom->rend = (t_render*)ft_memalloc(sizeof(t_render) * editor->doom->max_s);
-		generate_alpha_tab(editor->doom);
 		grid_all_sec(editor);
 		put_player(editor);
 		editor->flags.t_f.visual = 1;

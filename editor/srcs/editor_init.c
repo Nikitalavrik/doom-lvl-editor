@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:20:39 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/17 13:07:37 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/23 16:36:49 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_editor	*init_editor(void)
 	editor->doom->surface = editor->surf;
 	editor->absolute_center.x = (editor->width - MENU_WIDTH) / 2;
 	editor->absolute_center.y = (editor->height) / 2;
+	generate_alpha_tab(editor->doom);
 	ft_printf("x = %i y = %i\n", editor->center.x, editor->center.y);
 	return (editor);
 }

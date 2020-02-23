@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:01:36 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/16 16:42:28 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/23 16:36:58 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		start_editor(SDL_Window *win)
 	editor->absolute_center.y = (editor->height) / 2;
 	// ft_printf("w = %i h = %i\n", editor->width, editor->height);
 	load_textures(editor);
+	generate_alpha_tab(editor->doom);
 	main_loop(editor);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:55:01 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 13:50:16 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/23 16:57:05 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void	delete_room(t_editor *editor, t_room *room)
 		next->prev = prev;
 	if (room == editor->rooms)
 		editor->rooms = next;
+	if (room->del_me == 1)
+		while (room->point)
+			pop_point(&room->point);
 	ft_memdel((void **)&room);
 }
 
@@ -102,11 +105,11 @@ void	add_room(t_editor *editor)
 				editor->point_cnt++;
 				if (editor->room_point && editor->room_point->next)
 				{
-					ft_printf("room\n");
 					editor->point_cnt = 0;
 					delete_stick_line_room(editor);
 					push_room(&editor->rooms, editor->room_point);
 					editor->rooms->num_of_textures = 2;
+					editor->rooms->del_me = 1;
 					editor->rooms->f_x_angle = 2;
 					editor->rooms->f_y_angle = 2;
 					editor->rooms->f_height = 2;
