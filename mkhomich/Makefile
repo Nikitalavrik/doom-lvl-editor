@@ -40,7 +40,7 @@ OBJ_DIR = obj
 LIB = libft/libft.a
 H_DIR	= -I incs/doom.h
 CC      = /usr/bin/gcc
-FLAGS = -Wall -Wextra -Werror -g -Og
+FLAGS = -Wall -Wextra -Werror -g -O3
 SRC_DIR = srcs
 GREEN = \033[0;32m
 
