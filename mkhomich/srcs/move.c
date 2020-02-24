@@ -167,7 +167,31 @@ float	check_colizion_pl(t_doom *doom, float x, float y, float z)
 	return (col.range_min);
 }
 
+void   check_buttom_pl(t_doom *doom, int pl)
+{
+	t_coliz col;
 
+	col.i = 0;
+	col.range_min = 100000;
+	col.y = doom->play[pl].t.y;
+	doom->play[pl].buttom = -1;
+	doom->play[pl].sec_col = -1;
+	while (col.i < doom->max_s)
+	{
+		if (doom->sec[col.i].tape == 1)
+		{
+			if (min_line_sec(doom, doom->play[pl].t.x, doom->play[pl].t.z, &col))
+				if (col.b < col.range_min || col.c < col.range_min)
+					col.range_min = (col.b < col.c) ? col.b : col.c;
+			if (col.range_min < 2 && doom->sec[col.i].max_but)
+			{
+				doom->play[pl].buttom = 0;
+				doom->play[pl].sec_col = col.i;
+			}
+		}
+		col.i++;
+	}
+}
 
 float    coliz_pl(t_doom *doom, float x_p, float z_p, float pl)
 {
@@ -251,6 +275,7 @@ int    move(t_doom *doom)
 {
 	if (doom->play[doom->n_play].f_move == 1)
 		doom->play[doom->n_play].f_move = 0;
+	check_buttom_pl(doom, doom->n_play);
 	while (SDL_PollEvent(&doom->event))
 	{
 		if (doom->event.type == SDL_KEYDOWN || doom->event.type == SDL_KEYUP)
@@ -265,6 +290,8 @@ int    move(t_doom *doom)
 				doom->move.wsad[2] = doom->event.type==SDL_KEYDOWN;
 			else if (doom->event.key.keysym.sym == 'd')
 				doom->move.wsad[3] = doom->event.type==SDL_KEYDOWN;
+			else if (doom->event.key.keysym.sym == 'e')
+				doom->move.select = doom->event.type==SDL_KEYDOWN;
 			else if (doom->event.key.keysym.sym == ' ')
 				doom->move.jump = doom->event.type==SDL_KEYDOWN;
 			else if (doom->event.key.keysym.sym == SDLK_LSHIFT)
@@ -367,6 +394,16 @@ int    move(t_doom *doom)
 		}
 		if (doom->play[doom->n_play].f_move == 0)
 			doom->play[doom->n_play].f_move = 1;
+	}
+	if (doom->move.select && doom->play[doom->n_play].heart && doom->play[doom->n_play].sec_col != -1)
+	{
+		doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count++;
+		if (doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count >=
+			doom->sp[doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].spr].frame)
+			doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count = 0;
+		add_buttom(doom, &doom->sec[doom->play[doom->n_play].sec_col]);
+		caching_tex_sec(doom, &doom->sec[doom->play[doom->n_play].sec_col]);
+		doom->move.select = 0;
 	}
 
 	SDL_GetRelativeMouseState(&doom->mouse.x,&doom->mouse.y);

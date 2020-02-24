@@ -13,13 +13,9 @@
 #ifndef DOOM_H
 # define DOOM_H
 
-//# define WIDTH 1024
-//# define HEIGHT 768
 # define FPS 200
 # define PI 3.141592
 # define DELTA 0.5
-//# define IGRX WIDTH / 2
-//# define IGRY HEIGHT / 2
 # define FOV 60
 # define THREADS 6
 
@@ -146,6 +142,13 @@ typedef struct	s_tochsp
 	Uint32		time;
 }				t_tochsp;
 
+typedef struct  s_buttom
+{
+	t_mouse      st;
+	int         spr;
+	int         count;
+}               t_buttom;
+
 typedef struct	s_sec
 {
 	int			id;
@@ -159,6 +162,8 @@ typedef struct	s_sec
 	int			viem;
 	int			t_full;
 	int			t_win;
+	int			max_but;
+	t_buttom	*but;
 	SDL_Rect	win;
 	t_toch		**toch;
 	t_tochsp	*sp;
@@ -198,6 +203,8 @@ typedef struct	s_play
 	int			ip;
 	int			state;
 	int			crouch;
+	int			sec_col;
+	int			buttom;
 	t_toch		t;
 	t_aim		aim;
 	float		vec_grav;
@@ -228,6 +235,7 @@ typedef struct	s_move
 	int			mmap;
 	int			shot;
 	int 		altern;
+	int         select;
 }				t_move;
 
 typedef struct	s_minimap
@@ -425,5 +433,7 @@ void			draw_text(t_doom *doom, int x, int y, char *s);
 void			bzero_all(t_doom *doom);
 void			vec_pull(t_doom *doom);
 void			check_render(t_doom *doom);
+void			add_buttom(t_doom *doom, t_sec *sec);
+void			caching_tex_sec(t_doom *doom, t_sec *sec);
 
 #endif
