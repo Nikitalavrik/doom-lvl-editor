@@ -98,7 +98,7 @@ void	print_sp_sec(t_doom *doom)
 				else if (doom->sec[nb].sp[c].viem == 0 &&
 				((SDL_GetTicks() - doom->sec[nb].sp[c].time) > 20000))
 					doom->sec[nb].sp[c].viem = 1;
-				if (doom->sec[nb].sp[c].take && doom->sec[nb].sp[c].viem)
+				if (doom->sec[nb].sp[c].take && doom->sec[nb].sp[c].viem && doom->play[doom->n_play].state == 0)
 				{
 					line = sqrt((doom->sec[nb].sp[c].sp.tx2 *
 					doom->sec[nb].sp[c].sp.tx2) + (doom->sec[nb].sp[c].sp.tz2

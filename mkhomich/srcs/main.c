@@ -162,7 +162,7 @@ float check_h_pl(t_doom *doom, float x, float z, int pl)
             if (pnpoly(doom, sec, x, z) % 2)
             {
                 buf = cal_h_pl(doom, sec, x, z);
-                if (h < buf)
+                if (h < buf && (buf - doom->play[pl].t.y < 10 && buf - doom->play[pl].t.y > -1))
                     h = buf;
             }
         sec++;
@@ -180,17 +180,21 @@ void    jump_pl(t_doom *doom, int pl, int jump)
         doom->play[pl].vec_grav = 0.92;
     }
     h = check_h_pl(doom, doom->play[pl].t.x, doom->play[pl].t.z, pl);
-    if (h > doom->play[pl].t.y && doom->play[pl].state == 0)
+    if (h - doom->play[pl].t.y < 0.5 && h - doom->play[pl].t.y > 0 && doom->play[pl].state == 0)
         doom->play[pl].t.y = h;
     else if (doom->play[pl].state == 0 && h < doom->play[pl].t.y)
     {
         doom->play[pl].state = 1;
         doom->play[pl].vec_grav = 0;
     }
+    if (pl == doom->n_play)
+		printf("h = %f\n", doom->play[pl].t.y);
     if (doom->play[pl].state)
     {
         doom->play[pl].t.y += doom->play[pl].vec_grav;
 		doom->play[pl].vec_grav -= doom->gravity;
+//		if (h - doom->play[pl].t.y > 9)
+//		}
         if (doom->play[pl].t.y <= h)
         {
         	if (doom->play[pl].vec_grav <= -1.2)

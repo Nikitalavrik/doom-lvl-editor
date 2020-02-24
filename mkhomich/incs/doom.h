@@ -147,6 +147,7 @@ typedef struct  s_buttom
 	t_mouse      st;
 	int         spr;
 	int         count;
+	Uint32		time;
 }               t_buttom;
 
 typedef struct	s_sec

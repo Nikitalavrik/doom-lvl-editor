@@ -395,7 +395,8 @@ int    move(t_doom *doom)
 		if (doom->play[doom->n_play].f_move == 0)
 			doom->play[doom->n_play].f_move = 1;
 	}
-	if (doom->move.select && doom->play[doom->n_play].heart && doom->play[doom->n_play].sec_col != -1)
+	if (doom->move.select && doom->play[doom->n_play].heart && doom->play[doom->n_play].sec_col != -1
+	&& SDL_GetTicks() - doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].time > 2000)
 	{
 		doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count++;
 		if (doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count >=
@@ -404,6 +405,7 @@ int    move(t_doom *doom)
 		add_buttom(doom, &doom->sec[doom->play[doom->n_play].sec_col]);
 		caching_tex_sec(doom, &doom->sec[doom->play[doom->n_play].sec_col]);
 		doom->move.select = 0;
+		doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].time = SDL_GetTicks();
 	}
 
 	SDL_GetRelativeMouseState(&doom->mouse.x,&doom->mouse.y);
