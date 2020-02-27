@@ -48,6 +48,14 @@
 # include <sys/types.h>
 # include <arpa/inet.h>
 
+typedef struct	s_way
+{
+	int 		x0;
+	int			y0;
+	int			x1;
+	int			y1;
+}				t_way;
+
 typedef struct	s_text
 {
 	int			*tex;
@@ -356,6 +364,17 @@ typedef struct	s_light
     char l;
 }               t_light;
 
+/*
+**	Bots functions
+*/
+
+int				check_enemy(t_doom *doom, int nb);
+void			bots_logic(t_doom *doom, int nb);
+
+/*
+**	Another functions
+*/
+
 void			raycasting(t_doom *doom);
 void			load_texture_wall (t_doom *doom);
 int     		generate_alpha_tab(t_doom *doom);
@@ -415,6 +434,7 @@ t_coliz			coliz_pull(t_doom *doom, float x_p, float z_p, float y);
 void			calc_uron_pl(t_doom *doom, int pl, int zone, int weap);
 int				min_line_sec(t_doom *doom, float x, float z, t_coliz *col);
 unsigned char   **burn_tab(size_t x, size_t y);
+int				vec_play(t_doom *doom, int pl);
 
 /*
 ** Main func

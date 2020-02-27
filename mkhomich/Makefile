@@ -34,7 +34,7 @@ SRC     = main.c \
         print_sprite_sec.c \
         load_map.c \
         save_map.c \
-
+        check_enemy.c \
 
 OBJ_DIR = obj
 LIB = libft/libft.a

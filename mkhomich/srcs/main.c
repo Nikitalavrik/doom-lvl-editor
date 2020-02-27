@@ -99,122 +99,122 @@ void	draw_text(t_doom *doom, int x, int y, char *s)
 
 int pnpoly(t_doom *doom, int sec, float x, float y)
 {
-    int c = 0;
-    t_sec temp;
+	int c = 0;
+	t_sec temp;
 
-    temp = doom->sec[sec];
-    for (int i = 0, j = temp.max_toch - 1; i < temp.max_toch; j = i++)
-    {
-        if (((doom->toch[temp.pts[i]].z < doom->toch[temp.pts[j]].z) &&
-             (doom->toch[temp.pts[i]].z <= y) && (y <= doom->toch[temp.pts[j]].z)
-             && ((doom->toch[temp.pts[j]].z - doom->toch[temp.pts[i]].z) *
-                 (x - doom->toch[temp.pts[i]].x) >
-                 (doom->toch[temp.pts[j]].x - doom->toch[temp.pts[i]].x) *
-                 (y - doom->toch[temp.pts[i]].z))) || ((doom->toch[temp.pts[i]].z
-                                                        > doom->toch[temp.pts[j]].z) && (doom->toch[temp.pts[j]].z <= y)
-                                                       && (y <= doom->toch[temp.pts[i]].z) && ((doom->toch[temp.pts[j]].z
-                                                                                                - doom->toch[temp.pts[i]].z) * (x - doom->toch[temp.pts[i]].x) <
-                                                                                               (doom->toch[temp.pts[j]].x - doom->toch[temp.pts[i]].x) *
-                                                                                               (y - doom->toch[temp.pts[i]].z))))
-            c = !c;
-    }
-    return c;
+	temp = doom->sec[sec];
+	for (int i = 0, j = temp.max_toch - 1; i < temp.max_toch; j = i++)
+	{
+		if (((doom->toch[temp.pts[i]].z < doom->toch[temp.pts[j]].z) &&
+			 (doom->toch[temp.pts[i]].z <= y) && (y <= doom->toch[temp.pts[j]].z)
+			 && ((doom->toch[temp.pts[j]].z - doom->toch[temp.pts[i]].z) *
+				 (x - doom->toch[temp.pts[i]].x) >
+				 (doom->toch[temp.pts[j]].x - doom->toch[temp.pts[i]].x) *
+				 (y - doom->toch[temp.pts[i]].z))) || ((doom->toch[temp.pts[i]].z
+				> doom->toch[temp.pts[j]].z) && (doom->toch[temp.pts[j]].z <= y)
+				&& (y <= doom->toch[temp.pts[i]].z) && ((doom->toch[temp.pts[j]].z
+				- doom->toch[temp.pts[i]].z) * (x - doom->toch[temp.pts[i]].x) <
+			   (doom->toch[temp.pts[j]].x - doom->toch[temp.pts[i]].x) *
+			   (y - doom->toch[temp.pts[i]].z))))
+			c = !c;
+	}
+	return c;
 }
 
 float cal_h_pl(t_doom *doom, int sec, float x, float z)
 {
-    float cof;
-    float res;
+	float cof;
+	float res;
 
-    res = 0;
-    cof = ((doom->toch[doom->sec[sec].pts[0]].x - x) / doom->sec[sec].v1.x);
-    if (cof <= 1 && cof >= 0)
-        res += doom->toch[doom->sec[sec].pts[0]].y - (doom->sec[sec].v1.y * cof);
-    else
-    {
-        cof = ((doom->toch[doom->sec[sec].pts[0]].z - z) / doom->sec[sec].v1.z);
-        if (cof <= 1 && cof >= 0)
-            res += doom->toch[doom->sec[sec].pts[0]].y - (doom->sec[sec].v1.y * cof);
-    }
-    cof = ((doom->toch[doom->sec[sec].pts[1]].x - x) / doom->sec[sec].v2.x);
-    if (cof <= 1 && cof >= 0)
-        res -= doom->sec[sec].v2.y * cof;
-    else
-    {
-        cof = ((doom->toch[doom->sec[sec].pts[1]].z - z) / doom->sec[sec].v2.z);
-        if (cof <= 1 && cof >= 0)
-            res -= doom->sec[sec].v2.y * cof;
-    }
-    return (res);
+	res = 0;
+	cof = ((doom->toch[doom->sec[sec].pts[0]].x - x) / doom->sec[sec].v1.x);
+	if (cof <= 1 && cof >= 0)
+		res += doom->toch[doom->sec[sec].pts[0]].y - (doom->sec[sec].v1.y * cof);
+	else
+	{
+		cof = ((doom->toch[doom->sec[sec].pts[0]].z - z) / doom->sec[sec].v1.z);
+		if (cof <= 1 && cof >= 0)
+			res += doom->toch[doom->sec[sec].pts[0]].y - (doom->sec[sec].v1.y * cof);
+	}
+	cof = ((doom->toch[doom->sec[sec].pts[1]].x - x) / doom->sec[sec].v2.x);
+	if (cof <= 1 && cof >= 0)
+		res -= doom->sec[sec].v2.y * cof;
+	else
+	{
+		cof = ((doom->toch[doom->sec[sec].pts[1]].z - z) / doom->sec[sec].v2.z);
+		if (cof <= 1 && cof >= 0)
+			res -= doom->sec[sec].v2.y * cof;
+	}
+	return (res);
 }
 
 float check_h_pl(t_doom *doom, float x, float z, int pl)
 {
-    int sec;
-    float h;
-    float buf;
+	int sec;
+	float h;
+	float buf;
 
-    sec = 0;
-    h = -1000;
-    while (sec < doom->max_s && doom->play[pl].heart != 0)
-    {
-        if (doom->sec[sec].tape == 0)
-            if (pnpoly(doom, sec, x, z) % 2)
-            {
-                buf = cal_h_pl(doom, sec, x, z);
-                if (h < buf)
-                    h = buf;
-            }
-        sec++;
-    }
-    return (h);
+	sec = 0;
+	h = -1000;
+	while (sec < doom->max_s && doom->play[pl].heart != 0)
+	{
+		if (doom->sec[sec].tape == 0)
+			if (pnpoly(doom, sec, x, z) % 2)
+			{
+				buf = cal_h_pl(doom, sec, x, z);
+				if (h < buf)
+					h = buf;
+			}
+		sec++;
+	}
+	return (h);
 }
 
 void    jump_pl(t_doom *doom, int pl, int jump)
 {
-    float h;
+	float h;
 
-    if ((jump || (doom->move.jump && pl == doom->n_play)) && doom->play[pl].state == 0)
-    {
-        doom->play[pl].state = 1;
-        doom->play[pl].vec_grav = 0.92;
-    }
-    h = check_h_pl(doom, doom->play[pl].t.x, doom->play[pl].t.z, pl);
-    if (h > doom->play[pl].t.y && doom->play[pl].state == 0)
-        doom->play[pl].t.y = h;
-    else if (doom->play[pl].state == 0 && h < doom->play[pl].t.y)
-    {
-        doom->play[pl].state = 1;
-        doom->play[pl].vec_grav = 0;
-    }
-    if (doom->play[pl].state)
-    {
-        doom->play[pl].t.y += doom->play[pl].vec_grav;
+	if ((jump || (doom->move.jump && pl == doom->n_play)) && doom->play[pl].state == 0)
+	{
+		doom->play[pl].state = 1;
+		doom->play[pl].vec_grav = 0.92;
+	}
+	h = check_h_pl(doom, doom->play[pl].t.x, doom->play[pl].t.z, pl);
+	if (h > doom->play[pl].t.y && doom->play[pl].state == 0)
+		doom->play[pl].t.y = h;
+	else if (doom->play[pl].state == 0 && h < doom->play[pl].t.y)
+	{
+		doom->play[pl].state = 1;
+		doom->play[pl].vec_grav = 0;
+	}
+	if (doom->play[pl].state)
+	{
+		doom->play[pl].t.y += doom->play[pl].vec_grav;
 		doom->play[pl].vec_grav -= doom->gravity;
-        if (doom->play[pl].t.y <= h)
-        {
-        	if (doom->play[pl].vec_grav <= -1.2)
+		if (doom->play[pl].t.y <= h)
+		{
+			if (doom->play[pl].vec_grav <= -1.2)
 				doom->play[pl].heart = 0;
-            doom->play[pl].state = 0;
-            doom->play[pl].t.y = h;
-        }
-    }
+			doom->play[pl].state = 0;
+			doom->play[pl].t.y = h;
+		}
+	}
 }
 
 int     you_win(t_doom *doom)
 {
-    int pl;
-    int res;
+	int pl;
+	int res;
 
-    pl = 0;
-    res = 0;
-    while (pl < doom->max_p)
-    {
-        if (doom->play[pl].heart && pl != doom->n_play)
-            res = 1;
-        pl++;
-    }
-    return (res);
+	pl = 0;
+	res = 0;
+	while (pl < doom->max_p)
+	{
+		if (doom->play[pl].heart && pl != doom->n_play)
+			res = 1;
+		pl++;
+	}
+	return (res);
 }
 
 void	game(t_doom *doom)
@@ -229,6 +229,7 @@ void	game(t_doom *doom)
 		{
 
 			size = move_up(doom, nb);
+			bots_logic(doom, nb);
 			if (size > 0 && size <= 2)
 				doom->play[nb].angle_y += 1;
 			else if(size == 0)
@@ -244,7 +245,8 @@ void	new_pull(t_doom *doom, int pl, int nb)
 	doom->pull[nb].t.x = doom->play[pl].t.x;
 	doom->pull[nb].t.y = doom->play[pl].t.y + 6;
 	doom->pull[nb].t.z = doom->play[pl].t.z;
-	doom->pull[nb].vec = rot_vec((t_vec){0, -((float)(doom->play[pl].angle_x * 2) / (float)doom->skybox.indent) - 0.2, 1, 0}, 360 - doom->play[pl].angle_y);
+	doom->pull[nb].vec = rot_vec((t_vec){0, -((float)(doom->play[pl].angle_x * 2)\
+	/ (float)doom->skybox.indent) - 0.2, 1, 0}, 360 - doom->play[pl].angle_y);
 	doom->pull[nb].t.x += doom->pull[nb].vec.x * 2;
 	doom->pull[nb].t.y += doom->pull[nb].vec.y * 2;
 	doom->pull[nb].t.z += doom->pull[nb].vec.z * 2;
