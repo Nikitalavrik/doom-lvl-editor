@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:15 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/16 16:46:47 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:13:38 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,13 @@ void	keyboard_for_visual(t_editor *editor, SDL_Event event)
 	t_room	*find_room;
 	int		point[4];
 
-	aim = editor->doom->aim_sp != -1 ? editor->doom->aim_sp : editor->doom->aim_sec;
+	aim = editor->doom->aim_sec;
 	if (aim == -1)
 		return ;
-	if (editor->doom->aim_sp == -1)
-	{
-		point[0] = editor->doom->sec[aim].pts[0];
-		point[1] = editor->doom->sec[aim].pts[1];
-		point[2] = editor->doom->sec[aim].pts[2];
-		point[3] = editor->doom->sec[aim].pts[3];
-	}
+	point[0] = editor->doom->sec[aim].pts[0];
+	point[1] = editor->doom->sec[aim].pts[1];
+	point[2] = editor->doom->sec[aim].pts[2];
+	point[3] = editor->doom->sec[aim].pts[3];
 	if (event.key.keysym.sym == SDLK_UP)
 	{
 		editor->doom->toch[point[0]].y++;

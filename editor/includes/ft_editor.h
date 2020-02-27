@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/30 16:42:52 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/23 18:17:28 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ typedef struct			s_room
 	int					f_height;
 	int					floor;
 	int					num_of_textures;
+	int					del_me;
 	struct	s_room		*next;
 	struct	s_room		*prev;	
 }						t_room;
@@ -360,7 +361,6 @@ typedef	struct			s_editor
 	t_epoint			*point;
 	t_eline				*lines;
 	t_room				*selected;
-	t_doom				*doom;
 	int					floor;
 	t_epoint			*room_point;
 	int					num_of_rooms;
@@ -380,6 +380,7 @@ typedef	struct			s_editor
 	int					param_sflag;
 	char				point_cnt;
 	int					ques_flag;
+	t_doom				*doom;
 }						t_editor;
 
 /*
@@ -574,6 +575,7 @@ void			free_lines(t_eline **line);
 void			free_sprites(t_esprite **sprites);
 void			free_rooms(t_room **room);
 void			free_points(t_epoint **point);
+void			free_sec(t_sec *sec);
 
 
 /*

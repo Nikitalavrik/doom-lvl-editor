@@ -55,7 +55,10 @@ t_text    convert_tex(SDL_Surface *dst, int w, int h)
         res.h = h;
     }
     else
-    	res.tex = 0;
+	{
+    	printf("error load tex\n");
+		res.tex = 0;
+	}
     return (res);
 }
 
@@ -141,7 +144,7 @@ void    read_text(t_doom *doom, char *file)
 void    load_texture_wall(t_doom *doom)
 {
 //		read_text(doom, "texture.data");
-	doom->count_text = 32;
+	doom->count_text = 33;
 	doom->text = (t_text*)malloc(sizeof(t_text) * (doom->count_text + 1));
 	doom->text[1] = convert_tex(IMG_Load("../text/1.bmp"), 128, 128);
 	doom->text[2] = convert_tex(IMG_Load("../text/2.bmp"), 128, 128);
@@ -174,7 +177,8 @@ void    load_texture_wall(t_doom *doom)
 	doom->text[29] = convert_tex(IMG_Load("../text/AuriferousQuartz.png"), 128, 128);
 	doom->text[30] = convert_tex(IMG_Load("../text/red_stained_glass.png"), 128, 128);
 	doom->text[31] = convert_tex(IMG_Load("../text/0002.png"), 128, 128);
-	doom->count_sp = 20;
+    doom->text[32] = convert_tex(IMG_Load("../text/Mica.png"), 128, 128);
+	doom->count_sp = 21;
 	doom->sp = (t_sprite*)malloc(sizeof(t_sprite) * (doom->count_sp + 1));
 	doom->sp[0].count = 0;
 	doom->sp[0].frame = 1;
@@ -577,5 +581,12 @@ void    load_texture_wall(t_doom *doom)
     doom->sp[19].text[1] = convert_tex(IMG_Load("../sprite/TLMPB0.png"), 0, 0);
     doom->sp[19].text[2] = convert_tex(IMG_Load("../sprite/TLMPC0.png"), 0, 0);
     doom->sp[19].text[3] = convert_tex(IMG_Load("../sprite/TLMPD0.png"), 0, 0);
+    doom->sp[20].count = 0;
+    doom->sp[20].frame = 2;
+    doom->sp[20].f_hud = 0;
+    doom->sp[20].text = (t_text*)malloc(sizeof(t_text) * (doom->sp[20].frame + 1));
+    doom->sp[20].text[0] = convert_tex(IMG_Load("../sprite/buttom/sw1.png"), 64, 64);
+    doom->sp[20].text[1] = convert_tex(IMG_Load("../sprite/buttom/sw2.png"), 64, 64);
+
 //	save_text(doom);
 }

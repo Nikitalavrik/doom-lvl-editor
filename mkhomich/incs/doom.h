@@ -6,20 +6,16 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 16:48:28 by mkhomich          #+#    #+#             */
-/*   Updated: 2020/02/16 16:47:32 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/02/23 17:05:09 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_H
 # define DOOM_H
 
-//# define WIDTH 1024
-//# define HEIGHT 768
 # define FPS 200
 # define PI 3.141592
 # define DELTA 0.5
-//# define IGRX WIDTH / 2
-//# define IGRY HEIGHT / 2
 # define FOV 60
 # define THREADS 6
 
@@ -154,6 +150,14 @@ typedef struct	s_tochsp
 	Uint32		time;
 }				t_tochsp;
 
+typedef struct  s_buttom
+{
+	t_mouse      st;
+	int         spr;
+	int         count;
+	Uint32		time;
+}               t_buttom;
+
 typedef struct	s_sec
 {
 	int			id;
@@ -167,6 +171,8 @@ typedef struct	s_sec
 	int			viem;
 	int			t_full;
 	int			t_win;
+	int			max_but;
+	t_buttom	*but;
 	SDL_Rect	win;
 	t_toch		**toch;
 	t_tochsp	*sp;
@@ -177,9 +183,9 @@ typedef struct	s_sec
 	t_vec		move;
 	int			tape;
 	int			max_sp;
-	int         **tex;
 	int			level;
-	char **l_map;
+	int         **tex;
+	char		**l_map;
 }				t_sec;
 
 typedef struct	s_aim
@@ -206,6 +212,8 @@ typedef struct	s_play
 	int			ip;
 	int			state;
 	int			crouch;
+	int			sec_col;
+	int			buttom;
 	t_toch		t;
 	t_aim		aim;
 	float		vec_grav;
@@ -236,6 +244,7 @@ typedef struct	s_move
 	int			mmap;
 	int			shot;
 	int 		altern;
+	int         select;
 }				t_move;
 
 typedef struct	s_minimap
@@ -333,9 +342,7 @@ typedef struct	s_doom
 	int         h;
 	int         igr_x;
 	int         igr_y;
-	int			level;
     int			aim_sec;
-	int			aim_sp;
 }				t_doom;
 
 typedef struct	s_pth
@@ -447,5 +454,7 @@ void			draw_text(t_doom *doom, int x, int y, char *s);
 void			bzero_all(t_doom *doom);
 void			vec_pull(t_doom *doom);
 void			check_render(t_doom *doom);
+void			add_buttom(t_doom *doom, t_sec *sec);
+void			caching_tex_sec(t_doom *doom, t_sec *sec);
 
 #endif

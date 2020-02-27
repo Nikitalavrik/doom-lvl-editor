@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_new_win_param.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbratsla <tbratsla@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 17:30:46 by tbratsla          #+#    #+#             */
-/*   Updated: 2020/01/21 17:30:48 by tbratsla         ###   ########.fr       */
+/*   Updated: 2020/02/23 17:32:54 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		save_wall_param(t_editor *editor)
 
 void		save_room_param(t_editor *editor)
 {
-	editor->new_win->param_par.room->f_height =\
+	editor->new_win->param_par.room->height =\
 	ft_atoi(editor->new_win->f_height);
 	editor->new_win->param_par.room->num_of_textures =\
 	(editor->new_win->active_num.tex_num + 1) % editor->doom->count_text;
