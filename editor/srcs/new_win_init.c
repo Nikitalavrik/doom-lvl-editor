@@ -17,8 +17,8 @@ void	load_correct_scale_sprite(t_editor *editor)
 	int i;
 
 	i = 0;
-	editor->new_win->editor_sprite = (t_sprite*)malloc(sizeof(t_sprite) * 7);
-	while (i < 7)
+	editor->new_win->editor_sprite = (t_sprite*)malloc(sizeof(t_sprite) * 8);
+	while (i < 8)
 	{
 		editor->new_win->editor_sprite[i].text =\
 		(t_text*)malloc(sizeof(t_text));
@@ -38,6 +38,8 @@ void	load_correct_scale_sprite(t_editor *editor)
 	convert_tex(IMG_Load("../sprite/medkit.png"), 128, 128);
 	editor->new_win->editor_sprite[6].text[0] =\
 	convert_tex(IMG_Load("../sprite/ammo.png"), 128, 128);
+	editor->new_win->editor_sprite[7].text[0] =\
+	convert_tex(IMG_Load("../sprite/TLMPA0.png"), 128, 128);
 }
 
 void	set_up_text(t_editor *editor, t_coord *coord)
@@ -110,8 +112,8 @@ void	new_win_init(t_editor *editor, void *param, int flag)
 	else if (flag == 3)
 	{
 		editor->new_win->param_par.sprite = (t_esprite *)param;
-		editor->new_win->active_num.tex_num =\
-		editor->new_win->param_par.sprite->num_of_textures - 1;
+		editor->new_win->active_num.tex_num = editor->new_win->param_par.sprite->num_of_textures == 19 ? 6 :\
+		editor->new_win->param_par.sprite->num_of_textures - 10;
 		set_up_text(editor, &editor->new_win->active_num.coord);
 	}
 	editor->new_win->param_flag = flag;
