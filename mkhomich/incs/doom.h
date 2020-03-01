@@ -44,6 +44,12 @@
 # include <sys/types.h>
 # include <arpa/inet.h>
 
+typedef struct	s_cross
+{
+	int			x;
+	int			y;
+}				t_cross;
+
 typedef struct	s_way
 {
 	int 		x0;
@@ -377,6 +383,7 @@ typedef struct	s_light
 
 int				check_enemy(t_doom *doom, int nb);
 void			bots_logic(t_doom *doom, int nb);
+int				check_wall_crossing(t_doom *doom, int nb, int i);
 
 /*
 **	Another functions

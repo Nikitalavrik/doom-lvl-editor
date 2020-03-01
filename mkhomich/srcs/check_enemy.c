@@ -12,85 +12,19 @@
 
 #include "../incs/doom.h"
 
-
-static	int	vertical_line(t_doom *doom, t_way pr)
-{
-	int err;
-	int	sign_x;
-	int	sign_y;
-	int del_x;
-	int del_y;
-
-	doom = (void *)doom;
-	sign_y = pr.y1 >= pr.y0 ? 1 : -1;
-	sign_x = pr.x1 >= pr.x0 ? 1 : -1;
-	del_x = abs(pr.x1 - pr.x0);
-	del_y = abs(pr.y1 - pr.y0);
-	err = -del_y;
-	while (pr.x0 != pr.x1 || pr.y0 != pr.y1)
-	{
-		if (1)
-			return (0);
-		pr.y0 += sign_y;
-		err += 2 * del_x;
-		if (err > 0)
-		{
-			err -= 2 * del_y;
-			pr.x0 += sign_x;
-		}
-	}
-	return (0);
-}
-
-static	int	horizontal_line(t_doom *doom, t_way pr)
-{
-	int err;
-	int	sign_y;
-	int	sign_x;
-	int del_x;
-	int del_y;
-
-	doom = (void *)doom;
-	sign_y = pr.y1 >= pr.y0 ? 1 : -1;
-	sign_x = pr.x1 >= pr.x0 ? 1 : -1;
-	del_x = abs(pr.x1 - pr.x0);
-	del_y = abs(pr.y1 - pr.y0);
-	err = -del_x;
-	while (pr.x0 != pr.x1 || pr.y0 != pr.y1)
-	{
-		if (1)
-			return (0);
-		pr.x0 += sign_x;
-		err += 2 * del_y;
-		if (err > 0)
-		{
-			err -= 2 * del_x;
-			pr.y0 += sign_y;
-		}
-	}
-	return (0);
-}
-
-
 int		check_way(t_doom *doom, int nb)
 {
-	int		del_x;
-	int		del_y;
-	int		res;
-	t_way	pr;
+	int	i;
 
-	pr.x0 = doom->play[doom->n_play].t.x;
-	pr.y0 = doom->play[doom->n_play].t.y;
-	pr.x1 = doom->play[nb].t.x;
-	pr.y1 = doom->play[nb].t.y;
-	res = 0;
-	del_x = abs(pr.x1 - pr.x0);
-	del_y = abs(pr.y1 - pr.y0);
-	if (del_y <= del_x)
-		res += horizontal_line(doom, pr);
-	else
-		res += vertical_line(doom, pr);
-	return (res);
+	i = 0;
+	while (i < doom->max_s)
+	{
+		if (doom->sec[i].tape == 1)
+			if (check_wall_crossing(doom, nb, i))
+				return (1);
+		i++;
+	}
+	return (0);
 }
 
 int		check_enemy(t_doom *doom, int nb)
