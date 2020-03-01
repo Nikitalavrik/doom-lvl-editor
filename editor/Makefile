@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/10 15:56:05 by nlavrine          #+#    #+#              #
-#    Updated: 2020/02/23 16:00:54 by nlavrine         ###   ########.fr        #
+#    Updated: 2020/03/01 12:26:49 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,8 @@ SRC =	editor_main.c		\
 
 SRC_DOOM = ../mkhomich/doom-nukem.a
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -g -Og
+FLAGS = -Wall -Wextra -Werror -O3
+
 SRC_DIR = srcs
 H_DIR = -I includes	\
 		-I ../mkhomich/incs/

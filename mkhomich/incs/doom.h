@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 16:48:28 by mkhomich          #+#    #+#             */
-/*   Updated: 2020/02/23 17:05:09 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/03/01 12:47:26 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ typedef struct	s_sec
 	int			tape;
 	int			max_sp;
 	int			level;
+	char		bright;
 	int         **tex;
 	char		**l_map;
 }				t_sec;

@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/23 15:23:46 by mkhomich          #+#    #+#              #
-#    Updated: 2020/02/17 10:29:39 by nlavrine         ###   ########.fr        #
+#    Updated: 2020/03/01 12:19:25 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ lib: $(LIB) $(OBJS)
 
 $(LIB):
 	@echo "$(GREEN)Compile libft"
-	@make -C ../libft/
+	@make -C libft/
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)

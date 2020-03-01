@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:56:26 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/23 18:17:28 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/03/01 15:04:14 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct			s_eline
 	double				height;
 	int					floor;
 	int					rot_angle;
+	char				bright;
 	int					alpha;
 	struct s_eline		*next;
 	struct s_eline		*prev;
@@ -163,6 +164,7 @@ typedef struct			s_eline
 /*
 ** struct for sprite, square in editor
 */
+typedef struct			s_room t_room;
 
 typedef struct			s_esprite
 {
@@ -178,6 +180,7 @@ typedef struct			s_esprite
 	t_coords				origin;
 	int						num_of_textures;
 	int						s_height;
+	t_room					*room;
 	struct	s_esprite		*next;
 	struct	s_esprite		*prev;
 }						t_esprite;
@@ -194,6 +197,7 @@ typedef struct			s_room
 	t_coords			max_xy;
 	t_coords			min_xy;
 	t_esprite			*sprites;
+	int					max_mobs;
 	int					max_sprites;
 	int					area;
 	int					height;
@@ -205,6 +209,7 @@ typedef struct			s_room
 	int					floor;
 	int					num_of_textures;
 	int					del_me;
+	char				bright;
 	struct	s_room		*next;
 	struct	s_room		*prev;	
 }						t_room;

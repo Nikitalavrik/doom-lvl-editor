@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 13:53:15 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/17 15:13:38 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/03/01 16:02:35 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	keyboard_for_visual(t_editor *editor, SDL_Event event)
 			find_room->height++;
 		else if ((find_sec = find_line_by_id(editor, aim)))
 			find_sec->begin_height++;
-		grid_sec(editor->doom, &editor->doom->sec[aim], 0);	
+		free_sec(&editor->doom->sec[aim]);
+		grid_sec(editor->doom, &editor->doom->sec[aim], editor->doom->sec[aim].bright);	
 	}
 	else if (event.key.keysym.sym == SDLK_DOWN)
 	{
@@ -49,7 +50,8 @@ void	keyboard_for_visual(t_editor *editor, SDL_Event event)
 			find_room->height--;
 		else if ((find_sec = find_line_by_id(editor, aim)))
 			find_sec->begin_height--;
-		grid_sec(editor->doom, &editor->doom->sec[aim], 0);	
+		free_sec(&editor->doom->sec[aim]);
+		grid_sec(editor->doom, &editor->doom->sec[aim], editor->doom->sec[aim].bright);	
 	}
 	else if (event.key.keysym.sym == SDLK_1)
 		editor->flags.t_f.rot_ax = 0;

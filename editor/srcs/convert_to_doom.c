@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:44:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/17 15:40:32 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/03/01 15:41:02 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void		parse_walls(t_editor *editor, t_eline *lines, int *i, int *r)
 		editor->doom->toch[*i].y = iter->begin_height;
 		editor->doom->sec[++(*r)].max_toch = 4;
 		iter->id = *r;
+		editor->doom->sec[*r].bright = iter->bright;
 		editor->doom->sec[*r].pts = (int*)ft_memalloc(sizeof(int) *\
 		editor->doom->sec[*r].max_toch);
 		editor->doom->sec[*r].pts[0] = *i;
@@ -47,16 +48,40 @@ void		parse_walls(t_editor *editor, t_eline *lines, int *i, int *r)
 	}
 }
 
-void		parse_sprites(t_editor *editor, t_esprite *sprites, int sec, int s)
+void		parse_sprites(t_editor *editor, t_esprite *sprites, int sec, int *s)
 {
-	editor->doom->sec[sec].sp[s].nb_sp = sprites->num_of_textures;
-	editor->doom->sec[sec].sp[s].sp.x = (sprites->x << CONVERT_ZOOM) +\
+	if (sprites->num_of_textures >= 9 && sprites->num_of_textures <= 11)
+	{
+		editor->doom->max_p++;
+		editor->doom->play[editor->doom->max_p].t.x = (sprites->x << CONVERT_ZOOM) +\
+		(sprites->origin.x + sprites->move.x) / 4;
+		editor->doom->play[editor->doom->max_p].t.y =  sprites->floor * FLOOR_HEIGHT;
+		editor->doom->play[editor->doom->max_p].t.z = (sprites->y << CONVERT_ZOOM) +\
+		(sprites->origin.y + sprites->move.y) / 4;
+		editor->doom->play[editor->doom->max_p].angle_x = 0;
+		editor->doom->play[editor->doom->max_p].angle_y = 270;
+		editor->doom->play[editor->doom->max_p].speed = 1;
+		editor->doom->play[editor->doom->max_p].sp = sprites->num_of_textures;
+		editor->doom->play[editor->doom->max_p].weapons = 6;
+		editor->doom->play[editor->doom->max_p].heart = 34;
+		editor->doom->play[editor->doom->max_p].armor = 0;
+		editor->doom->play[editor->doom->max_p].shot = 8;
+		editor->doom->play[editor->doom->max_p].state = 0;
+		editor->doom->play[editor->doom->max_p].crouch = 0;
+		// editor->doom->play[editor->doom->max_p].id = editor->doom->max_p;
+		// ft_printf("num text = %i\n", sprites->num_of_textures);
+		return ;
+	}
+	ft_printf("sprite text = %i\n", sprites->num_of_textures);
+	editor->doom->sec[sec].sp[*s].nb_sp = sprites->num_of_textures;
+	editor->doom->sec[sec].sp[*s].sp.x = (sprites->x << CONVERT_ZOOM) +\
 	(sprites->origin.x + sprites->move.x) / 4;
-	editor->doom->sec[sec].sp[s].sp.z = (sprites->y << CONVERT_ZOOM) +\
+	editor->doom->sec[sec].sp[*s].sp.z = (sprites->y << CONVERT_ZOOM) +\
 	(sprites->origin.y + sprites->move.y) / 4;
-	editor->doom->sec[sec].sp[s].sp.y = sprites->floor * FLOOR_HEIGHT;
-	editor->doom->sec[sec].sp[s].viem = 1;
-	editor->doom->sec[sec].sp[s].take = 0;
+	editor->doom->sec[sec].sp[*s].sp.y = sprites->floor * FLOOR_HEIGHT;
+	editor->doom->sec[sec].sp[*s].viem = 1;
+	editor->doom->sec[sec].sp[*s].take = 0;
+	(*s)++;
 }
 
 void		init_floor(t_editor *editor, t_room *room, int *i, int *r)
@@ -70,6 +95,7 @@ void		init_floor(t_editor *editor, t_room *room, int *i, int *r)
 	editor->doom->toch[*i].z = room->max_xy.y << CONVERT_ZOOM;
 	editor->doom->toch[*i].y = room->height;
 	editor->doom->sec[++(*r)].max_toch = 4;
+	editor->doom->sec[*r].bright = room->bright;
 	room->id = *r;
 	editor->doom->sec[*r].pts = ft_memalloc(sizeof(int) *\
 	editor->doom->sec[*r].max_toch);
@@ -91,6 +117,7 @@ void		init_floor(t_editor *editor, t_room *room, int *i, int *r)
 	editor->doom->sec[*r].t_win = 0;
 	editor->doom->sec[*r].tape = 0;
 	editor->doom->sec[*r].max_sp = room->max_sprites;
+	ft_printf("max_sprite = %i\n", editor->doom->sec[*r].max_sp);
 	if (editor->doom->sec[*r].max_sp)
 	{
 		editor->doom->sec[*r].sp = ft_memalloc(sizeof(t_tochsp) *\
@@ -98,9 +125,8 @@ void		init_floor(t_editor *editor, t_room *room, int *i, int *r)
 	}
 	while (sprites)
 	{
-		parse_sprites(editor, sprites, *r, s);
+		parse_sprites(editor, sprites, *r, &s);
 		sprites = sprites->next;
-		s++;
 	}
 }
 
