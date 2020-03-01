@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:47:48 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/23 18:22:29 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:43:12 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void		free_doom(t_doom *doom)
 {
 	int	i;
 	
+	doom->max_p = 0;
 	if (doom->max_s && doom->max_t)
 	{
 		i = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkhomich <mkhomich@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:34:14 by mkhomich          #+#    #+#             */
-/*   Updated: 2019/09/01 17:34:15 by mkhomich         ###   ########.fr       */
+/*   Updated: 2020/03/01 12:36:54 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,7 @@ void    grid_sec(t_doom *doom, t_sec *sec, char ligh)
 				sec->toch[y][x].y = (doom->toch[sec->pts[0]].y - sec->v2.y + -sec->v1.y);
 				sec->toch[y][x].z = (doom->toch[sec->pts[0]].z - sec->v2.z + -sec->v1.z);
 			}
-			if (!sec->tex[y * sec->tex_w + x])
+			if (y * sec->tex_w + x < sec->tex_w * sec->tex_h && !sec->tex[y * sec->tex_w + x])
 			{
 				sec->l_map[y * sec->tex_w + x] = (char*)ft_memalloc(sizeof(char) * 128 * 128);
 				sec->tex[y * sec->tex_w + x] = (int*)ft_memalloc(sizeof(int) * 128 * 128);

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:12:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/23 18:17:44 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:11:48 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void	rot_sector_by_wheel(t_editor *editor, SDL_Event event)
 	else
 		rot_sec_by_z(editor->doom, points, coord, editor);
 	free_sec(&editor->doom->sec[aim]);
-	grid_sec(editor->doom, &editor->doom->sec[aim], 0);
+	grid_sec(editor->doom, &editor->doom->sec[aim], editor->doom->sec[aim].bright);
 }
 
 void	god_rot_move(t_editor *editor, SDL_Event event)
