@@ -108,7 +108,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(PRINTF) $(OBJS) $(TEST_MAIN_O) $(SRC_DOOM)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(SRC_DOOM) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) #-fsanitize=address
+		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(SRC_DOOM) $(PRINTF) $(LIB) -o $(NAME) $(INCLUDES) -fsanitize=address
 
 lib: $(LIB) $(PRINTF) $(OBJS) $(SRC_DOOM)
 	@echo "$(GREEN)Compile $(NAME).a"

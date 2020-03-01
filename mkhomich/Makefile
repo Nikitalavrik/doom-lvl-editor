@@ -35,6 +35,7 @@ SRC =	main.c \
         load_map.c \
         save_map.c \
         check_enemy.c \
+        cross_wall.c	\
 
 OBJ_DIR = obj
 LIB = libft/libft.a
@@ -68,7 +69,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(OBJS) $(TEST_MAIN_O)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(LIB) -o $(NAME) $(INCLUDES) #-fsanitize=address
+		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(LIB) -o $(NAME) $(INCLUDES) -fsanitize=address
 
 $(TEST_MAIN_O): $(TEST_MAIN)
 		@mkdir -p $(OBJ_DIR)

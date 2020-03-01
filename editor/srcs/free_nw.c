@@ -24,7 +24,7 @@ void		free_nw_elements(t_editor *editor)
 	ft_strdel(&editor->new_win->s_height);
 	if (editor->new_win->param_flag == 3)
 	{
-		while (i < 7)
+		while (i < 8)
 		{
 			free(editor->new_win->editor_sprite[i].text[0].tex);
 			free(editor->new_win->editor_sprite[i].text);
