@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	Uint32 startclock;
 	Uint32 deltaclock;
 	t_doom doom;
-	char *fps;
+//	char *fps;
 
 	if (argc == 2)
 		running = init_full(&doom, argv[argc - 1]);
@@ -75,11 +75,10 @@ int main(int argc, char **argv)
 		if (deltaclock < 1000 / FPS)
 			SDL_Delay(1000 / FPS - deltaclock);
 		deltaclock = SDL_GetTicks() - startclock;
-		fps = ft_itoa(1000 / deltaclock);
-		draw_text(&doom, 10, 10, fps);
-		free(fps);
+		draw_text(&doom, 10, 10, doom.fps[1000 / deltaclock]);
 		SDL_UpdateWindowSurface(doom.window);
 	}
+	system("leaks doom-nukem");
 	SDL_DestroyWindow(doom.window);
 	SDL_Quit();
 	return (0);

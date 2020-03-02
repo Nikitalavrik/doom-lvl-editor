@@ -20,6 +20,16 @@ void    vector(t_toch start, t_toch end, t_vec *res)
 	res->len = sqrt(res->x * res->x + res->y * res->y + res->z * res->z);
 }
 
+void    vector_1(t_vec *vec, t_vec *res)
+{
+	res->len = 1;
+	vec->len = sqrt(vec->x * vec->x + vec->y * vec->y + vec->z * vec->z);
+	res->x = vec->x / vec->len;
+	res->y = vec->y / vec->len;
+	res->z = vec->z / vec->len;
+
+}
+
 int		color_mix(int color, char grad)
 {
 	int nb;
@@ -178,7 +188,7 @@ void    lamp(t_sec * sec)
 	while (lig < sec->max_sp)
 	{
 		if (sec->sp[lig].nb_sp == 19)
-			circle_generation(sec, sec->sp[lig].sp.x * 20, sec->sp[lig].sp.z * 20, 400);
+			circle_generation(sec, sec->sp[lig].sp.x * 20 - sec->toch[0][0].x, sec->sp[lig].sp.z * 20 - sec->toch[0][0].z, 400);
 		lig++;
 	}
 
@@ -275,7 +285,7 @@ void    grid_sec(t_doom *doom, t_sec *sec, char ligh)
 				sec->toch[y][x].y = (doom->toch[sec->pts[0]].y - sec->v2.y + -sec->v1.y);
 				sec->toch[y][x].z = (doom->toch[sec->pts[0]].z - sec->v2.z + -sec->v1.z);
 			}
-			if (!sec->tex[y * sec->tex_w + x])
+			if (y * sec->tex_w + x < sec->tex_w * sec->tex_h && !sec->tex[y * sec->tex_w + x])
 			{
 				sec->l_map[y * sec->tex_w + x] = (char*)ft_memalloc(sizeof(char) * 128 * 128);
 				sec->tex[y * sec->tex_w + x] = (int*)ft_memalloc(sizeof(int) * 128 * 128);

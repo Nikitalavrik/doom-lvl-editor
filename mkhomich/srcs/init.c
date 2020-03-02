@@ -16,9 +16,9 @@ void    init_sectors(t_doom *doom)
 {
 	doom->min_z = 0.5;
 //	load_map(doom);
-	doom->max_s = 30;
+	doom->max_s = 32;
 	doom->sec = (t_sec*)malloc(sizeof(t_sec) * doom->max_s);
-	doom->max_t = 104;
+	doom->max_t = 112;
 	doom->toch = (t_toch*)malloc(sizeof(t_toch) * doom->max_t);
 	doom->toch[0].x = 0;
 	doom->toch[0].y = 5;
@@ -320,18 +320,42 @@ void    init_sectors(t_doom *doom)
 	doom->toch[99].x = 25;
 	doom->toch[99].y = 10;
 	doom->toch[99].z = 21.8;
-	doom->toch[100].x = 25;
+	doom->toch[100].x = 38;
 	doom->toch[100].y = 20;
-	doom->toch[100].z = 25;
-	doom->toch[101].x = 25;
+	doom->toch[100].z = 10;
+	doom->toch[101].x = 38;
 	doom->toch[101].y = 20;
-	doom->toch[101].z = 40;
-	doom->toch[102].x = 40;
+	doom->toch[101].z = 20;
+	doom->toch[102].x = 36;
 	doom->toch[102].y = 20;
-	doom->toch[102].z = 40;
-	doom->toch[103].x = 40;
+	doom->toch[102].z = 20;
+	doom->toch[103].x = 36;
 	doom->toch[103].y = 20;
-	doom->toch[103].z = 25;
+	doom->toch[103].z = 10;
+	doom->toch[104].x = 40;
+	doom->toch[104].y = 20;
+	doom->toch[104].z = 10;
+	doom->toch[105].x = 40;
+	doom->toch[105].y = 20;
+	doom->toch[105].z = 20;
+	doom->toch[106].x = 38;
+	doom->toch[106].y = 20;
+	doom->toch[106].z = 20;
+	doom->toch[107].x = 38;
+	doom->toch[107].y = 20;
+	doom->toch[107].z = 10;
+	doom->toch[108].x = 42;
+	doom->toch[108].y = 20;
+	doom->toch[108].z = 10;
+	doom->toch[109].x = 42;
+	doom->toch[109].y = 20;
+	doom->toch[109].z = 20;
+	doom->toch[110].x = 40;
+	doom->toch[110].y = 20;
+	doom->toch[110].z = 20;
+	doom->toch[111].x = 40;
+	doom->toch[111].y = 20;
+	doom->toch[111].z = 10;
 	doom->sec[0].max_toch = 4;
 	doom->sec[0].pts = (int*)malloc(sizeof(int) * doom->sec[0].max_toch);
 	doom->sec[0].pts[0] = 0;
@@ -599,9 +623,27 @@ void    init_sectors(t_doom *doom)
 	doom->sec[29].pts[1] = 101;
 	doom->sec[29].pts[2] = 102;
 	doom->sec[29].pts[3] = 103;
-	doom->sec[29].t_full = 32;
+	doom->sec[29].t_full = 33;
 	doom->sec[29].t_win = 0;
 	doom->sec[29].tape = 0;
+	doom->sec[30].max_toch = 4;
+	doom->sec[30].pts = (int*)malloc(sizeof(int) * doom->sec[30].max_toch);
+	doom->sec[30].pts[0] = 104;
+	doom->sec[30].pts[1] = 105;
+	doom->sec[30].pts[2] = 106;
+	doom->sec[30].pts[3] = 107;
+	doom->sec[30].t_full = 33;
+	doom->sec[30].t_win = 0;
+	doom->sec[30].tape = 0;
+	doom->sec[31].max_toch = 4;
+	doom->sec[31].pts = (int*)malloc(sizeof(int) * doom->sec[30].max_toch);
+	doom->sec[31].pts[0] = 108;
+	doom->sec[31].pts[1] = 109;
+	doom->sec[31].pts[2] = 110;
+	doom->sec[31].pts[3] = 111;
+	doom->sec[31].t_full = 33;
+	doom->sec[31].t_win = 0;
+	doom->sec[31].tape = 0;
 	doom->sec[0].win.x = 0;
 	doom->sec[0].win.y = 0;
 	doom->sec[0].win.w = 0;
@@ -782,6 +824,18 @@ void    init_sectors(t_doom *doom)
 	doom->sec[29].win.h = 0;
 	doom->sec[29].p_move = 0;
 	doom->sec[29].f_move = 0;
+	doom->sec[30].win.x = 0;
+	doom->sec[30].win.y = 0;
+	doom->sec[30].win.w = 0;
+	doom->sec[30].win.h = 0;
+	doom->sec[30].p_move = 0;
+	doom->sec[30].f_move = 0;
+	doom->sec[31].win.x = 0;
+	doom->sec[31].win.y = 0;
+	doom->sec[31].win.w = 0;
+	doom->sec[31].win.h = 0;
+	doom->sec[31].p_move = 0;
+	doom->sec[31].f_move = 0;
 
 	doom->sec[0].max_sp = 16;
 	doom->sec[0].sp = (t_tochsp*)malloc(sizeof(t_tochsp) * doom->sec[0].max_sp);
@@ -910,6 +964,8 @@ void    init_sectors(t_doom *doom)
 	doom->sec[27].max_sp = 0;
 	doom->sec[28].max_sp = 0;
 	doom->sec[29].max_sp = 0;
+	doom->sec[30].max_sp = 0;
+	doom->sec[31].max_sp = 0;
 	doom->sec[0].max_but = 0;
 	doom->sec[1].max_but = 0;
 	doom->sec[2].max_but = 0;
@@ -945,6 +1001,8 @@ void    init_sectors(t_doom *doom)
 	doom->sec[28].but[0].spr = 20;
 	doom->sec[28].but[0].count = 0;
 	doom->sec[29].max_but = 0;
+	doom->sec[30].max_but = 0;
+	doom->sec[31].max_but = 0;
 //	save_map(doom);
 	int i;
 
@@ -956,6 +1014,38 @@ void    init_sectors(t_doom *doom)
 	}
 	doom->rend = (t_render*)malloc(sizeof(t_render) * doom->max_s);
 	doom->z_buffer = (int*)malloc(sizeof(int) * doom->w * doom->h);
+	doom->max_div = 3;
+	doom->div = (t_div*)ft_memalloc(sizeof(t_div) * doom->max_div);
+	doom->div[0].buttom = 0;
+	doom->div[0].sec = 29;
+	doom->div[0].sec_but = 28;
+	doom->div[0].status = 0;
+	doom->div[0].vec.x = 0;
+	doom->div[0].vec.y = -14;
+	doom->div[0].vec.z = 2;
+	vector_1(&doom->div[0].vec, &doom->div[0].vec_1);
+	doom->div[0].max_caunt = doom->div[0].vec.len / 0.1;
+
+	doom->div[1].buttom = 0;
+	doom->div[1].sec = 30;
+	doom->div[1].sec_but = 28;
+	doom->div[1].status = 0;
+	doom->div[1].vec.x = 0;
+	doom->div[1].vec.y = -13;
+	doom->div[1].vec.z = -2;
+	vector_1(&doom->div[1].vec, &doom->div[1].vec_1);
+	doom->div[1].max_caunt = doom->div[1].vec.len / 0.1;
+
+	doom->div[2].buttom = 0;
+	doom->div[2].sec = 31;
+	doom->div[2].sec_but = 28;
+	doom->div[2].status = 0;
+	doom->div[2].vec.x = 0;
+	doom->div[2].vec.y = -12;
+	doom->div[2].vec.z = 2;
+	vector_1(&doom->div[2].vec, &doom->div[2].vec_1);
+	doom->div[2].max_caunt = doom->div[2].vec.len / 0.1;
+
 }
 
 void    init_minimap(t_doom *doom)
@@ -1120,6 +1210,7 @@ int 	init_full(t_doom *doom, char *str)
 	init_pull(doom);
     load_texture_wall(doom);
 	init_sectors(doom);
+	generate_table_fps(doom);
 	if (generate_alpha_tab(doom) == 0)
 	    return (0);
 	if (ft_strcmp(str, "s") == 0 || str == NULL)

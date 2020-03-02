@@ -92,7 +92,7 @@ void	print_sp_sec(t_doom *doom)
 			c = -1;
 			while (++c < doom->sec[nb].max_sp)
 			{
-				if (doom->sec[nb].sp[c].sp.tz2 > 0.4
+				if (doom->sec[nb].sp[c].sp.tz2 > 1
 				&& doom->sec[nb].sp[c].viem)
 					pr_s(doom, c, nb);
 				else if (doom->sec[nb].sp[c].viem == 0 &&

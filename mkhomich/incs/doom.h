@@ -16,15 +16,14 @@
 # define FPS 200
 # define PI 3.141592
 # define DELTA 0.5
-# define FOV 60
-# define THREADS 6
-
+# define THREADS 4
 # define FIXP16_ROUND_UP 0x00008000
 # define FIXP16_SHIFT 16
 # define FIXP28_SHIFT 28
 # define FIXP22_SHIFT 22
 # define STEP_AN 22.5
 # define MAX_PULL 15
+# define BOUND 1.5
 # include <SDL2/SDL.h>
 # include "SDL_image.h"
 # include "SDL_mixer.h"
@@ -200,6 +199,7 @@ typedef struct	s_play
 	double		angle_x;
 	double		angle_y;
 	double		speed;
+	float		height;
 	int 		id;
 	int			sp;
 	int			heart;
@@ -304,6 +304,20 @@ typedef struct	s_render
 	int 		sec;
 }				t_render;
 
+typedef struct	s_div
+{
+	int 		buttom;
+	int 		sec_but;
+	int			sec;
+	int 		status;
+	int 		count;
+	int 		max_caunt;
+	float		speed;
+	t_vec		vec;
+	t_vec		vec_1;
+	t_toch		end;
+}               t_div;
+
 typedef struct	s_doom
 {
 	SDL_Event	event;
@@ -321,6 +335,8 @@ typedef struct	s_doom
 	t_music		muz;
 	t_pull		pull[MAX_PULL];
 	t_render	*rend;
+	t_div		*div;
+	char 		**fps;
 	int			mult;
 	int			count_sp;
 	double		min_z;
@@ -331,6 +347,7 @@ typedef struct	s_doom
 	int			*z_buffer;
 	int			count_text;
 	int			*buff;
+	int 		max_div;
 	t_level		l;
 	int			nb;
 	t_socket	soc;
@@ -442,6 +459,10 @@ void			calc_uron_pl(t_doom *doom, int pl, int zone, int weap);
 int				min_line_sec(t_doom *doom, float x, float z, t_coliz *col);
 unsigned char   **burn_tab(size_t x, size_t y);
 int				vec_play(t_doom *doom, int pl);
+void			vector_1(t_vec *vec, t_vec *res);
+void			move_toch(t_toch *toch, t_vec vec, float speed);
+float			move_up(t_doom *doom, int pl);
+float			coliz_pl(t_doom *doom, float x_p, float z_p, float pl);
 
 /*
 ** Main func
@@ -456,5 +477,6 @@ void			vec_pull(t_doom *doom);
 void			check_render(t_doom *doom);
 void			add_buttom(t_doom *doom, t_sec *sec);
 void			caching_tex_sec(t_doom *doom, t_sec *sec);
+void			generate_table_fps(t_doom *doom);
 
 #endif

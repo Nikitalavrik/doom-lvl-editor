@@ -153,20 +153,34 @@ float check_h_pl(t_doom *doom, float x, float z, int pl)
 	int sec;
 	float h;
 	float buf;
+	int sec_ou;
+	int nb;
 
     sec = 0;
+	sec_ou = -1;
     h = -1000;
+    nb = 0;
     while (sec < doom->max_s && doom->play[pl].heart != 0)
     {
         if (doom->sec[sec].tape == 0)
             if (pnpoly(doom, sec, x, z) % 2)
             {
                 buf = cal_h_pl(doom, sec, x, z);
-                if (h < buf && (buf - doom->play[pl].t.y < 10 && buf - doom->play[pl].t.y > -1))
-                    h = buf;
+                if (h < buf && (buf - doom->play[pl].t.y < doom->play[pl].height + 1 && buf - doom->play[pl].t.y > -1))
+				{
+                	sec_ou = sec;
+					h = buf;
+				}
             }
         sec++;
     }
+	while (nb < doom->max_div)
+	{
+		if (doom->n_play == pl && doom->div[nb].status == 1 && sec_ou == doom->div[nb].sec)
+			move_toch(&doom->play[pl].t, doom->div[nb].vec_1, doom->div[nb].speed);
+		nb++;
+	}
+
     return (h);
 }
 
@@ -180,27 +194,30 @@ void    jump_pl(t_doom *doom, int pl, int jump)
         doom->play[pl].vec_grav = 0.92;
     }
     h = check_h_pl(doom, doom->play[pl].t.x, doom->play[pl].t.z, pl);
-    if (h - doom->play[pl].t.y < 0.5 && h - doom->play[pl].t.y > 0 && doom->play[pl].state == 0)
-        doom->play[pl].t.y = h;
+    if (h != -1000 && h > doom->play[pl].t.y && h - doom->play[pl].t.y < 2.1 && doom->play[pl].state == 0)
+	{
+//		printf("1h = %f h_p = %f\n", h, doom->play[pl].t.y);
+		doom->play[pl].t.y = h;
+	}
     else if (doom->play[pl].state == 0 && h < doom->play[pl].t.y)
     {
         doom->play[pl].state = 1;
         doom->play[pl].vec_grav = 0;
     }
     if (pl == doom->n_play)
-		printf("h = %f\n", doom->play[pl].t.y);
+//		printf("h = %f h_p = %f grav = %f\n", h, doom->play[pl].t.y, doom->play[pl].vec_grav);
     if (doom->play[pl].state)
     {
+    	if (h != -1000 && h - doom->play[pl].t.y > doom->play[pl].height && doom->play[pl].vec_grav > 0)
+			doom->play[pl].vec_grav *= -1;
         doom->play[pl].t.y += doom->play[pl].vec_grav;
 		doom->play[pl].vec_grav -= doom->gravity;
-//		if (h - doom->play[pl].t.y > 9)
-//		}
-        if (doom->play[pl].t.y <= h)
+		if (doom->play[pl].vec_grav <= -1.2)
+			doom->play[pl].heart = 0;
+        if (doom->play[pl].t.y <= h && h - doom->play[pl].t.y > 0 && h - doom->play[pl].t.y < 1)
         {
-        	if (doom->play[pl].vec_grav <= -1.2)
-				doom->play[pl].heart = 0;
 			doom->play[pl].state = 0;
-			doom->play[pl].t.y = h;
+//			doom->play[pl].t.y = h;
 		}
 	}
 }
@@ -377,10 +394,21 @@ void	check_render(t_doom *doom)
 		doom->rend[col.i].sec = col.i;
 		min_line_sec(doom, doom->play[doom->n_play].t.x, doom->play[doom->n_play].t.z, &col);
 		doom->rend[col.i].z = (doom->sec[col.i].tape == 1) ? col.range_min : 0;
-		//printf("sec = %i len = %f\n", col.i, doom->rend[col.i].z);
 		col.i++;
 	}
 	sorting_sec(doom);
-//	print_rend(doom);
+}
+
+void	generate_table_fps(t_doom *doom)
+{
+	int nb;
+
+	doom->fps = (char**)ft_memalloc(sizeof(char*) * (FPS + 1));
+	nb = 0;
+	while (nb <= FPS)
+	{
+		doom->fps[nb] = ft_itoa(nb);
+		nb++;
+	}
 }
 

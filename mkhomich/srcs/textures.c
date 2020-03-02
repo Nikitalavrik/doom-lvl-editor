@@ -144,7 +144,7 @@ void    read_text(t_doom *doom, char *file)
 void    load_texture_wall(t_doom *doom)
 {
 //		read_text(doom, "texture.data");
-	doom->count_text = 33;
+	doom->count_text = 34;
 	doom->text = (t_text*)malloc(sizeof(t_text) * (doom->count_text + 1));
 	doom->text[1] = convert_tex(IMG_Load("../text/1.bmp"), 128, 128);
 	doom->text[2] = convert_tex(IMG_Load("../text/2.bmp"), 128, 128);
@@ -178,6 +178,7 @@ void    load_texture_wall(t_doom *doom)
 	doom->text[30] = convert_tex(IMG_Load("../text/red_stained_glass.png"), 128, 128);
 	doom->text[31] = convert_tex(IMG_Load("../text/0002.png"), 128, 128);
     doom->text[32] = convert_tex(IMG_Load("../text/Mica.png"), 128, 128);
+	doom->text[33] = convert_tex(IMG_Load("../text/TntTop.png"), 128, 128);
 	doom->count_sp = 21;
 	doom->sp = (t_sprite*)malloc(sizeof(t_sprite) * (doom->count_sp + 1));
 	doom->sp[0].count = 0;

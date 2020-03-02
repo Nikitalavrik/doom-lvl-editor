@@ -255,27 +255,109 @@ t_coliz    coliz_pull(t_doom *doom, float x, float z, float y)
 	return (col);
 }
 
-float	move_up(t_doom *doom, int pl)
+void	move_toch(t_toch *toch, t_vec vec, float speed)
 {
-	float line_x;
-	float line_z;
-
-	line_x = coliz_pl(doom, doom->play[pl].t.x, doom->play[pl].t.z + SDL_cos(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed, pl);
-	line_z = coliz_pl(doom, doom->play[pl].t.x - SDL_sin(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed, doom->play[pl].t.z, pl);
-	if (line_x > 1.5)
-		doom->play[pl].t.z += SDL_cos(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed;
-	if (line_z > 1.5)
-		doom->play[pl].t.x -= SDL_sin(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed;
-	if (doom->play[pl].f_move == 0)
-		doom->play[pl].f_move = 1;
-	return ((line_x < line_z) ? line_x : line_z);
+	toch->x += vec.x * speed;
+	toch->y += vec.y * speed;
+	toch->z += vec.z * speed;
 }
+
+void	move_sec(t_doom *doom, int div, float speed)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < doom->sec[doom->div[div].sec].tex_y + 1)
+	{
+		x = 0;
+		while (x < doom->sec[doom->div[div].sec].tex_x + 1)
+		{
+			move_toch(&doom->sec[doom->div[div].sec].toch[y][x], doom->div[div].vec_1, speed);
+			x++;
+		}
+		y++;
+	}
+	x = 0;
+	while (x < doom->sec[doom->div[div].sec].max_toch)
+	{
+		move_toch(&doom->toch[doom->sec[doom->div[div].sec].pts[x]], doom->div[div].vec_1, speed);
+		x++;
+	}
+}
+
+int 	check_div(t_doom *doom, int sec_but, int but)
+{
+	int nb;
+	int count;
+
+	nb = 0;
+	count = 0;
+	while (nb < doom->max_div)
+	{
+		if (doom->div[nb].sec_but == sec_but && doom->sec[sec_but].max_but > but)
+			if (doom->div[nb].status == 0)
+			{
+				doom->div[nb].status = 1;
+				count++;
+			}
+		nb++;
+	}
+	return (count);
+}
+
+void	move_div(t_doom *doom)
+{
+	if (doom->play[doom->n_play].heart && doom->play[doom->n_play].sec_col != -1)
+	{
+		if (check_div(doom, doom->play[doom->n_play].sec_col, doom->play[doom->n_play].buttom))
+		{
+			doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count++;
+			if (doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count >=
+				doom->sp[doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].spr].frame)
+				doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count = 0;
+			add_buttom(doom, &doom->sec[doom->play[doom->n_play].sec_col]);
+			caching_tex_sec(doom, &doom->sec[doom->play[doom->n_play].sec_col]);
+			doom->move.select = 0;
+		}
+	}
+}
+
+void	animated_sec(t_doom *doom)
+{
+	int nb;
+
+	nb = 0;
+	while (nb < doom->max_div)
+	{
+		if (doom->div[nb].status == 1)
+		{
+			if (doom->play[doom->n_play].sec_col != -1)
+				doom->div[nb].speed = ((doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count) ? (0.1) : (-0.1));
+			if (doom->div[nb].speed > 0)
+				doom->div[nb].count++;
+			else if (doom->div[nb].speed < 0)
+				doom->div[nb].count--;
+			if (doom->div[nb].count < 0 || doom->div[nb].count > doom->div[nb].max_caunt)
+			{
+				doom->div[nb].status = 0;
+				doom->div[nb].count = (doom->div[nb].count < 0) ? 0 : doom->div[nb].max_caunt;
+			}
+			else
+				move_sec(doom, nb, doom->div[nb].speed);
+		}
+		nb++;
+	}
+}
+
+
 
 int    move(t_doom *doom)
 {
 	if (doom->play[doom->n_play].f_move == 1)
 		doom->play[doom->n_play].f_move = 0;
 	check_buttom_pl(doom, doom->n_play);
+	animated_sec(doom);
 	while (SDL_PollEvent(&doom->event))
 	{
 		if (doom->event.type == SDL_KEYDOWN || doom->event.type == SDL_KEYUP)
@@ -357,18 +439,7 @@ int    move(t_doom *doom)
 	if (doom->move.wsad[0] && doom->play[doom->n_play].heart)
 		move_up(doom, doom->n_play);
 	if(doom->move.wsad[1] && doom->play[doom->n_play].heart)
-	{
-		if (coliz_pl(doom, doom->play[doom->n_play].t.x, doom->play[doom->n_play].t.z - SDL_cos(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed, doom->n_play) > 1.5)
-		{
-			doom->play[doom->n_play].t.z -= SDL_cos(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed;
-		}
-		if (coliz_pl(doom, doom->play[doom->n_play].t.x + SDL_sin(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed, doom->play[doom->n_play].t.z, doom->n_play) > 1.5)
-		{
-			doom->play[doom->n_play].t.x += SDL_sin(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed;
-		}
-		if (doom->play[doom->n_play].f_move == 0)
-			doom->play[doom->n_play].f_move = 1;
-	}
+		move_down(doom, doom->n_play);
 	if(doom->move.wsad[2] && doom->play[doom->n_play].heart)
 	{
 		if (coliz_pl(doom, doom->play[doom->n_play].t.x, doom->play[doom->n_play].t.z - SDL_sin(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed, doom->n_play) > 1.5)
@@ -395,18 +466,9 @@ int    move(t_doom *doom)
 		if (doom->play[doom->n_play].f_move == 0)
 			doom->play[doom->n_play].f_move = 1;
 	}
-	if (doom->move.select && doom->play[doom->n_play].heart && doom->play[doom->n_play].sec_col != -1
-	&& SDL_GetTicks() - doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].time > 2000)
-	{
-		doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count++;
-		if (doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count >=
-			doom->sp[doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].spr].frame)
-			doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].count = 0;
-		add_buttom(doom, &doom->sec[doom->play[doom->n_play].sec_col]);
-		caching_tex_sec(doom, &doom->sec[doom->play[doom->n_play].sec_col]);
-		doom->move.select = 0;
-		doom->sec[doom->play[doom->n_play].sec_col].but[doom->play[doom->n_play].buttom].time = SDL_GetTicks();
-	}
+	if (doom->move.select)
+		move_div(doom);
+	doom->play[doom->n_play].height = (doom->play[doom->n_play].crouch) ? 4 : 8;
 
 	SDL_GetRelativeMouseState(&doom->mouse.x,&doom->mouse.y);
 	doom->play[doom->n_play].angle_x += doom->mouse.y;

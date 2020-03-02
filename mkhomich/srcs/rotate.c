@@ -15,7 +15,7 @@
 void	rotate_y(t_doom *doom, t_toch *toch)
 {
 	toch->tx1 = toch->x - doom->play[doom->n_play].t.x;
-	toch->ty1 = toch->y - doom->play[doom->n_play].t.y - ((doom->play[doom->n_play].crouch) ? 4 : 8);
+	toch->ty1 = toch->y - doom->play[doom->n_play].t.y - doom->play[doom->n_play].height;
 	toch->tz1 = toch->z - doom->play[doom->n_play].t.z;
 	toch->tx2 = toch->tx1 *
 			SDL_cos(doom->play[doom->n_play].angle_y * PI / 180) + toch->tz1
@@ -46,13 +46,13 @@ void	rotate_sec(t_doom *doom, t_sec *sec)
 			if (sec->f_move && sec->p_move > 0 && sec->p_move < 1)
 			{
 				sec->toch[y][x].tx1 = (sec->toch[y][x].x + sec->p_move * sec->v2.x) - doom->play[doom->n_play].t.x;
-				sec->toch[y][x].ty1 = (sec->toch[y][x].y + sec->p_move * sec->v2.y) - doom->play[doom->n_play].t.y - ((doom->play[doom->n_play].crouch) ? 4 : 8);
+				sec->toch[y][x].ty1 = (sec->toch[y][x].y + sec->p_move * sec->v2.y) - doom->play[doom->n_play].t.y - doom->play[doom->n_play].height;
 				sec->toch[y][x].tz1 = (sec->toch[y][x].z + sec->p_move * sec->v2.z) - doom->play[doom->n_play].t.z;
 			}
 			else
 			{
 				sec->toch[y][x].tx1 = sec->toch[y][x].x - doom->play[doom->n_play].t.x;
-				sec->toch[y][x].ty1 = sec->toch[y][x].y - doom->play[doom->n_play].t.y - ((doom->play[doom->n_play].crouch) ? 4 : 8);
+				sec->toch[y][x].ty1 = sec->toch[y][x].y - doom->play[doom->n_play].t.y - doom->play[doom->n_play].height;
 				sec->toch[y][x].tz1 = sec->toch[y][x].z - doom->play[doom->n_play].t.z;
 			}
 			sec->toch[y][x].tx2 = sec->toch[y][x].tx1 *

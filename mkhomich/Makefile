@@ -35,6 +35,7 @@ SRC =	main.c \
         load_map.c \
         save_map.c \
         check_enemy.c \
+        move_pl.c \
 
 OBJ_DIR = obj
 LIB = libft/libft.a
