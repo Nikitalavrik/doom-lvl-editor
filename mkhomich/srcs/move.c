@@ -261,20 +261,6 @@ void	move_toch(t_toch *toch, t_vec vec, float speed)
 	toch->x += vec.x * speed;
 	toch->y += vec.y * speed;
 	toch->z += vec.z * speed;
-
-	float line_x;
-	float line_z;
-
-	line_x = coliz_pl(doom, doom->play[pl].t.x, doom->play[pl].t.z + SDL_cos(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed, pl);
-	line_z = coliz_pl(doom, doom->play[pl].t.x - SDL_sin(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed, doom->play[pl].t.z, pl);
-	if (line_x > 1.5 )
-		doom->play[pl].t.z += SDL_cos(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed;
-	if (line_z > 1.5 )
-		doom->play[pl].t.x -= SDL_sin(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed;
-	if (doom->play[pl].f_move == 0)
-		doom->play[pl].f_move = 1;
-	return ((line_x < line_z) ? line_x : line_z);
-
 }
 
 void	move_sec(t_doom *doom, int div, float speed)
@@ -456,35 +442,12 @@ int    move(t_doom *doom)
 	if(doom->move.wsad[1] && doom->play[doom->n_play].heart)
 		move_down(doom, doom->n_play);
 	if(doom->move.wsad[2] && doom->play[doom->n_play].heart)
-	{
-		if (coliz_pl(doom, doom->play[doom->n_play].t.x, doom->play[doom->n_play].t.z - SDL_sin(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed, doom->n_play) > 1.5)
-		{
-			doom->play[doom->n_play].t.z -= SDL_sin(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed;
-		}
-		if (coliz_pl(doom, doom->play[doom->n_play].t.x - SDL_cos(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed, doom->play[doom->n_play].t.z, doom->n_play) > 1.5)
-		{
-			doom->play[doom->n_play].t.x -= SDL_cos(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed;
-		}
-		if (doom->play[doom->n_play].f_move == 0)
-			doom->play[doom->n_play].f_move = 1;
-	}
+		move_left(doom, doom->n_play);
 	if(doom->move.wsad[3] && doom->play[doom->n_play].heart)
-	{
-		if (coliz_pl(doom, doom->play[doom->n_play].t.x, doom->play[doom->n_play].t.z + SDL_sin(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed, doom->n_play) > 1.5)
-		{
-			doom->play[doom->n_play].t.z += SDL_sin(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed;
-		}
-		if (coliz_pl(doom, doom->play[doom->n_play].t.x + SDL_cos(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed, doom->play[doom->n_play].t.z, doom->n_play) > 1.5)
-		{
-			doom->play[doom->n_play].t.x += SDL_cos(doom->play[doom->n_play].angle_y * PI / 180) * doom->play[doom->n_play].speed;
-		}
-		if (doom->play[doom->n_play].f_move == 0)
-			doom->play[doom->n_play].f_move = 1;
-	}
+		move_right(doom, doom->n_play);
 	if (doom->move.select)
 		move_div(doom);
 	doom->play[doom->n_play].height = (doom->play[doom->n_play].crouch) ? 4 : 8;
-
 	SDL_GetRelativeMouseState(&doom->mouse.x,&doom->mouse.y);
 	doom->play[doom->n_play].angle_x += doom->mouse.y;
 	doom->play[doom->n_play].angle_y -= doom->mouse.x * DELTA;

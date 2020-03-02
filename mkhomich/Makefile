@@ -70,7 +70,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(OBJS) $(TEST_MAIN_O)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(LIB) -o $(NAME) $(INCLUDES) -fsanitize=address
+		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(LIB) -o $(NAME) $(INCLUDES) #-fsanitize=address
 
 $(TEST_MAIN_O): $(TEST_MAIN)
 		@mkdir -p $(OBJ_DIR)
