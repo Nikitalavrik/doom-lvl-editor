@@ -262,9 +262,9 @@ float	move_up(t_doom *doom, int pl)
 
 	line_x = coliz_pl(doom, doom->play[pl].t.x, doom->play[pl].t.z + SDL_cos(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed, pl);
 	line_z = coliz_pl(doom, doom->play[pl].t.x - SDL_sin(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed, doom->play[pl].t.z, pl);
-	if (line_x > 1.5)
+	if (line_x > 1.5 )
 		doom->play[pl].t.z += SDL_cos(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed;
-	if (line_z > 1.5)
+	if (line_z > 1.5 )
 		doom->play[pl].t.x -= SDL_sin(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed;
 	if (doom->play[pl].f_move == 0)
 		doom->play[pl].f_move = 1;
@@ -289,7 +289,7 @@ int    move(t_doom *doom)
 			else if (doom->event.key.keysym.sym == 'a')
 				doom->move.wsad[2] = doom->event.type==SDL_KEYDOWN;
 			else if (doom->event.key.keysym.sym == 'd')
-				doom->move.wsad[3] = doom->event.type==SDL_KEYDOWN;
+				doom->move.wsad[3] = doom->event.type == SDL_KEYDOWN;
 			else if (doom->event.key.keysym.sym == 'e')
 				doom->move.select = doom->event.type==SDL_KEYDOWN;
 			else if (doom->event.key.keysym.sym == ' ')

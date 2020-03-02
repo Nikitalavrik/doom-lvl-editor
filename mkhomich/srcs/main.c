@@ -187,8 +187,8 @@ void    jump_pl(t_doom *doom, int pl, int jump)
         doom->play[pl].state = 1;
         doom->play[pl].vec_grav = 0;
     }
-    if (pl == doom->n_play)
-		printf("h = %f\n", doom->play[pl].t.y);
+  //   if (pl == doom->n_play)
+		// printf("h = %f\n", doom->play[pl].t.y);
     if (doom->play[pl].state)
     {
         doom->play[pl].t.y += doom->play[pl].vec_grav;
@@ -231,14 +231,17 @@ void	game(t_doom *doom)
 	{
 		if (nb != doom->n_play)
 		{
-
-			size = move_up(doom, nb);
 			bots_logic(doom, nb);
-			if (size > 0 && size <= 2)
-				doom->play[nb].angle_y += 1;
-			else if(size == 0)
-				jump_pl(doom, nb, 1);
-			jump_pl(doom, nb, 0);
+			if (doom->play[nb].f_move != 2)
+			{
+				size = move_up(doom, nb);
+				if (size > 0 && size <= 2)
+					doom->play[nb].angle_y += 1;
+				else if(size == 0)
+					jump_pl(doom, nb, 1);
+				jump_pl(doom, nb, 0);
+			}
+			
 		}
 		nb++;
 	}

@@ -32,6 +32,7 @@
 # include "../libft/libft.h"
 # include "../libft/get_next_line.h"
 # include <stdlib.h>
+# include <time.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include <pthread.h>
@@ -41,8 +42,21 @@
 # include <netinet/in.h>
 # include <netdb.h>
 # include <ifaddrs.h>
+# include <stdlib.h>
 # include <sys/types.h>
 # include <arpa/inet.h>
+
+typedef	union			u_flag
+{
+	short				flag;
+	struct				s_f1
+	{
+		unsigned char	see		: 1;
+		unsigned char	fire	: 1;
+		unsigned char	any		: 6;
+		unsigned char	any1	: 8;
+	}					t_f1;
+}						t_flag;
 
 typedef struct	s_cross
 {
@@ -52,10 +66,10 @@ typedef struct	s_cross
 
 typedef struct	s_way
 {
-	int 		x0;
-	int			y0;
-	int			x1;
-	int			y1;
+	double 		x0;
+	double		y0;
+	double		x1;
+	double		y1;
 }				t_way;
 
 typedef struct	s_text
@@ -328,6 +342,7 @@ typedef struct	s_doom
 	t_music		muz;
 	t_pull		pull[MAX_PULL];
 	t_render	*rend;
+	t_flag		flag;
 	int			mult;
 	int			count_sp;
 	double		min_z;
@@ -382,7 +397,7 @@ typedef struct	s_light
 **	Bots functions
 */
 
-int				check_enemy(t_doom *doom, int nb);
+int				check_enemy(t_doom *doom, int nb, long *leng);
 void			bots_logic(t_doom *doom, int nb);
 int				check_wall_crossing(t_doom *doom, int nb, int i);
 

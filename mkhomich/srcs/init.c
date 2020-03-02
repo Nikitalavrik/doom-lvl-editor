@@ -968,7 +968,7 @@ void    init_minimap(t_doom *doom)
 
 void    init_player(t_doom *doom)
 {
-	doom->max_p = 4;
+	doom->max_p = 2;
 	doom->n_play = 0;
 	doom->play = (t_play*)malloc(sizeof(t_play) * doom->max_p);
 	doom->play[0].t.x = 10;
@@ -1003,38 +1003,38 @@ void    init_player(t_doom *doom)
 	doom->play[1].state = 0;
 	doom->play[1].crouch = 0;
 	doom->play[1].id = 1;
-	doom->play[2].t.x = 190;
-	doom->play[2].t.y = 5;
-	doom->play[2].t.z = 190;
-	doom->play[2].angle_x = 0;
-	doom->play[2].angle_y = 90;
-	doom->play[2].speed = 0.1f;
-	doom->play[2].sp = 9;
-	doom->play[2].weapons = 7;
-	doom->play[2].heart = 34;
-	doom->play[2].armor = 0;
-	doom->play[2].count = 0;
-	doom->play[2].f_move = 0;
-	doom->play[2].shot = 8;
-    doom->play[2].state = 0;
-    doom->play[2].crouch = 0;
-	doom->play[2].id = 2;
-	doom->play[3].t.x = 10;
-	doom->play[3].t.y = 5;
-	doom->play[3].t.z = 190;
-	doom->play[3].angle_x = 0;
-	doom->play[3].angle_y = 270;
-	doom->play[3].speed = 0.1f;
-	doom->play[3].sp = 9;
-	doom->play[3].weapons = 7;
-	doom->play[3].heart = 34;
-	doom->play[3].armor = 0;
-	doom->play[3].count = 0;
-	doom->play[3].f_move = 0;
-	doom->play[3].shot = 8;
-    doom->play[3].state = 0;
-    doom->play[3].crouch = 0;
-	doom->play[3].id = 3;
+	// doom->play[2].t.x = 190;
+	// doom->play[2].t.y = 5;
+	// doom->play[2].t.z = 190;
+	// doom->play[2].angle_x = 0;
+	// doom->play[2].angle_y = 90;
+	// doom->play[2].speed = 0.1f;
+	// doom->play[2].sp = 9;
+	// doom->play[2].weapons = 7;
+	// doom->play[2].heart = 34;
+	// doom->play[2].armor = 0;
+	// doom->play[2].count = 0;
+	// doom->play[2].f_move = 0;
+	// doom->play[2].shot = 8;
+ //    doom->play[2].state = 0;
+ //    doom->play[2].crouch = 0;
+	// doom->play[2].id = 2;
+	// doom->play[3].t.x = 10;
+	// doom->play[3].t.y = 5;
+	// doom->play[3].t.z = 190;
+	// doom->play[3].angle_x = 0;
+	// doom->play[3].angle_y = 270;
+	// doom->play[3].speed = 0.1f;
+	// doom->play[3].sp = 9;
+	// doom->play[3].weapons = 7;
+	// doom->play[3].heart = 34;
+	// doom->play[3].armor = 0;
+	// doom->play[3].count = 0;
+	// doom->play[3].f_move = 0;
+	// doom->play[3].shot = 8;
+ //    doom->play[3].state = 0;
+ //    doom->play[3].crouch = 0;
+	// doom->play[3].id = 3;
 	doom->move.wsad[0] = 0;
 	doom->move.wsad[1] = 0;
 	doom->move.wsad[2] = 0;
@@ -1108,6 +1108,7 @@ int     generate_alpha_tab(t_doom *doom)
 
 int 	init_full(t_doom *doom, char *str)
 {
+	// randomize();
 	doom->nb = 0;
 	doom->soc.r = 0;
 	doom->w = 1024;

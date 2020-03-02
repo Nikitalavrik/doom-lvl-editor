@@ -53,7 +53,8 @@ void		save_sprite_param(t_editor *editor)
 		editor->new_win->param_par.sprite->room->max_mobs++;
 		editor->new_win->param_par.sprite->room->max_sprites--;
 	}
-	editor->new_win->param_par.sprite->num_of_textures = editor->new_win->active_num.tex_num % 8 == 6 ? 19 :
+	editor->new_win->param_par.sprite->num_of_textures =\
+	editor->new_win->active_num.tex_num % 8 == 6 ? 19 :\
 	(editor->new_win->active_num.tex_num + 1) % 8 + 9;
 	editor->new_win->param_par.sprite->s_height =\
 	ft_atoi(editor->new_win->s_height);
