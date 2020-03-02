@@ -257,9 +257,24 @@ t_coliz    coliz_pull(t_doom *doom, float x, float z, float y)
 
 void	move_toch(t_toch *toch, t_vec vec, float speed)
 {
+
 	toch->x += vec.x * speed;
 	toch->y += vec.y * speed;
 	toch->z += vec.z * speed;
+
+	float line_x;
+	float line_z;
+
+	line_x = coliz_pl(doom, doom->play[pl].t.x, doom->play[pl].t.z + SDL_cos(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed, pl);
+	line_z = coliz_pl(doom, doom->play[pl].t.x - SDL_sin(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed, doom->play[pl].t.z, pl);
+	if (line_x > 1.5 )
+		doom->play[pl].t.z += SDL_cos(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed;
+	if (line_z > 1.5 )
+		doom->play[pl].t.x -= SDL_sin(doom->play[pl].angle_y * PI / 180) * doom->play[pl].speed;
+	if (doom->play[pl].f_move == 0)
+		doom->play[pl].f_move = 1;
+	return ((line_x < line_z) ? line_x : line_z);
+
 }
 
 void	move_sec(t_doom *doom, int div, float speed)
@@ -371,7 +386,7 @@ int    move(t_doom *doom)
 			else if (doom->event.key.keysym.sym == 'a')
 				doom->move.wsad[2] = doom->event.type==SDL_KEYDOWN;
 			else if (doom->event.key.keysym.sym == 'd')
-				doom->move.wsad[3] = doom->event.type==SDL_KEYDOWN;
+				doom->move.wsad[3] = doom->event.type == SDL_KEYDOWN;
 			else if (doom->event.key.keysym.sym == 'e')
 				doom->move.select = doom->event.type==SDL_KEYDOWN;
 			else if (doom->event.key.keysym.sym == ' ')

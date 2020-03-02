@@ -51,7 +51,7 @@ void	add_sprites_to_screen(t_editor *editor)
 		x = 20;
 		while (x + 128 < C_WIDTH)
 		{
-			k %= 7;
+			k %= 8;
 			put_text_to_screen(editor, y, x, &k);
 			x += editor->new_win->delim_x;
 		}

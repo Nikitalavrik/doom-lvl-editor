@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:11:09 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/01/26 13:52:15 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/03/01 14:54:39 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,11 @@ void	add_sprite(t_editor *editor)
 				editor->coords[coord.y][coord.x].y) / editor->zoom;
 				editor->selected->sprites->size = SPRITE_SIZE * editor->zoom;
 				editor->selected->sprites->alpha = 140;
-				editor->selected->sprites->num_of_textures = 9;
+				editor->selected->sprites->num_of_textures = 12;
 				editor->selected->sprites->x = coord.x;
 				editor->selected->sprites->y = coord.y;
 				editor->selected->sprites->floor = editor->selected->floor;
+				editor->selected->sprites->room = editor->selected;
 				editor->selected->max_sprites++;
 			}
 		}

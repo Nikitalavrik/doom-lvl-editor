@@ -12,101 +12,37 @@
 
 #include "../incs/doom.h"
 
-
-static	int	vertical_line(t_doom *doom, t_way pr)
-{
-	int err;
-	int	sign_x;
-	int	sign_y;
-	int del_x;
-	int del_y;
-
-	doom = (void *)doom;
-	sign_y = pr.y1 >= pr.y0 ? 1 : -1;
-	sign_x = pr.x1 >= pr.x0 ? 1 : -1;
-	del_x = abs(pr.x1 - pr.x0);
-	del_y = abs(pr.y1 - pr.y0);
-	err = -del_y;
-	while (pr.x0 != pr.x1 || pr.y0 != pr.y1)
-	{
-		if (1)
-			return (0);
-		pr.y0 += sign_y;
-		err += 2 * del_x;
-		if (err > 0)
-		{
-			err -= 2 * del_y;
-			pr.x0 += sign_x;
-		}
-	}
-	return (0);
-}
-
-static	int	horizontal_line(t_doom *doom, t_way pr)
-{
-	int err;
-	int	sign_y;
-	int	sign_x;
-	int del_x;
-	int del_y;
-
-	doom = (void *)doom;
-	sign_y = pr.y1 >= pr.y0 ? 1 : -1;
-	sign_x = pr.x1 >= pr.x0 ? 1 : -1;
-	del_x = abs(pr.x1 - pr.x0);
-	del_y = abs(pr.y1 - pr.y0);
-	err = -del_x;
-	while (pr.x0 != pr.x1 || pr.y0 != pr.y1)
-	{
-		if (1)
-			return (0);
-		pr.x0 += sign_x;
-		err += 2 * del_y;
-		if (err > 0)
-		{
-			err -= 2 * del_x;
-			pr.y0 += sign_y;
-		}
-	}
-	return (0);
-}
-
-
 int		check_way(t_doom *doom, int nb)
 {
-	int		del_x;
-	int		del_y;
-	int		res;
-	t_way	pr;
+	int	i;
 
-	pr.x0 = doom->play[doom->n_play].t.x;
-	pr.y0 = doom->play[doom->n_play].t.y;
-	pr.x1 = doom->play[nb].t.x;
-	pr.y1 = doom->play[nb].t.y;
-	res = 0;
-	del_x = abs(pr.x1 - pr.x0);
-	del_y = abs(pr.y1 - pr.y0);
-	if (del_y <= del_x)
-		res += horizontal_line(doom, pr);
-	else
-		res += vertical_line(doom, pr);
-	return (res);
+	i = 0;
+	while (i < doom->max_s)
+	{
+		if (doom->sec[i].tape == 1)
+			if (check_wall_crossing(doom, nb, i))
+				return (1);
+		i++;
+	}
+	return (0);
 }
 
-int		check_enemy(t_doom *doom, int nb)
+int		check_enemy(t_doom *doom, int nb, long *leng)
 {
-	long long	leng;
 	int			x;
 	int			y;
 
 	x = doom->play[nb].t.x - doom->play[doom->n_play].t.x;
-	y = doom->play[nb].t.y - doom->play[doom->n_play].t.y;
-	leng = x * x + y * y;
-	if (((leng > 1000 && doom->play[nb].angle_sp <= 6 &&\
-		doom->play[nb].angle_sp >= 3) || (leng > 2000 &&\
+	y = doom->play[nb].t.z - doom->play[doom->n_play].t.z;
+	*leng = x * x + y * y;
+	if (((*leng > 1000 && doom->play[nb].angle_sp <= 6 &&\
+		doom->play[nb].angle_sp >= 3) || (*leng > 2000 &&\
 		doom->play[nb].angle_sp >= 6 &&\
 		doom->play[nb].angle_sp <= 3)) || check_way(doom, nb))
+	{
+		doom->flag.t_f1.see = 0;
 		return (0);
+	}
 	vec_play(doom, nb);
 	if (doom->play[nb].angle_sp == 0)
 		return (2);
@@ -115,13 +51,25 @@ int		check_enemy(t_doom *doom, int nb)
 
 void	bots_logic(t_doom *doom, int nb)
 {
-	int	state;
+	int		state;
+	long	len;
+	int		zone;
 
 	state = 0;
-	while ((state = check_enemy(doom, nb)) == 1)
+	while ((state = check_enemy(doom, nb, &len)) == 1)
  		doom->play[nb].angle_y += 1;
- 	if (state == 2)
+ 	if (state == 2 && len <= 900)
+ 		doom->play[nb].f_move = 2;
+ 	else
+ 		doom->play[nb].f_move = 1;
+ 	if (doom->play[nb].f_move == 2 && doom->play[nb].count == 0 &&\
+ 		doom->flag.t_f1.fire == 0)
  	{
- 		// write fire fuctions;
+ 		zone = rand() % 32;
+ 		if (zone >= 1 && zone <= 4)
+ 			calc_uron_pl(doom, doom->n_play, zone, 1);
+		doom->flag.t_f1.fire	= 1;
  	}
+ 	if (doom->play[nb].f_move == 2 && doom->play[nb].count != 0)
+ 		doom->flag.t_f1.fire = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2020/02/17 15:12:52 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/03/01 16:36:29 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	right_click_event(t_editor *editor, SDL_Event event)
 	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
 	if ((param = check_line(editor, mouse_position)))
 		choice_win(editor, event, 1, param);
-	else if ((param = check_sprite(editor->rooms, mouse_position, editor->zoom)))
+	else if ((param = check_sprite(editor->selected, mouse_position, editor->zoom)))
 		choice_win(editor, event, 3, param);
 	else if ((param = check_rooms(editor, mouse_position, 1)))
 		choice_win(editor, event, 2, param);

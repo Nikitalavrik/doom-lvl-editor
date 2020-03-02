@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/23 15:23:46 by mkhomich          #+#    #+#              #
-#    Updated: 2020/02/17 10:29:39 by nlavrine         ###   ########.fr        #
+#    Updated: 2020/03/01 12:19:25 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC =	main.c \
         save_map.c \
         check_enemy.c \
         move_pl.c \
+        cross_wall.c	\
 
 OBJ_DIR = obj
 LIB = libft/libft.a
@@ -69,7 +70,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(OBJS) $(TEST_MAIN_O)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(LIB) -o $(NAME) $(INCLUDES) #-fsanitize=address
+		@$(CC)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(TEST_MAIN_O) $(LIB) -o $(NAME) $(INCLUDES) -fsanitize=address
 
 $(TEST_MAIN_O): $(TEST_MAIN)
 		@mkdir -p $(OBJ_DIR)
@@ -83,7 +84,7 @@ lib: $(LIB) $(OBJS)
 
 $(LIB):
 	@echo "$(GREEN)Compile libft"
-	@make -C ../libft/
+	@make -C libft/
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)

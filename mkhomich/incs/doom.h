@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 16:48:28 by mkhomich          #+#    #+#             */
-/*   Updated: 2020/02/23 17:05:09 by nlavrine         ###   ########.fr       */
+/*   Updated: 2020/03/01 12:47:26 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include "../libft/libft.h"
 # include "../libft/get_next_line.h"
 # include <stdlib.h>
+# include <time.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include <pthread.h>
@@ -40,15 +41,34 @@
 # include <netinet/in.h>
 # include <netdb.h>
 # include <ifaddrs.h>
+# include <stdlib.h>
 # include <sys/types.h>
 # include <arpa/inet.h>
 
+typedef	union			u_flag
+{
+	short				flag;
+	struct				s_f1
+	{
+		unsigned char	see		: 1;
+		unsigned char	fire	: 1;
+		unsigned char	any		: 6;
+		unsigned char	any1	: 8;
+	}					t_f1;
+}						t_flag;
+
+typedef struct	s_cross
+{
+	int			x;
+	int			y;
+}				t_cross;
+
 typedef struct	s_way
 {
-	int 		x0;
-	int			y0;
-	int			x1;
-	int			y1;
+	double 		x0;
+	double		y0;
+	double		x1;
+	double		y1;
 }				t_way;
 
 typedef struct	s_text
@@ -183,6 +203,7 @@ typedef struct	s_sec
 	int			tape;
 	int			max_sp;
 	int			level;
+	char		bright;
 	int         **tex;
 	char		**l_map;
 }				t_sec;
@@ -337,6 +358,7 @@ typedef struct	s_doom
 	t_render	*rend;
 	t_div		*div;
 	char 		**fps;
+	t_flag		flag;
 	int			mult;
 	int			count_sp;
 	double		min_z;
@@ -392,8 +414,9 @@ typedef struct	s_light
 **	Bots functions
 */
 
-int				check_enemy(t_doom *doom, int nb);
+int				check_enemy(t_doom *doom, int nb, long *leng);
 void			bots_logic(t_doom *doom, int nb);
+int				check_wall_crossing(t_doom *doom, int nb, int i);
 
 /*
 **	Another functions
