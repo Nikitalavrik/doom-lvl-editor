@@ -488,6 +488,8 @@ float			move_up(t_doom *doom, int pl);
 float			move_down(t_doom *doom, int pl);
 float			move_left(t_doom *doom, int pl);
 float			move_right(t_doom *doom, int pl);
+void			move_pl(t_doom *doom);
+void			move_div(t_doom *doom);
 float			coliz_pl(t_doom *doom, float x_p, float z_p, float pl);
 
 /*

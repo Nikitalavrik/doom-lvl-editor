@@ -42,11 +42,8 @@ int main(int argc, char **argv)
 		{
 			vec_pull(&doom);
 			print_weapons(&doom);
-			if (doom.play[doom.n_play].weapons == 6)
-			{
-				print_aim(&doom);
-				calc_uron(&doom);
-			}
+			print_aim(&doom);
+			calc_uron(&doom);
 			print_hud(&doom);
 		}
 		else

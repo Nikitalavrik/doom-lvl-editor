@@ -389,22 +389,6 @@ int    move(t_doom *doom)
 				doom->play[doom->n_play].weapons = 7;
 			else if (doom->event.key.keysym.sym == SDLK_3)
 				doom->play[doom->n_play].weapons = 8;
-			else if (doom->event.key.keysym.sym == SDLK_KP_1)
-				doom->n_play = 0;
-			else if (doom->event.key.keysym.sym == SDLK_KP_2)
-				doom->n_play = 1;
-			else if (doom->event.key.keysym.sym == SDLK_KP_3)
-				doom->n_play = 2;
-			else if (doom->event.key.keysym.sym == SDLK_KP_4)
-				doom->n_play = 3;
-			else if (doom->event.key.keysym.sym == SDLK_KP_6)
-				doom->play[1].f_move = 0;
-			else if (doom->event.key.keysym.sym == SDLK_KP_7)
-				doom->play[1].f_move = 1;
-			else if (doom->event.key.keysym.sym == SDLK_KP_8)
-				doom->play[1].f_move = 2;
-			else if (doom->event.key.keysym.sym == SDLK_KP_9)
-				doom->play[1].f_move = 3;
 		}
 		else if (doom->event.type == SDL_MOUSEBUTTONDOWN || doom->event.type == SDL_MOUSEBUTTONUP)
 		{
@@ -437,16 +421,7 @@ int    move(t_doom *doom)
 		if (doom->nb % ((doom->play[doom->n_play].weapons == 6) ? 4 : 2) == 0)
 			doom->sp[doom->play[doom->n_play].weapons].count++;
 	doom->play[doom->n_play].speed = (doom->move.run) ? (0.4) : (0.2);
-	if (doom->move.wsad[0] && doom->play[doom->n_play].heart)
-		move_up(doom, doom->n_play);
-	if(doom->move.wsad[1] && doom->play[doom->n_play].heart)
-		move_down(doom, doom->n_play);
-	if(doom->move.wsad[2] && doom->play[doom->n_play].heart)
-		move_left(doom, doom->n_play);
-	if(doom->move.wsad[3] && doom->play[doom->n_play].heart)
-		move_right(doom, doom->n_play);
-	if (doom->move.select)
-		move_div(doom);
+	move_pl(doom);
 	doom->play[doom->n_play].height = (doom->play[doom->n_play].crouch) ? 4 : 8;
 	SDL_GetRelativeMouseState(&doom->mouse.x,&doom->mouse.y);
 	doom->play[doom->n_play].angle_x += doom->mouse.y;

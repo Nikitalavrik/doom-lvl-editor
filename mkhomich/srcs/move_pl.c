@@ -99,3 +99,17 @@ float	move_right(t_doom *doom, int pl)
 		doom->play[pl].f_move = 1;
 	return ((line_x < line_z) ? line_x : line_z);
 }
+
+void	move_pl(t_doom *doom)
+{
+	if (doom->move.wsad[0] && doom->play[doom->n_play].heart)
+		move_up(doom, doom->n_play);
+	if(doom->move.wsad[1] && doom->play[doom->n_play].heart)
+		move_down(doom, doom->n_play);
+	if(doom->move.wsad[2] && doom->play[doom->n_play].heart)
+		move_left(doom, doom->n_play);
+	if(doom->move.wsad[3] && doom->play[doom->n_play].heart)
+		move_right(doom, doom->n_play);
+	if (doom->move.select)
+		move_div(doom);
+}
